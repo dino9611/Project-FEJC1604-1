@@ -40,6 +40,7 @@ export const LoginActionThunk = (input) => {
         // console.log(res.headers);
         localStorage.setItem("TA", res.headers["x-token-access"]);
         localStorage.setItem("TR", res.headers["x-token-refresh"]);
+        // console.log(res.data)
         dispatch({ type: "LOGIN", payload: res.data });
       })
       .catch((err) => {
@@ -67,12 +68,13 @@ export const RegActionThunk = (input) => {
       dispatch({ type: "LOADING" });
       axios
         .post(`${API_URL}/auth/registration`, data)
-        .then((res1) => {
+        .then((res) => {
           // console.log(res1.data);
           // console.log(res1.headers);
-          localStorage.setItem("TA", res1.headers["x-token-access"]);
-          localStorage.setItem("TR", res1.headers["x-token-refresh"]);
-          dispatch({ type: "LOGIN", payload: res1.data });
+          localStorage.setItem("TA", res.headers["x-token-access"]);
+          localStorage.setItem("TR", res.headers["x-token-refresh"]);
+          dispatch({ type: "LOGIN", payload: res.data });
+          // console.log(res.data)
         })
         .catch((err) => {
           dispatch({ type: "ERROR", error: err.response.data.message });
