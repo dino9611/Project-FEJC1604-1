@@ -1,0 +1,96 @@
+.login-content {
+  display: flex;
+}
+
+.login-content-off {
+  display: none;
+}
+
+.left-content-login {
+  display: flex;
+  background-color: #D4EAF5;
+  align-items:center;
+  height: 100vh;
+  flex: 1;
+}
+
+.right-content-login {
+  background-color: #89ADC3;
+  flex: 1;
+}
+
+.login-form{
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.login-text-1 {
+  color: #052C43;
+  margin-bottom: -1.3%;
+  letter-spacing: -0.5px;
+  font-size: 27px;
+}
+
+.login-text-2 {
+  color: #535353;
+  font-size: 15px;
+  margin-bottom: 8%;
+}
+
+.login-with {
+  display: flex;
+}
+
+.googleIcon {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+}
+
+.separator {
+  flex: 1;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.login-loading {
+  z-index: 2;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.divider {
+  color: #9f9f9f;
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+  width: 100%;
+  margin-top: 13px;
+  margin-bottom: 13px;
+}
+
+.divider > label {
+  align-self: baseline;
+  white-space: nowrap;
+  flex-grow: 2;
+}
+
+.divider > hr {
+  margin-top: 10px;
+  width: 100%;
+  border: 0;
+  height: 1px;
+  background: #9f9f9f;
+}
+
+.divider.center >:first-child {
+  margin-right: 10px;
+}
+
+.divider.center >:last-child {
+  margin-left: 10px;
+}
