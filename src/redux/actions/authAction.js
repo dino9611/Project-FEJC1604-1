@@ -74,7 +74,6 @@ export const RegActionThunk = (input) => {
           localStorage.setItem("TA", res.headers["x-token-access"]);
           localStorage.setItem("TR", res.headers["x-token-refresh"]);
           dispatch({ type: "LOGIN", payload: res.data });
-          // console.log(res.data)
         })
         .catch((err) => {
           dispatch({ type: "ERROR", error: err.response.data.message });
