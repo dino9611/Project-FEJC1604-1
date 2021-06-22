@@ -1,17 +1,14 @@
-.upper-box{
-    background-color: white;
+.app{
+    text-align: center;
 }
 
-.main-box{
+.app-header{
     background-color: #89ADC3;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-}
-
-.login-content{
-    display: flex;
-    background-color: #D4EAF5;
-    align-items:center;
-    height: 100vh;
+    justify-content: center;
+    font-size: 3vh;
+    /* color: white; */
 }
