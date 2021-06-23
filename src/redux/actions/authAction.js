@@ -81,3 +81,24 @@ export const RegActionThunk = (input) => {
     }
   };
 };
+
+export const LoginAdminActionThunk = (input) => {
+  let { emailorusername, password } = input;
+  return (dispatch) => {
+    dispatch({ type: "LOADING" });
+    let data = {
+      emailorusername: emailorusername,
+      password: password,
+    };
+    axios
+      .post(`${API_URL}/admin/login`, data)
+      .then((res) => {
+        localStorage.setItem("TA", res.headers["x-token-access"]);
+        localStorage.setItem("TR", res.headers["x-token-refresh"]);
+        dispatch({ type: "LOGIN", payload: res.data });
+      })
+      .catch((err) => {
+        dispatch({ type: "ERROR", error: err.response.data.message });
+      });
+  };
+};

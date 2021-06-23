@@ -7,6 +7,8 @@ import Login from "./pages/users/Login";
 import Registration from "./pages/users/Registration";
 import "./App.css";
 import LoginAdmin from './pages/admin/Login';
+import HomeAdmin from './pages/admin/Home';
+
 
 
 class App extends Component {
@@ -18,6 +20,7 @@ class App extends Component {
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />
           <Route path="/admin/login" component={LoginAdmin} />
+          <Route path="/admin/home" component={HomeAdmin} />
         </Switch>
       </div>
     );

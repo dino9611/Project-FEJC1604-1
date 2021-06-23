@@ -6,6 +6,8 @@ import { Form, Button } from 'react-bootstrap';
 import { connect } from "react-redux";
 import { LoginAdminActionThunk } from "../../redux/actions";
 import { Redirect } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class LoginAdmin extends Component {
     state = {
@@ -25,17 +27,28 @@ class LoginAdmin extends Component {
     onLoginSubmit = (e) => {
         e.preventDefault();
         const { emailorusername, password } = this.state;
+        if (!emailorusername || !password) {
+            toast.error('Input can not be empty', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
         let data = {
             emailorusername: emailorusername,
             password: password,
         };
         console.log(data);
-        // this.props.LoginAdminActionThunk(data);
+        this.props.LoginAdminActionThunk(data);
     };
 
     render() {
         if (this.props.dataAdmin.islogin) {
-            return <Redirect to='/' />;
+            return <Redirect to='/admin/home' />;
         }
         return (
             <div className="app">
@@ -61,6 +74,7 @@ class LoginAdmin extends Component {
                         </button>
                     </form>
                 </header>
+                <ToastContainer />
             </div>
         );
     }
@@ -72,4 +86,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {})(LoginAdmin);
+export default connect(mapStateToProps, { LoginAdminActionThunk })(LoginAdmin);
