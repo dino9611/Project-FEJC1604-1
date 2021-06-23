@@ -6,6 +6,8 @@ import Home from "./pages/users/Home";
 import Login from "./pages/users/Login";
 import Registration from "./pages/users/Registration";
 import "./App.css";
+import UserProfile from './pages/users/UserProfile';
+import AddressList from './pages/users/Address';
 
 class App extends Component {
   render() {
@@ -15,6 +17,8 @@ class App extends Component {
           <Route path="/" exact component={Home} />
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />
+          <Route path="/userprofile" exact component={UserProfile} />
+          <Route path="/address" exact component={AddressList} />
         </Switch>
       </div>
     );
