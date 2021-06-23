@@ -14,7 +14,7 @@ class LoginAdmin extends Component {
         emailorusername: ""
     };
 
-    visToggle = () => {
+    toggle = () => {
         this.setState({ isVisible: !this.state.isVisible });
     };
 
@@ -29,31 +29,37 @@ class LoginAdmin extends Component {
             emailorusername: emailorusername,
             password: password,
         };
-        this.props.LoginAdminActionThunk(data);
+        console.log(data);
+        // this.props.LoginAdminActionThunk(data);
     };
 
     render() {
-        const { classes } = this.props;
         if (this.props.dataAdmin.islogin) {
-            return <Redirect to="/" />;
+            return <Redirect to='/' />;
         }
         return (
             <div className="app">
                 <header className="app-header">
-                    <Form>
-                        <Form.Label>Fournir</Form.Label>
-                        <Form.Group>
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
-                        </Form.Group>
-                        <Form.Group controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
+                    <form onSubmit={this.onLoginSubmit}>
+                        <h1>Login Admin</h1>
+                        <input
+                            type="text"
+                            className="form-control my-2"
+                            placeholder="email/username"
+                            name="emailorusername"
+                            onChange={this.onInputChange}
+                        />
+                        <input
+                            type="password"
+                            className="form-control my-2"
+                            placeholder="password"
+                            name="password"
+                            onChange={this.onInputChange}
+                        />
+                        <button type="submit" className="btn btn-primary mt-3">
                             Login
-                        </Button>
-                    </Form>
+                        </button>
+                    </form>
                 </header>
             </div>
         );
@@ -66,4 +72,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { LoginAdminActionThunk })(LoginAdmin);
+export default connect(mapStateToProps, {})(LoginAdmin);
