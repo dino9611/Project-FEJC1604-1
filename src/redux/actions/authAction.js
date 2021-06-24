@@ -27,12 +27,12 @@ export const ResetActionthunk = () => {
 };
 
 export const LoginActionThunk = (input) => {
-  let { emailorusername, password } = input;
+  let { emailOrUsername, password } = input;
   return (dispatch) => {
     dispatch({ type: "LOADING" });
     axios
       .post(`${API_URL}/auth/login`, {
-        emailorusername: emailorusername,
+        emailorusername: emailOrUsername,
         password: password,
       })
       .then((res) => {
