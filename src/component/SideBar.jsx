@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { BiCog } from 'react-icons/bi';
 import { FaUserAlt, FaPen } from 'react-icons/fa';
 import { AiFillHeart } from 'react-icons/ai';
 import { CgNotes } from 'react-icons/cg';
 import { BsFillLockFill } from 'react-icons/bs';
 import "../pages/styles/userProfile.css";
-
-
+import { AiFillHome } from 'react-icons/ai';
 
 class Sidebar extends Component {
 
@@ -37,18 +37,24 @@ class Sidebar extends Component {
                             <div className="col-md-2 font2">
                                 <div className="mt-3 d-flex">
                                     <div><FaPen /></div>
-                                    <div className="pl-2 pt-1" style={{ color: this.props.page === "profile" ? "black" : "gray" }}>Edit Profile</div>
+                                    <Link className="pl-2 link" style={{ color: this.props.page === "profile" ? "black" : "gray" }} to="/userprofile">
+                                        Edit Profile
+                                    </Link>
+                                </div>
+                                <div className="mt-3 d-flex">
+                                    <div><AiFillHome /></div>
+                                    <Link className="pl-2 link" style={{ color: this.props.page === "address" ? "black" : "gray" }} to="/address">
+                                        Address
+                                    </Link>
                                 </div>
                                 <div className="mt-3 d-flex">
                                     <div><BsFillLockFill /></div>
-                                    <div className="pl-2 pt-1" style={{ color: this.props.page === "security" ? "black" : "gray" }}>Security</div>
-                                </div>
-                                <div className="mt-3 d-flex">
-                                    <div><BsFillLockFill /></div>
-                                    <div className="pl-2 pt-1" style={{ color: this.props.page === "address" ? "black" : "gray" }}>Address</div>
+                                    <Link className="pl-3 link" style={{ color: this.props.page === "security" ? "black" : "gray" }} to="/security">
+                                        Security
+                                    </Link>
                                 </div>
                             </div>
-                            <div className="col-md-5 px-5 pt-4">
+                            <div className="col-md-7 px-5 pt-4">
                                 {this.props.children}
                             </div>
                         </div>

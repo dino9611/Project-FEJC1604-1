@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import { API_URL } from '../../helper';
 import axios from 'axios';
-import Header from '../../component/Header';
-import { Container } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { BiCog } from 'react-icons/bi';
-import { FaUserAlt, FaPen } from 'react-icons/fa';
-import { AiFillHeart } from 'react-icons/ai';
-import { CgNotes } from 'react-icons/cg';
-import { BsFillLockFill } from 'react-icons/bs';
 import "../styles/userProfile.css";
 import Sidebar from '../../component/SideBar';
+import { toast } from 'react-toastify';
 
 
 class UserProfile extends Component {
@@ -54,7 +48,24 @@ class UserProfile extends Component {
     };
 
     onSaveClick = () => {
-
+        let data = this.state.dataUser;
+        console.log(data, 'line 51');
+        axios
+            .post(`${API_URL}/auth/addData/${this.props.Auth.id}`, data)
+            .then((res) => {
+                this.setState({ dataUser: res.data[0], dataInit: res.data[0], save: true });
+                toast.success('Profile updated!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }).catch((error) => {
+                console.error(error);
+            });
     };
 
     render() {
@@ -72,7 +83,7 @@ class UserProfile extends Component {
                             </div>
                         </div>
                         <div className="d-flex flex-column align-items-center mt-5">
-                            <form>
+                            <div>
                                 <div className="d-flex">
                                     <div>
                                         <div>First Name</div>
@@ -122,10 +133,16 @@ class UserProfile extends Component {
                                     </div>
                                 </div>
                                 <div className="d-flex mt-5">
-                                    <button className="btn btn-primary" disabled={this.state.save} >Save</button>
-                                    <button className="btn btn-secondary" onClick={this.onCancelClick}>Cancel</button>
+                                    <button
+                                        className="btn btn-primary"
+                                        disabled={this.state.save}
+                                        onClick={this.onSaveClick}
+                                    >
+                                        Save
+                                    </button>
+                                    <button className="btn btn-secondary ml-4" onClick={this.onCancelClick}>Cancel</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </Sidebar>
@@ -140,4 +157,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {})(UserProfile);;;;
+export default connect(mapStateToProps, {})(UserProfile);
