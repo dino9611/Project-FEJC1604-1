@@ -14,7 +14,7 @@ class Sidebar extends Component {
         return (
             <div>
                 <div className="row p-0">
-                    <div className="col-md-2 pt-5 pl-5 back-ground font1">
+                    <div className="col-md-2 input-border pt-5 pl-5 back-ground font1">
                         <BiCog className="icon" />
                         <div className="mt-5 d-flex">
                             <div><FaUserAlt /></div>

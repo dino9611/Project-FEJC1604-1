@@ -50,7 +50,7 @@ class AddressList extends Component {
                     <td>{val.city}</td>
                     <td>{val.zip}</td>
                     <td>{val.description}</td>
-                    <td> {val.is_default ? 'Default' : <button>Make Default</button>} </td>
+                    <td> {val.is_default ? 'Default' : <button className="button-second">Make Default</button>} </td>
                     <td>
                         Delete
                     </td>
@@ -124,8 +124,8 @@ class AddressList extends Component {
                         <textarea placeholder="Description" className="form-control my-3" rows='5' name="description" value={this.state.addAddress.description} onChange={this.onInputChange}></textarea>
                     </ModalBody>
                     <ModalFooter>
-                        <button className="btn btn-success" onClick={this.onAddClick}>Add</button>
-                        <button onClick={this.toggle}>Cancel</button>
+                        <button className="button-utama" onClick={this.onAddClick}>Add</button>
+                        <button className="button-cancel" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
                 <Sidebar page="address">
@@ -145,7 +145,7 @@ class AddressList extends Component {
                             {this.renderAddress()}
                         </tbody>
                     </Table>
-                    <button className="btn btn-primary" onClick={this.toggle}>Add Address</button>
+                    <button className="button-utama" onClick={this.toggle}>Add Address</button>
                 </Sidebar>
             </div>
         );

@@ -124,7 +124,7 @@ class UserProfile extends Component {
                                         <div>Age</div>
                                         <input
                                             name="age"
-                                            className="form-control mt-1 input-width input-border"
+                                            className="form-control mt-1 input-border input-width"
                                             type="number"
                                             placeholder="Age"
                                             value={this.state.dataUser.age}
@@ -132,15 +132,20 @@ class UserProfile extends Component {
                                         />
                                     </div>
                                 </div>
-                                <div className="d-flex mt-5">
+                                <div className="d-flex mt-5 justify-content-end">
                                     <button
-                                        className="btn btn-primary"
+                                        className="button-utama"
                                         disabled={this.state.save}
                                         onClick={this.onSaveClick}
                                     >
                                         Save
                                     </button>
-                                    <button className="btn btn-secondary ml-4" onClick={this.onCancelClick}>Cancel</button>
+                                    <button
+                                        className="button-cancel ml-4"
+                                        onClick={this.onCancelClick}
+                                    >
+                                        Cancel
+                                    </button>
                                 </div>
                             </div>
                         </div>

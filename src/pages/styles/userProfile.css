@@ -30,8 +30,7 @@
 }
 
 .input-border{
-    border-color: #D4EAF5;
-    border-width: 2px;
+    border: 2px #D4EAF5 solid !important;
 }
 
 .photo{
@@ -47,11 +46,42 @@
    width: 50%;
 }
 
-.button{
-    
+.button-utama{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+}
+.button-utama:disabled{
+    background-color:#b2c9d8;
+}
+
+.button-second{
+    background-color:#D4EAF5  ;
+    border: none;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+}
+
+.button-cancel{
+    background-color:gray ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
 }
 
 .link:hover{
     text-decoration: none;
-
 }
