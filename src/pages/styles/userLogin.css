@@ -8,24 +8,24 @@
 
 .left-content-login {
   display: flex;
-  background-color: #D4EAF5;
-  align-items:center;
+  background-color: #d4eaf5;
+  align-items: center;
   height: 100vh;
   flex: 1;
 }
 
 .right-content-login {
-  background-color: #89ADC3;
+  background-color: #89adc3;
   flex: 1;
 }
 
-.login-form{
+.login-form {
   margin-left: 20%;
   margin-right: 20%;
 }
 
 .login-text-1 {
-  color: #052C43;
+  color: #052c43;
   margin-bottom: -1.3%;
   letter-spacing: -0.5px;
   font-size: 27px;
@@ -58,9 +58,13 @@
   height: 100vh;
   width: 100%;
   display: flex;
+  position: absolute;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.685);
+  clip-path: (1300px at 90%);
+  -webkit-clip-path: circle(1300px at 90%);
+  transition: all 1s ease-in-out;
 }
 
 .divider {
@@ -87,10 +91,10 @@
   background: #9f9f9f;
 }
 
-.divider.center >:first-child {
+.divider.center > :first-child {
   margin-right: 10px;
 }
 
-.divider.center >:last-child {
+.divider.center > :last-child {
   margin-left: 10px;
 }

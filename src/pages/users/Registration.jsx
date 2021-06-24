@@ -24,13 +24,32 @@ class Registration extends Component {
   state = {
     isVisible: false,
     isVisibleConf: false,
+    radioMale: false,
+    radioFemale: false,
     username: "",
     password: "",
     email: "",
     gender: "",
     confirmpass: "",
-    isError: false,
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.dataUser.sendemail !== this.props.dataUser.sendemail) {
+      this.setState({
+        isVisible: false,
+        isVisibleConf: false,
+        radioMale: false,
+        radioFemale: false,
+        username: "",
+        password: "",
+        email: "",
+        gender: "",
+        confirmpass: "",
+      });
+      // console.log('test')
+    }
+    // console.log(prevProps)
+  }
 
   visToggle = () => {
     this.setState({ isVisible: !this.state.isVisible });
@@ -38,10 +57,11 @@ class Registration extends Component {
 
   visConfToggle = () => {
     this.setState({ isVisibleConf: !this.state.isVisibleConf });
-  }
+  };
 
   onInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+    // console.log(e.target)
   };
 
   onRadioInput = (e) => {
@@ -61,6 +81,19 @@ class Registration extends Component {
       gender,
     };
     this.props.RegActionThunk(data);
+    // console.log(data);
+  };
+
+  onReset = () => {
+    this.setState({
+      isVisible: false,
+      isVisibleConf: false,
+      username: "",
+      password: "",
+      email: "",
+      gender: "",
+      confirmpass: "",
+    });
   };
 
   render() {
@@ -69,292 +102,312 @@ class Registration extends Component {
     }
     return (
       <>
-      {this.props.dataUser.loading ? (
+        {this.props.dataUser.loading ? (
           <div className="login-loading">
             <Loader
-              type="ThreeDots"
+              type="TailSpin"
               color="#052C43"
-              height={70}
-              width={70}
-              timeout={3000}
+              height={100}
+              width={100}
+              timeout={5000}
             />
           </div>
         ) : null}
 
-
-      <div className={this.props.dataUser.loading ? "regist-content-off" : "regist-content" }>
-        <div className="left-content-regist">
-          <h1>left</h1>
-        </div>
-        <div className="right-content-regist">
-          <div className="regist-form">
-            <h1 className="login-text-1">Sign Up</h1>
-            <p className="regist-text-2">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </p>
-            {this.props.dataUser.error ? (
-              <Alert severity="error" style={{ marginBottom: "10px" }}>
-                {this.props.dataUser.error}
-              </Alert>
-            ) : null}
-            <form onSubmit={this.onRegistSubmit} autoComplete="off">
-              <div className="regist-form-1">
-                <FormControl
-                  style={{
-                    width: "100%",
-                    flex: 1,
-                  }}
-                >
-                  <InputBase
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 0,
-                      outline: "none",
-                      padding: 10,
-                      fontSize: "15px",
-                      paddingLeft: 18,
-                    }}
-                    value={this.state.username}
-                    onChange={this.onInputChange}
-                    type="username"
-                    name="username"
-                    placeholder="Username"
-                  />
-                </FormControl>
-                <div style={{ width: "10px" }}></div>
-                <FormControl
-                  style={{
-                    width: "100%",
-                    flex: 1,
-                  }}
-                >
-                  <RadioGroup row aria-label="position" defaultValue="top">
-                    <FormControlLabel
-                      style={{ marginLeft: "1px" }}
-                      onChange={this.onRadioInput}
-                      value="male"
-                      name="gender"
-                      control={<Radio color="red" />}
-                      label="Male"
-                    />
-                    <FormControlLabel
-                      onChange={this.onRadioInput}
-                      value="female"
-                      name="gender"
-                      control={<Radio color="red" />}
-                      label="Female"
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </div>
-              <div>
-                <FormControl
-                  style={{
-                    width: "100%",
-                    flex: 1,
-                    paddingTop: "10px",
-                  }}
-                >
-                  <InputBase
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 0,
-                      outline: "none",
-                      padding: 10,
-                      fontSize: "15px",
-                      paddingLeft: 18,
-                    }}
-                    value={this.state.email}
-                    onChange={this.onInputChange}
-                    type="email"
-                    name="email"
-                    placeholder="E-mail"
-                  />
-                </FormControl>
-              </div>
-              <div className="regist-form-1">
-                <FormControl
-                  style={{
-                    width: "100%",
-                    flex: 1,
-                    paddingTop: "10px",
-                  }}
-                >
-                  <InputBase
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 0,
-                      outline: "none",
-                      padding: 10,
-                      fontSize: "15px",
-                      paddingLeft: 18,
-                    }}
-                    value={this.state.password}
-                    onChange={this.onInputChange}
-                    type={this.state.isVisible ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={this.visToggle}
-                        >
-                          {this.state.isVisible ? (
-                            <AiFillEye
-                              style={{ color: "#052C43", fontSize: "21px" }}
-                              onClick={this.visToggle}
-                            />
-                          ) : (
-                            <AiFillEyeInvisible
-                              style={{ color: "#9f9f9f", fontSize: "21px" }}
-                              onClick={this.visToggle}
-                            />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                <div style={{ width: "10px" }}></div>
-                <FormControl
-                  style={{
-                    width: "100%",
-                    flex: 1,
-                    paddingTop: "10px",
-                  }}
-                >
-                  <InputBase
-                    style={{
-                      backgroundColor: "white",
-                      borderRadius: 0,
-                      outline: "none",
-                      padding: 10,
-                      fontSize: "15px",
-                      paddingLeft: 18,
-                    }}
-                    value={this.state.confirmpass}
-                    onChange={this.onInputChange}
-                    type={this.state.isVisibleConf ? "text" : "password"}
-                    name="confirmpass"
-                    placeholder="Confirm password"
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={this.visConfToggle}
-                        >
-                          {this.state.isVisibleConf ? (
-                            <AiFillEye
-                              style={{ color: "#052C43", fontSize: "21px" }}
-                              onClick={this.visConfToggle}
-                            />
-                          ) : (
-                            <AiFillEyeInvisible
-                              style={{ color: "#9f9f9f", fontSize: "21px" }}
-                              onClick={this.visConfToggle}
-                            />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </div>
-              <p
-                style={{
-                  textAlign: "start",
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                  fontSize: "15px",
-                  color: "#535353",
-                }}
-              >
-                Have Account?
-                <Link
-                  to="/login"
-                  style={{
-                    textDecoration: "none",
-                    color: "#89ADC3",
-                  }}
-                >
-                  <span onClick={this.props.ResetActionthunk}> Login</span>
-                </Link>
+        <div className="regist-content">
+          <div className="left-content-regist">
+            <img />
+          </div>
+          <div className="right-content-regist">
+            <div className="regist-form">
+              <h1 className="login-text-1">Sign Up</h1>
+              <p className="regist-text-2">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry.
               </p>
-              <ButtonBase
-                type="submit"
-                onClick={this.props.ResetActionthunk}
-                submit={true}
-                disableRipple
-                style={{
-                  width: "100%",
-                  backgroundColor:
-                    this.state.password &&
-                    this.state.email &&
-                    this.state.confirmpass
-                      ? "#89ADC3"
-                      : "#aec7d6",
-                  color: "white",
-                  borderRadius: 0,
-                  padding: 17,
-                  fontSize: "16px",
-                  fontWeight: 600,
-                  letterSpacing: 0.3,
-                }}
-              >
-                Sign Up
-              </ButtonBase>
-              <div className="divider center">
-                <hr />
-                <label>or</label>
-                <hr />
-              </div>
-              <div className="login-with">
+              {this.props.dataUser.error ? (
+                <Alert severity="error" style={{ marginBottom: "10px" }}>
+                  {this.props.dataUser.error}
+                </Alert>
+              ) : null}
+
+              {this.props.dataUser.sendemail ? (
+                <Alert severity="success" style={{ marginBottom: "10px" }}>
+                  {this.props.dataUser.sendemail}
+                </Alert>
+              ) : null}
+
+              <form onSubmit={this.onRegistSubmit} autoComplete="off">
+                <div className="regist-form-1">
+                  <FormControl
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                    }}
+                  >
+                    <InputBase
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 0,
+                        outline: "none",
+                        padding: 10,
+                        fontSize: "15px",
+                        paddingLeft: 18,
+                      }}
+                      value={this.state.username}
+                      onChange={this.onInputChange}
+                      type="username"
+                      name="username"
+                      placeholder="Username"
+                    />
+                  </FormControl>
+                  <div style={{ width: "10px" }}></div>
+                  <FormControl
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                    }}
+                  >
+                    <RadioGroup row aria-label="position" defaultValue="top">
+                      <FormControlLabel
+                        style={{ marginLeft: "1px" }}
+                        onChange={this.onRadioInput}
+                        checked={this.state.radioMale}
+                        onClick={() => {
+                          this.setState({
+                            radioMale: !this.state.radioMale,
+                            radioFemale: false,
+                          });
+                        }}
+                        value="male"
+                        name="gender"
+                        control={<Radio color="red" />}
+                        label="Male"
+                      />
+                      <FormControlLabel
+                        onChange={this.onRadioInput}
+                        checked={this.state.radioFemale}
+                        onClick={() => {
+                          this.setState({
+                            radioFemale: !this.state.radioFemale,
+                            radioMale: false,
+                          });
+                        }}
+                        value="female"
+                        name="gender"
+                        control={<Radio color="red" />}
+                        label="Female"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </div>
+                <div>
+                  <FormControl
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                      paddingTop: "10px",
+                    }}
+                  >
+                    <InputBase
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 0,
+                        outline: "none",
+                        padding: 10,
+                        fontSize: "15px",
+                        paddingLeft: 18,
+                      }}
+                      value={this.state.email}
+                      onChange={this.onInputChange}
+                      type="email"
+                      name="email"
+                      placeholder="E-mail"
+                    />
+                  </FormControl>
+                </div>
+                <div className="regist-form-1">
+                  <FormControl
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                      paddingTop: "10px",
+                    }}
+                  >
+                    <InputBase
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 0,
+                        outline: "none",
+                        padding: 10,
+                        fontSize: "15px",
+                        paddingLeft: 18,
+                      }}
+                      value={this.state.password}
+                      onChange={this.onInputChange}
+                      type={this.state.isVisible ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={this.visToggle}
+                          >
+                            {this.state.isVisible ? (
+                              <AiFillEye
+                                style={{ color: "#052C43", fontSize: "21px" }}
+                                onClick={this.visToggle}
+                              />
+                            ) : (
+                              <AiFillEyeInvisible
+                                style={{ color: "#9f9f9f", fontSize: "21px" }}
+                                onClick={this.visToggle}
+                              />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                  <div style={{ width: "10px" }}></div>
+                  <FormControl
+                    style={{
+                      width: "100%",
+                      flex: 1,
+                      paddingTop: "10px",
+                    }}
+                  >
+                    <InputBase
+                      style={{
+                        backgroundColor: "white",
+                        borderRadius: 0,
+                        outline: "none",
+                        padding: 10,
+                        fontSize: "15px",
+                        paddingLeft: 18,
+                      }}
+                      value={this.state.confirmpass}
+                      onChange={this.onInputChange}
+                      type={this.state.isVisibleConf ? "text" : "password"}
+                      name="confirmpass"
+                      placeholder="Confirm password"
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={this.visConfToggle}
+                          >
+                            {this.state.isVisibleConf ? (
+                              <AiFillEye
+                                style={{ color: "#052C43", fontSize: "21px" }}
+                                onClick={this.visConfToggle}
+                              />
+                            ) : (
+                              <AiFillEyeInvisible
+                                style={{ color: "#9f9f9f", fontSize: "21px" }}
+                                onClick={this.visConfToggle}
+                              />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      }
+                    />
+                  </FormControl>
+                </div>
+                <p
+                  style={{
+                    textAlign: "start",
+                    marginTop: "20px",
+                    marginBottom: "20px",
+                    fontSize: "15px",
+                    color: "#535353",
+                  }}
+                >
+                  Have Account?
+                  <Link
+                    to="/login"
+                    style={{
+                      textDecoration: "none",
+                      color: "#89ADC3",
+                    }}
+                  >
+                    <span onClick={this.props.ResetActionthunk}> Login</span>
+                  </Link>
+                </p>
                 <ButtonBase
                   type="submit"
+                  onClick={this.props.ResetActionthunk}
                   submit={true}
                   disableRipple
                   style={{
                     width: "100%",
-                    backgroundColor: "#3A5897",
+                    backgroundColor:
+                      this.state.password &&
+                      this.state.email &&
+                      this.state.confirmpass
+                        ? "#89ADC3"
+                        : "#aec7d6",
                     color: "white",
                     borderRadius: 0,
                     padding: 17,
-                    fontSize: "13px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    letterSpacing: 0.3,
                   }}
                 >
-                  <FaFacebookF
-                    style={{ fontSize: "25px", marginRight: "10px" }}
-                  />
-                  Continue with Facebook
+                  Sign Up
                 </ButtonBase>
-                <div className="separator"></div>
-                <ButtonBase
-                  type="submit"
-                  submit={true}
-                  disableRipple
-                  style={{
-                    width: "100%",
-                    backgroundColor: "white",
-                    color: "black",
-                    borderRadius: 0,
-                    padding: 17,
-                    fontSize: "13px",
-                  }}
-                >
-                  <img
-                    src={googleIcon}
-                    alt="google-icon"
-                    className="googleIcon"
-                  />
-                  Continue with Google
-                </ButtonBase>
-              </div>
-            </form>
+                <div className="divider center">
+                  <hr />
+                  <label>or</label>
+                  <hr />
+                </div>
+                <div className="login-with">
+                  <ButtonBase
+                    type="submit"
+                    submit={true}
+                    disableRipple
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#3A5897",
+                      color: "white",
+                      borderRadius: 0,
+                      padding: 17,
+                      fontSize: "13px",
+                    }}
+                  >
+                    <FaFacebookF
+                      style={{ fontSize: "25px", marginRight: "10px" }}
+                    />
+                    Continue with Facebook
+                  </ButtonBase>
+                  <div className="separator"></div>
+                  <ButtonBase
+                    type="submit"
+                    submit={true}
+                    disableRipple
+                    style={{
+                      width: "100%",
+                      backgroundColor: "white",
+                      color: "black",
+                      borderRadius: 0,
+                      padding: 17,
+                      fontSize: "13px",
+                    }}
+                  >
+                    <img
+                      src={googleIcon}
+                      alt="google-icon"
+                      className="googleIcon"
+                    />
+                    Continue with Google
+                  </ButtonBase>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
       </>
     );
   }

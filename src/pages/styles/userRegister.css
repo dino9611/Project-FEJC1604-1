@@ -2,10 +2,6 @@
   display: flex;
 }
 
-.regist-content-off {
-  display: none;
-}
-
 .left-content-regist {
   background-color: #89ADC3;
   flex: 1;

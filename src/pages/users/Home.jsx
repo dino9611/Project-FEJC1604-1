@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { LogoutAction, ResetActionthunk } from "../../redux/actions";
 
 class Home extends Component {
+
   onLogout = (e) => {
     this.props.LogoutAction();
   };
@@ -58,5 +59,5 @@ const MaptstatetoProps = (state) => {
 
 export default connect(MaptstatetoProps, {
   LogoutAction,
-  ResetActionthunk
+  ResetActionthunk,
 })(Home);

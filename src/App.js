@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Home from './pages/users/Home';
 import Login from './pages/users/Login';
 import Registration from './pages/users/Registration';
+import EmailVerification from './pages/users/EmailVerification';
 import './App.css';
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Route path='/' exact component={Home} />
           <Route path='/login' exact component={Login} />
           <Route path='/registration' exact component={Registration} />
+          <Route path='/verified-email/:token' component={EmailVerification} />
         </Switch>
       </div>
     )
