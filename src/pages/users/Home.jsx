@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { LogoutAction, ResetActionthunk } from "../../redux/actions";
 
 class Home extends Component {
-
-  onLogout = (e) => {
+  onLogout = () => {
+    localStorage.removeItem("TA");
+    localStorage.removeItem("TR");
+    localStorage.removeItem("data");
     this.props.LogoutAction();
   };
 
