@@ -11,12 +11,12 @@ import {
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { FaFacebookF } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import { RegActionThunk, ResetActionthunk } from "../../redux/actions";
-import Loader from "react-loader-spinner";
+import LoaderComp from "../../components/Loader";
 import googleIcon from "../../search.svg";
 import "../styles/userRegister.css";
 
@@ -28,9 +28,9 @@ class Registration extends Component {
     radioFemale: false,
     username: "",
     password: "",
+    confirmPassword: "",
     email: "",
     gender: "",
-    confirmpass: "",
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -44,7 +44,7 @@ class Registration extends Component {
         password: "",
         email: "",
         gender: "",
-        confirmpass: "",
+        confirmPassword: "",
       });
       // console.log('test')
     }
@@ -72,11 +72,11 @@ class Registration extends Component {
 
   onRegistSubmit = (e) => {
     e.preventDefault();
-    const { username, password, confirmpass, email, gender } = this.state;
+    const { username, password, confirmPassword, email, gender } = this.state;
     let data = {
       username,
       password,
-      confirmpass,
+      confirmPassword,
       email,
       gender,
     };
@@ -92,7 +92,7 @@ class Registration extends Component {
       password: "",
       email: "",
       gender: "",
-      confirmpass: "",
+      confirmPassword: "",
     });
   };
 
@@ -102,28 +102,17 @@ class Registration extends Component {
     }
     return (
       <>
-        {this.props.dataUser.loading ? (
-          <div className="login-loading">
-            <Loader
-              type="TailSpin"
-              color="#052C43"
-              height={100}
-              width={100}
-              timeout={5000}
-            />
-          </div>
-        ) : null}
-
+        {this.props.dataUser.loading ? <LoaderComp /> : null}
         <div className="regist-content">
           <div className="left-content-regist">
-            <img />
+            <img alt="bg-register" />
           </div>
           <div className="right-content-regist">
             <div className="regist-form">
               <h1 className="login-text-1">Sign Up</h1>
               <p className="regist-text-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
+                We are in Business to Improve Lives. Please live with the best
+                comfort.
               </p>
               {this.props.dataUser.error ? (
                 <Alert severity="error" style={{ marginBottom: "10px" }}>
@@ -287,10 +276,10 @@ class Registration extends Component {
                         fontSize: "15px",
                         paddingLeft: 18,
                       }}
-                      value={this.state.confirmpass}
+                      value={this.state.confirmPassword}
                       onChange={this.onInputChange}
                       type={this.state.isVisibleConf ? "text" : "password"}
-                      name="confirmpass"
+                      name="confirmPassword"
                       placeholder="Confirm password"
                       endAdornment={
                         <InputAdornment position="end">
@@ -345,7 +334,7 @@ class Registration extends Component {
                     backgroundColor:
                       this.state.password &&
                       this.state.email &&
-                      this.state.confirmpass
+                      this.state.confirmPassword
                         ? "#89ADC3"
                         : "#aec7d6",
                     color: "white",

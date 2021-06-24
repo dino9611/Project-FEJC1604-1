@@ -9,11 +9,41 @@ import Login from "./pages/users/Login";
 import Registration from "./pages/users/Registration";
 import LoginAdmin from "./pages/admin/Login";
 import HomeAdmin from "./pages/admin/Home";
+import { API_URL } from "./helper";
+import axios from "axios";
+import LoaderComp from "./components/Loader";
 import EmailVerification from "./pages/users/EmailVerification";
 import "./App.css";
 
 class App extends Component {
+  state = {
+    loading: true,
+  };
+
+  componentDidMount() {
+    let tokenAccess = localStorage.getItem("TA");
+    axios
+      .get(`${API_URL}/auth/keeplogin`, {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.props.LoginAction(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  }
+
   render() {
+    if (this.state.loading) {
+      return <LoaderComp />;
+    }
     return (
       <div>
         <Switch>

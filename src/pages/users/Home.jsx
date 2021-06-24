@@ -8,8 +8,10 @@ import { LogoutAction, ResetActionthunk } from "../../redux/actions";
 import "../styles/Home.css";
 
 class Home extends Component {
-
-  onLogout = (e) => {
+  onLogout = () => {
+    localStorage.removeItem("TA");
+    localStorage.removeItem("TR");
+    localStorage.removeItem("data");
     this.props.LogoutAction();
   };
 

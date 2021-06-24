@@ -9,19 +9,19 @@ import {
 import { Alert } from "@material-ui/lab";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { FaFacebookF } from "react-icons/fa";
-import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { LoginActionThunk, ResetActionthunk } from "../../redux/actions";
-import "../styles/userLogin.css";
+import LoaderComp from "../../components/Loader";
 import googleIcon from "../../search.svg";
-import Loader from "react-loader-spinner";
+import "../styles/userLogin.css";
 
 class Login extends Component {
   state = {
     isVisible: false,
     password: "",
-    emailorusername: "",
+    emailOrUsername: "",
   };
 
   visToggle = () => {
@@ -34,7 +34,7 @@ class Login extends Component {
 
   onLoginSubmit = (e) => {
     e.preventDefault();
-    const { emailorusername, password } = this.state;
+    const { emailOrUsername: emailorusername, password } = this.state;
     let data = {
       emailorusername: emailorusername,
       password: password,
@@ -48,25 +48,14 @@ class Login extends Component {
     }
     return (
       <>
-        {this.props.dataUser.loading ? (
-          <div className="login-loading">
-            <Loader
-              type="TailSpin"
-              color="#052C43"
-              height={100}
-              width={100}
-              timeout={5000}
-            />
-          </div>
-        ) : null}
-
+        {this.props.dataUser.loading ? <LoaderComp /> : null}
         <div className="login-content">
           <div className="left-content-login">
             <div className="login-form">
               <h1 className="login-text-1">Login to Fournir</h1>
               <p className="login-text-2">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry.
+                We are in Business to Improve Lives. Please live with the best
+                comfort.
               </p>
               {this.props.dataUser.error ? (
                 <Alert severity="error" style={{ marginBottom: "10px" }}>
@@ -88,10 +77,10 @@ class Login extends Component {
                       fontSize: "15px",
                       paddingLeft: 18,
                     }}
-                    value={this.state.emailorusername}
+                    value={this.state.emailOrUsername}
                     onChange={this.onInputChange}
-                    type="emailorusername"
-                    name="emailorusername"
+                    type="emailOrUsername"
+                    name="emailOrUsername"
                     placeholder="Username or email"
                   />
                 </FormControl>
@@ -163,7 +152,7 @@ class Login extends Component {
                   style={{
                     width: "100%",
                     backgroundColor:
-                      this.state.password && this.state.emailorusername
+                      this.state.password && this.state.emailOrUsername
                         ? "#89ADC3"
                         : "#aec7d6",
                     color: "white",
@@ -226,7 +215,7 @@ class Login extends Component {
             </div>
           </div>
           <div className="right-content-login">
-            <h1>right</h1>
+            <img alt="bg-login" />
           </div>
         </div>
       </>
