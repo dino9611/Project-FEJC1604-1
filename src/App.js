@@ -14,6 +14,11 @@ import axios from "axios";
 import LoaderComp from "./components/Loader";
 import EmailVerification from "./pages/users/EmailVerification";
 import "./App.css";
+import UserProfile from "./pages/users/UserProfile";
+import AddressList from "./pages/users/Address";
+import Security from "./pages/users/Security";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   state = {
@@ -55,7 +60,11 @@ class App extends Component {
           <Route path="/admin/login" component={LoginAdmin} />
           <Route path="/admin/home" component={HomeAdmin} />
           <Route path="/verified-email/:token" component={EmailVerification} />
+          <Route path="/userprofile" exact component={UserProfile} />
+          <Route path="/address" exact component={AddressList} />
+          <Route path="/security" exact component={Security} />
         </Switch>
+        <ToastContainer />
       </div>
     );
   }
