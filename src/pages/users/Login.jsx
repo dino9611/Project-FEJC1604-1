@@ -36,7 +36,7 @@ class Login extends Component {
     e.preventDefault();
     const { emailOrUsername: emailorusername, password } = this.state;
     let data = {
-      emailorusername: emailorusername,
+      emailOrUsername: emailOrUsername,
       password: password,
     };
     this.props.LoginActionThunk(data);
