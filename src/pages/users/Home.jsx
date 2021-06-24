@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import Header from "../../components/Header";
 import { connect } from "react-redux";
+import { ButtonBase } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import ChairHome from "../../images/chair-home.jpg";
 import { LogoutAction, ResetActionthunk } from "../../redux/actions";
+import "../styles/Home.css";
 
 class Home extends Component {
   onLogout = (e) => {
@@ -10,41 +14,24 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-        {this.props.dataUser.islogin ? (
-          <div>
-            <h1>Home Login</h1>
-            <button onClick={this.onLogout}>Logout</button>
+      <div className="home-content">
+        <Header />
+        <div className="left-content-home">
+          <div className="inside-left-content">
+            <h1 className="fournir-text-1">Best Design of</h1>
+            <h1 className="fournir-text-2">Furniture Collections</h1>
+            <h5 className="fournir-text-3">
+              A small river named Duden flows by their place and supplies it
+              with the necessary regelialia.
+            </h5>
+            <Link to="/collection" className="normal-link">
+              <div className="btn-collection">See Collection</div>
+            </Link>
           </div>
-        ) : (
-          <div>
-            <h1>Home</h1>
-            <button>
-              <Link
-                onClick={this.props.ResetActionthunk}
-                to="/login"
-                style={{
-                  textDecoration: "none",
-                  color: "#535353",
-                }}
-              >
-                Login
-              </Link>
-            </button>
-            <button>
-              <Link
-                onClick={this.props.ResetActionthunk}
-                to="/registration"
-                style={{
-                  textDecoration: "none",
-                  color: "#535353",
-                }}
-              >
-                Sign Up
-              </Link>
-            </button>
-          </div>
-        )}
+        </div>
+        <div className="right-content-home">
+          <img className="chair-home" src={ChairHome} />
+        </div>
       </div>
     );
   }
@@ -58,5 +45,5 @@ const MaptstatetoProps = (state) => {
 
 export default connect(MaptstatetoProps, {
   LogoutAction,
-  ResetActionthunk
+  ResetActionthunk,
 })(Home);

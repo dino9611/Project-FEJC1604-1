@@ -1,0 +1,35 @@
+.header-bg {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 85%;
+  margin: 3% 7%;
+}
+
+.header-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #052c43;
+}
+
+.header-menu {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+}
+
+.header-menu > a {
+  color: #052c43;
+}
+
+.header-menu > a:hover {
+  color: white;
+}
+
+.normal-link {
+  text-decoration: none;
+}
+
+.normal-link:hover {
+  text-decoration: none;
+}

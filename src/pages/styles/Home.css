@@ -1,0 +1,67 @@
+.home-content {
+  display: flex;
+}
+
+.left-content-home {
+  display: flex;
+  flex-direction: column;
+  background-color: #d4eaf5;
+  justify-content: center;
+  height: 100vh;
+  flex: 1;
+}
+
+.inside-left-content {
+  margin: 0px 13%;
+}
+
+.right-content-home {
+  background-color: #89adc3;
+  flex: 1;
+}
+
+.chair-home {
+  height: 100%;
+  width: 100%;
+}
+
+.fournir-text-1 {
+  font-size: 45px;
+  color: #052c43;
+  margin-bottom: -5px;
+}
+
+.fournir-text-2 {
+  font-size: 45px;
+  font-weight: bold;
+  color: #052c43;
+  margin-bottom: 15px;
+}
+
+.fournir-text-3 {
+  font-size: 20px;
+  color: grey;
+  margin-bottom: 30px;
+}
+
+.btn-collection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #052c43;
+  background-color: white;
+  width: 200px;
+  height: 30%;
+  box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
+  -webkit-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
+  -moz-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
+}
+
+.btn-collection:hover {
+  box-shadow: none;
+}
+
+.normal-link {
+  text-decoration: none;
+}

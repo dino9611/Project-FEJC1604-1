@@ -1,0 +1,146 @@
+:root {
+  --textprimary: #052c43;
+}
+
+.parallax {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 6rem;
+  color: white;
+}
+
+.page-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-2-text-1 {
+  color: grey;
+  margin-top: 5%;
+}
+
+.page-2-text-2 {
+  color: var(--textprimary);
+  font-weight: bold;
+  margin-bottom: 5%;
+}
+
+.card-content {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.render-prod-card {
+  height: 250px;
+  width: 250px;
+  margin: 0 10px;
+  overflow: hidden;
+}
+
+.render-prod-info {
+  margin: 0 10px;
+}
+
+.card-name-text {
+  color: var(--textprimary);
+  letter-spacing: -1px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.card-category-text {
+  color: var(--textprimary);
+  margin-top: -20px;
+}
+
+.card-price-content {
+  margin-top: -10px;
+}
+
+.card-price-text {
+  font-size: 1.2rem;
+  color: var(--textprimary);
+  width: fit-content;
+  letter-spacing: -1px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.pagination-content {
+  margin-top: 10px;
+  margin-bottom: 5%;
+}
+
+.page-number {
+  list-style: none;
+  display: flex;
+}
+
+.page-number li {
+  display: flex;
+  justify-content: center;
+  margin: 5px;
+  width: 45px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--textprimary);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 3px;
+}
+
+.page-number li.active {
+  color: white;
+  background-color: #89adc3;
+  border-color: #89adc3;
+}
+
+.page-number li:hover {
+  color: #89adc3;
+  background-color: #d4eaf5;
+  border-color: #d4eaf5;
+  transition: ease-out 0.3s;
+}
+
+.page-number li button {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.page-number li button:hover {
+  color: #89adc3;
+  background-color: #d4eaf5;
+}
+
+.page-number li button:focus {
+  outline: none;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  background-color: #d4eaf5;
+  height: 90vh;
+}
+
+.footer-1 {
+  display: flex;
+  flex: 5;
+}
+
+.footer-2 {
+  display: flex;
+  flex: 1;
+  background-color: #89adc3;
+}

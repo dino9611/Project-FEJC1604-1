@@ -1,0 +1,140 @@
+.detail-content {
+  display: flex;
+}
+
+.detail-content-1 {
+  display: flex;
+  width: 100%;
+  /* background-color: red; */
+  margin-top: 8%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.image-content {
+  background-color: steelblue;
+}
+
+.image-detail {
+  width: 500px;
+  height: 500px;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  width: 28%;
+}
+
+.detail-info > hr {
+  width: 100%;
+  color: black;
+}
+
+.detail-name {
+  font-size: 2rem;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+.detail-description {
+  font-size: 1.5rem;
+  margin-top: -3%;
+}
+
+.detail-price {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.detail-penjualan {
+  margin-top: 10%;
+}
+
+.detail-ongkir {
+  margin-bottom: -10px;
+}
+
+.detail-quantity {
+  display: flex;
+  width: 85%;
+  height: 10%;
+}
+
+.detail-quantity > p {
+  margin-top: 4%;
+  margin-right: 20%;
+}
+
+.detail-quantity > button {
+  flex: 1;
+  border-width: 0.5px;
+}
+
+.button-minus {
+  background-color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right-color: transparent;
+}
+
+.button-minus > div {
+  margin-top: -15%;
+}
+
+.button-qty {
+  pointer-events: none;
+  background-color: white;
+  border-right-width: 0px;
+  border-left-width: 0px;
+}
+
+.button-plus {
+  background-color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-color: transparent;
+}
+
+.button-plus > div {
+  margin-top: -8%;
+}
+
+.detail-button-cart {
+  display: flex;
+  margin: 2% 0;
+  height: 18%;
+}
+
+.detail-button-cart > button {
+  flex: 1;
+  margin: 5% 0;
+  background-color: #89adc3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2rem;
+  border-style: none;
+}
+
+.detail-button-cart > button > div {
+  margin: 4%;
+}
+
+.detail-button-cart > button > div:first-child {
+  margin-top: 0;
+  font-size: 1.8rem;
+}
