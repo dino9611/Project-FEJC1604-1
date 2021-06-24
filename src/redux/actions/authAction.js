@@ -32,7 +32,7 @@ export const LoginActionThunk = (input) => {
     dispatch({ type: "LOADING" });
     axios
       .post(`${API_URL}/auth/login`, {
-        emailorusername: emailOrUsername,
+        emailOrUsername: emailOrUsername,
         password: password,
       })
       .then((res) => {
@@ -52,8 +52,8 @@ export const LoginActionThunk = (input) => {
 
 export const RegActionThunk = (input) => {
   return (dispatch) => {
-    let { username, password, confirmpass, email, gender } = input;
-    if (!email && !username && !password && !confirmpass && !gender) {
+    let { username, password, confirmPassword, email, gender } = input;
+    if (!email && !username && !password && !confirmPassword && !gender) {
       dispatch({
         type: "ERROR",
         error: "Data must be filled",
@@ -62,7 +62,7 @@ export const RegActionThunk = (input) => {
       let data = {
         username,
         password,
-        confirmpass,
+        confirmPassword,
         email,
         gender,
       };

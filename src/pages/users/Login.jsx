@@ -79,7 +79,7 @@ class Login extends Component {
                     }}
                     value={this.state.emailOrUsername}
                     onChange={this.onInputChange}
-                    type="emailOrUsername"
+                    type="text"
                     name="emailOrUsername"
                     placeholder="Username or email"
                   />
