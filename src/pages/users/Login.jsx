@@ -34,7 +34,7 @@ class Login extends Component {
 
   onLoginSubmit = (e) => {
     e.preventDefault();
-    const { emailOrUsername: emailorusername, password } = this.state;
+    const { emailOrUsername, password } = this.state;
     let data = {
       emailOrUsername: emailOrUsername,
       password: password,
