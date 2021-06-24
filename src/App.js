@@ -7,11 +7,10 @@ import Collection from "./pages/users/Collection";
 import ProductDetail from "./pages/users/ProductDetail";
 import Login from "./pages/users/Login";
 import Registration from "./pages/users/Registration";
+import LoginAdmin from "./pages/admin/Login";
+import HomeAdmin from "./pages/admin/Home";
+import EmailVerification from "./pages/users/EmailVerification";
 import "./App.css";
-import LoginAdmin from './pages/admin/Login';
-import HomeAdmin from './pages/admin/Home';
-
-
 
 class App extends Component {
   render() {
@@ -25,6 +24,7 @@ class App extends Component {
           <Route path="/registration" exact component={Registration} />
           <Route path="/admin/login" component={LoginAdmin} />
           <Route path="/admin/home" component={HomeAdmin} />
+          <Route path="/verified-email/:token" component={EmailVerification} />
         </Switch>
       </div>
     );

@@ -8,6 +8,7 @@ import { LogoutAction, ResetActionthunk } from "../../redux/actions";
 import "../styles/Home.css";
 
 class Home extends Component {
+
   onLogout = (e) => {
     this.props.LogoutAction();
   };
