@@ -1,0 +1,48 @@
+.icon{
+    font-size: 70px;
+}
+
+.back-ground{
+    background-color: #89ADC3;
+    height: 99vh;
+}
+
+.font1{
+    color: white;
+    font-size: 25px;
+}
+.font2{
+    color: #052C43;
+    font-size: 25px;
+}
+
+.icon-position{
+    text-align: center;
+}
+
+.my-profile{
+    font-weight: 650; 
+}
+
+
+.input-width{
+    width: 43%;
+}
+
+.input-border{
+    border-color: #D4EAF5;
+    border-width: 2px;
+}
+
+.photo{
+    border: 2px #89ADC3 solid;
+    border-radius: 50% ;
+    background-color:#D4EAF5 ;
+    height: 200px;
+    width:200px;
+    overflow: auto;
+}
+
+.container-width{
+   width: 50%;
+}

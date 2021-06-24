@@ -14,19 +14,19 @@ import {
     Container
 } from "reactstrap";
 import axios from "axios";
+import Sidebar from '../../component/SideBar';
 
 class AddressList extends Component {
     state = {};
     render() {
         return (
             <div>
-                <Header />
-                <Container>
-                    <h1>Address List</h1>
-                    <Modal>
+                <Sidebar page="address">
 
-                    </Modal>
-                </Container>
+                </Sidebar>
+                <Modal>
+
+                </Modal>
             </div>
         );
     }
