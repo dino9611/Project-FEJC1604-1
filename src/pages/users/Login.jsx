@@ -34,9 +34,9 @@ class Login extends Component {
 
   onLoginSubmit = (e) => {
     e.preventDefault();
-    const { emailOrUsername: emailorusername, password } = this.state;
+    const { emailOrUsername, password } = this.state;
     let data = {
-      emailorusername: emailorusername,
+      emailOrUsername: emailOrUsername,
       password: password,
     };
     this.props.LoginActionThunk(data);
@@ -79,7 +79,7 @@ class Login extends Component {
                     }}
                     value={this.state.emailOrUsername}
                     onChange={this.onInputChange}
-                    type="emailOrUsername"
+                    type="text"
                     name="emailOrUsername"
                     placeholder="Username or email"
                   />
