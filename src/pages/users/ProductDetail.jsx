@@ -4,6 +4,8 @@ import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import "../styles/ProductDetail.css";
+import { connect } from 'react-redux';
+import { CartAction } from '../../redux/actions/authAction';
 
 class ProductDetail extends Component {
   state = {
@@ -18,6 +20,7 @@ class ProductDetail extends Component {
     if (!data) {
       Axios.get(`${API_URL}/product/productDetail/${id}`)
         .then((res) => {
+          console.log(res.data);
           this.setState({ product: res.data });
         })
         .catch((err) => {
@@ -51,7 +54,18 @@ class ProductDetail extends Component {
   };
 
   //======================== Function Add To Cart ( Willy ) ===========================//
-  // addToCart=()=>{}
+  addToCart = () => {
+    if (this.props.dataUser.role !== 1 || this.props.dataUser.islogin === false) {
+      alert('Can not buy!');
+    } else {
+      let users_id = this.props.dataUser.id;
+      let prod_id = this.state.product.product_id;
+      let qty = this.state.qty;
+      let tokenAccess = localStorage.getItem("TA");
+
+
+    }
+  };
 
   render() {
     return (
@@ -87,19 +101,19 @@ class ProductDetail extends Component {
                 <button
                   className="button-minus"
                   onClick={() => this.quantityClick("minus")}
-                  disabled={this.state.qty == 1 ? true : false}
+                  disabled={this.state.qty === 1 ? true : false}
                 >
                   <div>-</div>
                 </button>
                 <button className="button-qty">
-                  {this.state.product.quantity == null ? "0" : this.state.qty}
+                  {this.state.product.quantity === null ? "0" : this.state.qty}
                 </button>
                 <button
                   className="button-plus"
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                    this.state.product.quantity == null
+                      this.state.product.quantity == null
                       ? true
                       : false
                   }
@@ -123,4 +137,10 @@ class ProductDetail extends Component {
   }
 }
 
-export default ProductDetail;
+const mapStateToProps = (state) => {
+  return {
+    dataUser: state.Auth
+  };
+};
+
+export default connect(mapStateToProps, { CartAction })(ProductDetail);

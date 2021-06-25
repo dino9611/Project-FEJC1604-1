@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   sendemail: "",
   islogin: false,
   loading: false,
+  cart: []
 };
 
 const AuthReducers = (state = INITIAL_STATE, action) => {
@@ -29,6 +30,8 @@ const AuthReducers = (state = INITIAL_STATE, action) => {
       return { ...state, loading: true };
     case "RESET":
       return { ...state, error: "", sendemail: "", loading: false };
+    case "UPDATECART":
+      return { ...state, cart: action.cart };
     default:
       return state;
   }
