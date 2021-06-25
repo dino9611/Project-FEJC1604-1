@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../../component/Header";
 import {
   Table,
   Modal,
