@@ -13,6 +13,7 @@ import { API_URL } from "./helper";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import EmailVerification from "./pages/users/EmailVerification";
+import ManageProduct from "./pages/admin/ManageProduct";
 import "./App.css";
 import UserProfile from "./pages/users/UserProfile";
 import AddressList from "./pages/users/Address";
@@ -63,6 +64,7 @@ class App extends Component {
           <Route path="/userprofile" exact component={UserProfile} />
           <Route path="/address" exact component={AddressList} />
           <Route path="/security" exact component={Security} />
+          <Route path="/admin" exact component={ManageProduct} />
         </Switch>
         <ToastContainer />
       </div>

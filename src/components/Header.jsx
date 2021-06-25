@@ -22,13 +22,17 @@ class Header extends Component {
           </Link>
           <a>Cart</a>
           <a>History</a>
-          {this.props.dataUser.islogin ? (
-            <a onClick={this.onLogoutClick}>Logout</a>
-          ) : (
-            <Link to="/login" className="normal-link">
-              <a>Login</a>
-            </Link>
-          )}
+          <div>
+            {this.props.dataUser.islogin ? (
+              <button className="log-button" onClick={this.onLogoutClick}>
+                Logout
+              </button>
+            ) : (
+              <Link to="/login" className="normal-link">
+                <button className="log-button">Login</button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     );
