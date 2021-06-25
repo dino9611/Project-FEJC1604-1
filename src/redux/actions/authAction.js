@@ -79,6 +79,7 @@ export const RegActionThunk = (input) => {
           // dispatch({ type: "LOGIN", payload: res.data });
         })
         .catch((err) => {
+          console.error(err);
           dispatch({ type: "ERROR", error: err.response.data.message });
         });
     }

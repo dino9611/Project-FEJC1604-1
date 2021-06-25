@@ -58,7 +58,7 @@ class LoginAdmin extends Component {
                             type="text"
                             className="form-control my-2"
                             placeholder="email/username"
-                            name="emailorusername"
+                            name="emailOrUsername"
                             onChange={this.onInputChange}
                         />
                         <input
