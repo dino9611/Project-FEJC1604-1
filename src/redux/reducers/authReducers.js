@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   id: 0,
-  emailorusername: "",
+  emailOrUsername: "",
   password: "",
   role: "",
   error: "",
@@ -22,7 +22,7 @@ const AuthReducers = (state = INITIAL_STATE, action) => {
     case "ERROR":
       return { ...state, error: action.error, loading: false };
     case "EMAIL":
-      return { ...state, sendemail: action.mess, loading: false  };
+      return { ...state, sendemail: action.mess, loading: false };
     case "LOGOUT":
       return INITIAL_STATE;
     case "LOADING":

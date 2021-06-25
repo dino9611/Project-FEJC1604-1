@@ -34,10 +34,10 @@ class Login extends Component {
 
   onLoginSubmit = (e) => {
     e.preventDefault();
-    const { emailOrUsername: emailorusername, password } = this.state;
+    const { emailOrUsername, password } = this.state;
     let data = {
-      emailorusername: emailorusername,
-      password: password,
+      emailOrUsername,
+      password,
     };
     this.props.LoginActionThunk(data);
   };

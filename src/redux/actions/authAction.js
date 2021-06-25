@@ -32,8 +32,8 @@ export const LoginActionThunk = (input) => {
     dispatch({ type: "LOADING" });
     axios
       .post(`${API_URL}/auth/login`, {
-        emailorusername: emailOrUsername,
-        password: password,
+        emailOrUsername,
+        password,
       })
       .then((res) => {
         // console.log(res.data);
@@ -52,8 +52,8 @@ export const LoginActionThunk = (input) => {
 
 export const RegActionThunk = (input) => {
   return (dispatch) => {
-    let { username, password, confirmpass, email, gender } = input;
-    if (!email && !username && !password && !confirmpass && !gender) {
+    let { username, password, confirmPassword, email, gender } = input;
+    if (!email && !username && !password && !confirmPassword && !gender) {
       dispatch({
         type: "ERROR",
         error: "Data must be filled",
@@ -62,7 +62,7 @@ export const RegActionThunk = (input) => {
       let data = {
         username,
         password,
-        confirmpass,
+        confirmPassword,
         email,
         gender,
       };
@@ -75,7 +75,7 @@ export const RegActionThunk = (input) => {
           localStorage.setItem("data", JSON.stringify(res.data));
           localStorage.setItem("TA", res.headers["x-token-access"]);
           localStorage.setItem("TR", res.headers["x-token-refresh"]);
-          dispatch({ type: "EMAIL", mess: 'A verification link has been sent to your email account'});
+          dispatch({ type: "EMAIL", mess: 'A verification link has been sent to your email account' });
           // dispatch({ type: "LOGIN", payload: res.data });
         })
         .catch((err) => {
@@ -86,12 +86,12 @@ export const RegActionThunk = (input) => {
 };
 
 export const LoginAdminActionThunk = (input) => {
-  let { emailorusername, password } = input;
+  let { emailOrUsername, password } = input;
   return (dispatch) => {
     dispatch({ type: "LOADING" });
     let data = {
-      emailorusername: emailorusername,
-      password: password,
+      emailOrUsername,
+      password,
     };
     axios
       .post(`${API_URL}/admin/login`, data)

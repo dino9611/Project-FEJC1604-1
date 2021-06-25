@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Offline, Online } from "react-detect-offline";
 import '../styles/adminLogin.css';
 import Loader from "react-loader-spinner";
 import { Form, Button } from 'react-bootstrap';
@@ -13,7 +12,7 @@ class LoginAdmin extends Component {
     state = {
         isVisible: false,
         password: "",
-        emailorusername: ""
+        emailOrUsername: ""
     };
 
     toggle = () => {
@@ -26,8 +25,8 @@ class LoginAdmin extends Component {
 
     onLoginSubmit = (e) => {
         e.preventDefault();
-        const { emailorusername, password } = this.state;
-        if (!emailorusername || !password) {
+        const { emailOrUsername, password } = this.state;
+        if (!emailOrUsername || !password) {
             toast.error('Input can not be empty', {
                 position: "top-right",
                 autoClose: 5000,
@@ -39,7 +38,7 @@ class LoginAdmin extends Component {
             });
         }
         let data = {
-            emailorusername: emailorusername,
+            emailOrUsername: emailOrUsername,
             password: password,
         };
         console.log(data);
