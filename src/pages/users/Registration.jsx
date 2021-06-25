@@ -145,7 +145,7 @@ class Registration extends Component {
                       }}
                       value={this.state.username}
                       onChange={this.onInputChange}
-                      type="username"
+                      type="text"
                       name="username"
                       placeholder="Username"
                     />
