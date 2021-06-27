@@ -1,34 +1,74 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { LogoutAction, ResetActionthunk } from "../redux/actions";
+import { LogoutAction } from "../redux/actions";
+import ModalCH from "./ModalCH";
 import "./styles/Header.css";
 
 class Header extends Component {
-  state = {};
+  state = {
+    isOpenModalCH: false,
+  };
+
+  onLogoutClick = () => {
+    localStorage.removeItem("id");
+    this.props.LogoutAction();
+  };
+
+  onCloseClick = () => {
+    this.setState({ isOpenModalCH: false });
+  };
 
   render() {
     return (
       <div className="header-bg">
-        <Link to="/" className="normal-link">
+        <Link to="/" className="normal-link-header">
           <div className="header-brand">Fournir</div>
         </Link>
         <div className="header-menu">
-          <Link to="/" className="normal-link">
-            <a>Home</a>
-          </Link>
-          <Link to="/collection" className="normal-link">
+          <Link to="/collection" className="normal-link-header">
             <a>Collection</a>
           </Link>
-          <a>Cart</a>
-          <a>History</a>
+
           {this.props.dataUser.islogin ? (
-            <a onClick={this.onLogoutClick}>Logout</a>
-          ) : (
-            <Link to="/login" className="normal-link">
-              <a>Login</a>
+            <Link to="/cart" className="normal-link-header">
+              <a>Cart</a>
             </Link>
+          ) : (
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => this.setState({ isOpenModalCH: true })}
+            >
+              Cart
+            </a>
           )}
+
+          {this.props.dataUser.islogin ? (
+            <Link to="/history" className="normal-link-header">
+              <a>History</a>
+            </Link>
+          ) : (
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={() => this.setState({ isOpenModalCH: true })}
+            >
+              History
+            </a>
+          )}
+
+          <div>
+            {this.props.dataUser.islogin ? (
+              <button className="log-button" onClick={this.onLogoutClick}>
+                LOGOUT
+              </button>
+            ) : (
+              <Link to="/login" className="normal-link-header">
+                <button className="log-button">LOGIN</button>
+              </Link>
+            )}
+          </div>
+
+          <ModalCH open={this.state.isOpenModalCH} close={this.onCloseClick} />
         </div>
       </div>
     );
@@ -41,7 +81,4 @@ const MaptstatetoProps = (state) => {
   };
 };
 
-export default connect(MaptstatetoProps, {
-  LogoutAction,
-  ResetActionthunk,
-})(Header);
+export default connect(MaptstatetoProps, { LogoutAction })(Header);

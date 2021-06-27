@@ -2,12 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Header from "../../components/Header";
 import Axios from "axios";
-import ParallaxImg from "../../images/parallax.jpg";
-import { Parallax } from "react-parallax";
 import { Link } from "react-router-dom";
-import { BsChevronRight, BsChevronLeft } from "react-icons/bs";
+import { BsChevronRight, BsChevronLeft, BsSearch } from "react-icons/bs";
 import { API_URL, currencyFormatter } from "../../helper";
-import "../styles/Collection.css";
+import Loader from "react-loader-spinner";
+import "./../styles/Collection.css";
 
 class Collection extends Component {
   state = {
@@ -21,17 +20,14 @@ class Collection extends Component {
   };
 
   componentDidMount() {
-    Axios.get(`${API_URL}/product/all`)
+    Axios.get(
+      `${API_URL}/product/paging?pages=${this.state.page}&limit=${this.state.limit}`
+    )
       .then((res) => {
-        Axios.get(
-          `${API_URL}/product/paging?pages=${this.state.page}&limit=${this.state.limit}`
-        )
-          .then((res1) => {
-            this.setState({ products: res1.data, totaldata: res.data.length });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        this.setState({
+          products: res.data.dataProduct,
+          totaldata: res.data.totaldata,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +41,7 @@ class Collection extends Component {
       )
         .then((res) => {
           this.setState({
-            products: res.data,
+            products: res.data.dataProduct,
           });
         })
         .catch((err) => {
@@ -102,6 +98,7 @@ class Collection extends Component {
     return this.state.products.map((val, index) => {
       return (
         <Link
+          className="normal-link-collection"
           to={{ pathname: `/productDetail/${val.id}`, state: { product: val } }}
         >
           <div style={{ display: "flex" }} key={index}>
@@ -134,45 +131,73 @@ class Collection extends Component {
   render() {
     return (
       <div>
-        <Parallax bgImage={ParallaxImg} strength={110}>
-          <Header />
-          <div className="parallax">
-            <div className="title">Our Collection</div>
+        {this.props.dataUser.loading ? (
+          <div className="login-loading">
+            <Loader
+              type="ThreeDots"
+              color="#052C43"
+              height={70}
+              width={70}
+              timeout={3000}
+            />
           </div>
-        </Parallax>
-        <div className="page-2">
-          <h5 className="page-2-text-1">Our Product</h5>
-          <h1 className="page-2-text-2">Furniture Collection</h1>
-          <div className="card-content">{this.renderProducts()}</div>
-          <div className="pagination-content">
-            <ul className="page-number">
-              <li>
-                <button
-                  disabled={this.state.page == 1 ? true : false}
-                  onClick={() => this.prevButton()}
-                >
-                  <BsChevronLeft
-                    style={{ fontSize: "20px", color: "#052c43" }}
-                  />
-                </button>
-              </li>
-              {this.renderTotalPage()}
-              <li>
-                <button
-                  disabled={
-                    this.state.page ==
-                    Math.ceil(this.state.totaldata / this.state.limit)
-                      ? true
-                      : false
-                  }
-                  onClick={() => this.nextButton()}
-                >
-                  <BsChevronRight
-                    style={{ fontSize: "20px", color: "#052c43" }}
-                  />
-                </button>
-              </li>
-            </ul>
+        ) : null}
+        <Header />
+        <div className="jumbotron-1-collection">
+          <div className="page-2-collection">
+            <h5 className="page-2-text-1">Our Product</h5>
+            <h1 className="page-2-text-2">Furniture Collection</h1>
+            <div className="filter-content-collection">
+              <div className="filter-dropdown">
+                <p>Total Products {this.state.totaldata}</p>
+              </div>
+              <div className="searchbar-content-collection">
+                <input
+                  className="searchbar-collection"
+                  type="text"
+                  placeholder="Search..."
+                />
+                <BsSearch
+                  style={{
+                    fontSize: "1.5rem",
+                    color: "black",
+                    marginLeft: "4%",
+                    color: "grey",
+                  }}
+                />
+              </div>
+            </div>
+            <div className="card-content">{this.renderProducts()}</div>
+            <div className="pagination-content">
+              <ul className="page-number">
+                <li>
+                  <button
+                    disabled={this.state.page == 1 ? true : false}
+                    onClick={() => this.prevButton()}
+                  >
+                    <BsChevronLeft
+                      style={{ fontSize: "20px", color: "#052c43" }}
+                    />
+                  </button>
+                </li>
+                {this.renderTotalPage()}
+                <li>
+                  <button
+                    disabled={
+                      this.state.page ==
+                      Math.ceil(this.state.totaldata / this.state.limit)
+                        ? true
+                        : false
+                    }
+                    onClick={() => this.nextButton()}
+                  >
+                    <BsChevronRight
+                      style={{ fontSize: "20px", color: "#052c43" }}
+                    />
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
         <div className="footer-content">

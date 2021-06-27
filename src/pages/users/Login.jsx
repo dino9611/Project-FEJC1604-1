@@ -47,7 +47,7 @@ class Login extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <>
+      <div>
         {this.props.dataUser.loading ? (
           <div className="login-loading">
             <Loader
@@ -233,7 +233,7 @@ class Login extends Component {
             <h1>right</h1>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
