@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   sendemail: "",
   islogin: false,
   loading: false,
-  cart: []
+  cart: [],
 };
 
 const AuthReducers = (state = INITIAL_STATE, action) => {

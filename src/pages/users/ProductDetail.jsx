@@ -6,6 +6,9 @@ import { BsFillBagFill } from "react-icons/bs";
 import "../styles/ProductDetail.css";
 import { connect } from 'react-redux';
 import { CartAction } from '../../redux/actions/authAction';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 class ProductDetail extends Component {
   state = {
@@ -20,7 +23,7 @@ class ProductDetail extends Component {
     if (!data) {
       Axios.get(`${API_URL}/product/productDetail/${id}`)
         .then((res) => {
-          console.log(res.data);
+          console.log(res.data, 'ini dari backend');
           this.setState({ product: res.data });
         })
         .catch((err) => {
@@ -30,6 +33,7 @@ class ProductDetail extends Component {
           this.setState({ loading: false });
         });
     } else {
+      console.log(data.product);
       this.setState({ product: data.product, loading: false });
     }
   }
@@ -55,15 +59,50 @@ class ProductDetail extends Component {
 
   //======================== Function Add To Cart ( Willy ) ===========================//
   addToCart = () => {
-    if (this.props.dataUser.role !== 1 || this.props.dataUser.islogin === false) {
-      alert('Can not buy!');
+    if (this.props.dataUser.role === 1) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Admin can't buy product`,
+      });
+    } if (this.props.dataUser.islogin === false) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `You must login first!`,
+      });
     } else {
       let users_id = this.props.dataUser.id;
-      let prod_id = this.state.product.product_id;
+      let prod_id = this.state.product.id;
       let qty = this.state.qty;
       let tokenAccess = localStorage.getItem("TA");
-
-
+      console.log('isi tokenAccess', tokenAccess);
+      let data = {
+        users_id: users_id,
+        prod_id: prod_id,
+        qty: qty
+      };
+      let option = {
+        headers: {
+          Authorization: 'Bearer ' + tokenAccess
+        }
+      };
+      axios.post(`${API_URL}/transaction/cart`, data, option)
+        .then((res) => {
+          console.log(res.data);
+          toast.success('Product added to cart', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }).catch((error) => {
+          console.error('line 103', error);
+          // alert(error.response.data.message);
+        });
     }
   };
 

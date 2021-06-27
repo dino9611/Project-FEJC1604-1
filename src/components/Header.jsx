@@ -20,7 +20,9 @@ class Header extends Component {
           <Link to="/collection" className="normal-link">
             <a>Collection</a>
           </Link>
-          <a>Cart</a>
+          <Link to="/cart" className="normal-link">
+            <a>Cart</a>
+          </Link>
           <a>History</a>
           {this.props.dataUser.islogin ? (
             <a onClick={this.onLogoutClick}>Logout</a>

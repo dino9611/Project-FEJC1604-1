@@ -19,6 +19,7 @@ import AddressList from "./pages/users/Address";
 import Security from "./pages/users/Security";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Cart from './pages/users/Cart';
 
 class App extends Component {
   state = {
@@ -34,7 +35,7 @@ class App extends Component {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.props.LoginAction(res.data);
       })
       .catch((err) => {
@@ -54,6 +55,7 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/collection" exact component={Collection} />
+          <Route path="/cart" component={Cart} />
           <Route path="/productDetail/:id" exact component={ProductDetail} />
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />
