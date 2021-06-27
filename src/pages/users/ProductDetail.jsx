@@ -7,7 +7,6 @@ import "../styles/ProductDetail.css";
 import { connect } from 'react-redux';
 import { CartAction } from '../../redux/actions/authAction';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
 class ProductDetail extends Component {
@@ -18,8 +17,10 @@ class ProductDetail extends Component {
   };
 
   componentDidMount() {
+    console.log('ini dataUser', this.props.dataUser);
     let id = this.props.match.params.id;
     let data = this.props.location.state;
+    console.log(data);
     if (!data) {
       Axios.get(`${API_URL}/product/productDetail/${id}`)
         .then((res) => {
@@ -33,7 +34,7 @@ class ProductDetail extends Component {
           this.setState({ loading: false });
         });
     } else {
-      console.log(data.product);
+      console.log('isi data.product', data.product);
       this.setState({ product: data.product, loading: false });
     }
   }
@@ -59,17 +60,23 @@ class ProductDetail extends Component {
 
   //======================== Function Add To Cart ( Willy ) ===========================//
   addToCart = () => {
-    if (this.props.dataUser.role === 1) {
+    if (this.props.dataUser.islogin === false) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `You must login first!`,
+      });
+    } if (this.props.dataUser.role != 1) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: `Admin can't buy product`,
       });
-    } if (this.props.dataUser.islogin === false) {
+    } if (this.props.dataUser.is_verified === 0) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `You must login first!`,
+        text: `Please verify your account`,
       });
     } else {
       let users_id = this.props.dataUser.id;
@@ -87,15 +94,16 @@ class ProductDetail extends Component {
           Authorization: 'Bearer ' + tokenAccess
         }
       };
-      axios.post(`${API_URL}/transaction/cart`, data, option)
+      Axios.post(`${API_URL}/transaction/cart`, data, option)
         .then((res) => {
-          console.log(res.data);
+          console.log('isi dari res.data', res.data);
+          this.props.CartAction(res.data);
           toast.success('Product added to cart', {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
-            pauseOnHover: true,
+            pauseOnHover: false,
             draggable: true,
             progress: undefined,
           });

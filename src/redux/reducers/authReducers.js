@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   islogin: false,
   loading: false,
   cart: [],
+  is_verified: 0
 };
 
 const AuthReducers = (state = INITIAL_STATE, action) => {

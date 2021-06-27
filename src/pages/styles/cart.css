@@ -1,0 +1,64 @@
+.cart-background{
+    background-color:#89AEC2 ;
+    height: 40vh;
+}
+
+.section-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 55vh;
+
+}
+
+.title-top{
+font-size: 6rem;
+color: white;
+}
+
+.table-margin{
+margin-top: 100px;
+
+}
+
+.edit-btn{
+    color: #052C43;
+}
+
+.delete-btn{
+    color: red;
+    margin-left: 15px;
+}
+
+.checkout-btn{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+}
+
+.modal-btn1{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+.modal-btn2{
+    background-color:gray ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 10px 20px;
+}

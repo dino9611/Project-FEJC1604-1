@@ -17,7 +17,7 @@ import "./App.css";
 import UserProfile from "./pages/users/UserProfile";
 import AddressList from "./pages/users/Address";
 import Security from "./pages/users/Security";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from './pages/users/Cart';
 
