@@ -1,13 +1,13 @@
 .cart-background{
     background-color:#89AEC2 ;
-    height: 40vh;
+    height: 30vh;
 }
 
 .section-content{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 55vh;
+    height: 40vh;
 
 }
 

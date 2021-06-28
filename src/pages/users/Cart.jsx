@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import '../styles/cart.css';
 import { CartAction } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { Table, Container, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import { Table, Container, Modal, ModalBody, ModalHeader, ModalFooter, Collapse } from 'reactstrap';
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import axios from 'axios';
@@ -20,7 +20,7 @@ class Cart extends Component {
         modalVisible: false,
         stockByProduct: 0,
         qtyInput: 0,
-        ordersdetail_id: 0
+        ordersdetail_id: 0,
     };
 
     componentDidMount() {
@@ -124,7 +124,7 @@ class Cart extends Component {
                     <td className="text-center">{index + 1}</td>
                     <td>{val.name}</td>
                     <td>
-                        <img src={val.image} alt={val.name} width="200px" height="150px" />
+                        <img src={API_URL + val.image} alt={val.name} width="200px" height="150px" />
                     </td>
                     <td className="text-center">{currencyFormatter(val.price)}</td>
                     <td className="text-center">{val.qty}</td>
@@ -173,6 +173,7 @@ class Cart extends Component {
                         <button className="modal-btn2" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
+
                 <div className="cart-background">
                     <Header />
                     <div className="section-content">
