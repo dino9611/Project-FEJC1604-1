@@ -1,0 +1,57 @@
+body {
+  background-color: #f5f5f5;
+}
+
+.transaction-container {
+  height: 100Vh;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 7%;
+  margin-top: 3%;
+}
+
+.transaction-content {
+  display: flex;
+}
+
+.transaction-content-left {
+  flex: 1;
+  /* background-color: red; */
+}
+
+.transaction-content-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* background-color: red; */
+}
+
+.transaction-text-1{
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.transaction-show {
+  font-size: 17px;
+  margin-right: 20px;
+  font-weight: 500;
+  color: rgb(117, 117, 117);
+}
+
+.transaction-text-2 {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.transaction-text-3 {
+  font-size: 18px;
+  margin: 10;
+  font-weight: 500;
+  color: rgb(175, 175, 175);
+}
+
+.transaction-button-detail {
+  font-size: 13px;
+  font-weight: bold;
+}

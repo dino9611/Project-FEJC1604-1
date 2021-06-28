@@ -86,11 +86,11 @@ export const RegActionThunk = (input) => {
 };
 
 export const LoginAdminActionThunk = (input) => {
-  let { emailorusername, password } = input;
+  let { emailOrUsername, password } = input;
   return (dispatch) => {
     dispatch({ type: "LOADING" });
     let data = {
-      emailorusername: emailorusername,
+      emailOrUsername: emailOrUsername,
       password: password,
     };
     axios
