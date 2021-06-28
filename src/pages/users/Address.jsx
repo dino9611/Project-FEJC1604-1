@@ -10,6 +10,7 @@ import axios from "axios";
 import Sidebar from "../../components/SideBar";
 import { API_URL } from "../../helper";
 import { connect } from "react-redux";
+import Swal from 'sweetalert2';
 class AddressList extends Component {
   state = {
     addAddress: {
@@ -55,7 +56,7 @@ class AddressList extends Component {
             )}{" "}
           </td>
           <td className="text-center">
-            <button className="button-delete">
+            <button className="button-cancel" onClick={() => this.onDeleteClick(index)}>
               Delete
             </button>
           </td>
@@ -64,8 +65,37 @@ class AddressList extends Component {
     });
   };
 
+  onDeleteClick = (index) => {
+    let alamat = this.state.addresses;
+    Swal.fire({
+      title: `Are you sure want to delete ${alamat[index].address} ?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let address_id = alamat[index].id;
+        let tokenAccess = localStorage.getItem("TA");
+        axios.delete(`${API_URL}/auth/address/delete/${address_id}/${this.props.Auth.id}`)
+          .then((res) => {
+            this.setState({ addresses: res.data });
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            );
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
+    });
+  };
+
   onDefaultClick = (index) => {
-    console.log(index);
+
   };
 
   onInputChange = (e) => {

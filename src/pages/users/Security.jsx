@@ -1,7 +1,4 @@
 import React, { Component } from "react";
-import { API_URL } from "../../helper";
-import axios from "axios";
-import { connect } from "react-redux";
 import "../styles/userProfile.css";
 import Sidebar from "../../components/SideBar";
 
