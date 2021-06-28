@@ -5,17 +5,12 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  InputGroup,
-  Button as ButtonStrap,
-  Pagination,
-  PaginationItem,
-  CustomInput,
-  Container,
 } from "reactstrap";
 import axios from "axios";
 import Sidebar from "../../components/SideBar";
 import { API_URL } from "../../helper";
 import { connect } from "react-redux";
+import Swal from 'sweetalert2';
 class AddressList extends Component {
   state = {
     addAddress: {
@@ -32,7 +27,7 @@ class AddressList extends Component {
     axios
       .get(`${API_URL}/auth/address/${this.props.Auth.id}`)
       .then((res) => {
-        console.log(res.data);
+        console.log('isi res.data', res.data);
         this.setState({ addresses: res.data });
       })
       .catch((err) => {
@@ -47,22 +42,84 @@ class AddressList extends Component {
           key={index}
           style={{ backgroundColor: val.is_default == 1 ? "#D4EAF5" : "white" }}
         >
-          <td>{index + 1}</td>
+          <td className="text-center">{index + 1}</td>
           <td>{val.address}</td>
-          <td>{val.city}</td>
-          <td>{val.zip}</td>
+          <td className="text-center">{val.city}</td>
+          <td className="text-center">{val.zip}</td>
           <td>{val.description}</td>
-          <td>
+          <td className="text-center">
             {" "}
             {val.is_default ? (
               "Default"
             ) : (
-              <button className="button-second">Make Default</button>
+              <button className="button-second" onClick={() => this.onDefaultClick(index)}>Make Default</button>
             )}{" "}
           </td>
-          <td>Delete</td>
+          <td className="text-center">
+            <button className="button-cancel" onClick={() => this.onDeleteClick(index)}>
+              Delete
+            </button>
+          </td>
         </tr>
       );
+    });
+  };
+
+  onDeleteClick = (index) => {
+    let alamat = this.state.addresses;
+    Swal.fire({
+      title: `Are you sure want to delete ${alamat[index].address} ?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let address_id = alamat[index].id;
+        let tokenAccess = localStorage.getItem("TA");
+        axios.delete(`${API_URL}/auth/address/delete/${address_id}/${this.props.Auth.id}`)
+          .then((res) => {
+            this.setState({ addresses: res.data });
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            );
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
+    });
+  };
+
+  onDefaultClick = (index) => {
+    console.log(index);
+    const address_id = this.state.addresses[index].id;
+    const users_id = this.props.Auth.id;
+    Swal.fire({
+      title: `Are you sure want to make detault ${this.state.addresses[index].address} ?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, make default'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post(`${API_URL}/auth/defaultaddress/${address_id}/${users_id}`)
+          .then((res) => {
+            this.setState({ addresses: res.data });
+            Swal.fire(
+              'Success!',
+              'Address updated.',
+              'success'
+            );
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
     });
   };
 
@@ -181,8 +238,8 @@ class AddressList extends Component {
         <Sidebar page="address">
           <Table>
             <thead>
-              <tr>
-                <th>#</th>
+              <tr className="text-center">
+                <th>No</th>
                 <th>Address</th>
                 <th>City</th>
                 <th>ZIP</th>

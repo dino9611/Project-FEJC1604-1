@@ -1,6 +1,13 @@
 import { API_URL } from "../../helper";
 import axios from "axios";
 
+export const CartAction = (input) => {
+  return {
+    type: "UPDATECART",
+    cart: input,
+  };
+};
+
 export const LoginAction = (input) => {
   return {
     type: "LOGIN",
@@ -75,10 +82,14 @@ export const RegActionThunk = (input) => {
           localStorage.setItem("data", JSON.stringify(res.data));
           localStorage.setItem("TA", res.headers["x-token-access"]);
           localStorage.setItem("TR", res.headers["x-token-refresh"]);
-          dispatch({ type: "EMAIL", mess: 'A verification link has been sent to your email account'});
+          dispatch({
+            type: "EMAIL",
+            mess: "A verification link has been sent to your email account",
+          });
           // dispatch({ type: "LOGIN", payload: res.data });
         })
         .catch((err) => {
+          console.error(err);
           dispatch({ type: "ERROR", error: err.response.data.message });
         });
     }

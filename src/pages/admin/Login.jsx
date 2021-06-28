@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Offline, Online } from "react-detect-offline";
 import '../styles/adminLogin.css';
 import Loader from "react-loader-spinner";
 import { Form, Button } from 'react-bootstrap';

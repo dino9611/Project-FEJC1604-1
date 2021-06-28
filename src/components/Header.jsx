@@ -30,6 +30,10 @@ class Header extends Component {
             <a>Collection</a>
           </Link>
 
+          <Link to="/cart" className="normal-link">
+            <a>Cart</a>
+          </Link>
+          <a>History</a>
           {this.props.dataUser.islogin ? (
             <Link to="/cart" className="normal-link-header">
               <a>Cart</a>

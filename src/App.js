@@ -40,7 +40,7 @@ class App extends Component {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.props.LoginAction(res.data);
       })
       .catch((err) => {
@@ -62,6 +62,7 @@ class App extends Component {
           <Route path="/cart" exact component={Cart} />
           <Route path="/history" exact component={History} />
           <Route path="/collection" exact component={Collection} />
+          <Route path="/cart" component={Cart} />
           <Route path="/productDetail/:id" exact component={ProductDetail} />
           <Route path="/login" exact component={Login} />
           <Route path="/registration" exact component={Registration} />

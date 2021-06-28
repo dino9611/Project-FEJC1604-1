@@ -85,3 +85,14 @@
 .link:hover{
     text-decoration: none;
 }
+
+.button-delete{
+    background-color:#052C43;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+}
