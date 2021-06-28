@@ -3,7 +3,7 @@ import Header from '../../components/Header';
 import '../styles/cart.css';
 import { CartAction } from '../../redux/actions';
 import { connect } from 'react-redux';
-import { Table, Container, Modal, ModalBody, ModalHeader, ModalFooter, Collapse } from 'reactstrap';
+import { Table, Container, Modal, ModalBody, ModalHeader, ModalFooter, Collapse, Card, CardBody } from 'reactstrap';
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import axios from 'axios';
@@ -21,11 +21,18 @@ class Cart extends Component {
         stockByProduct: 0,
         qtyInput: 0,
         ordersdetail_id: 0,
+        addresses: [],
+        isOpen: false
     };
 
     componentDidMount() {
-        // * get data products
-        console.log('ini line 24', this.props.dataUser);
+        axios.get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
+            .then((res) => {
+                console.log('ini res.data', res.data);
+                this.setState({ addresses: res.data });
+            }).catch((error) => {
+                console.error(error);
+            });
     }
 
     toggle = () => {
@@ -151,7 +158,23 @@ class Cart extends Component {
     };
 
     renderAddress = () => {
+        return this.state.addresses.map((val, index) => {
+            return (
+                <p>
+                    {val.address}
+                    <br />
+                    {val.zip}
+                    <br />
+                    {val.city}
+                </p>
 
+            );
+        });
+
+    };
+
+    isOpen = () => {
+        this.setState({ isOpen: !this.state.isOpen });
     };
 
     render() {
@@ -176,7 +199,6 @@ class Cart extends Component {
                         <button className="modal-btn2" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
-
                 <div className="cart-background">
                     <Header />
                     <div className="section-content">
@@ -184,6 +206,18 @@ class Cart extends Component {
                     </div>
                 </div>
                 <Container>
+                    <h3 style={{ marginTop: "35px" }}>Alamat Tujuan:</h3>
+                    {this.renderAddress()}
+                    <Collapse >
+                        <Card>
+                            <CardBody>
+                                Anim pariatur cliche reprehenderit,
+                                enim eiusmod high life accusamus terry richardson ad squid. Nihil
+                                anim keffiyeh helvetica, craft beer labore wes anderson cred
+                                nesciunt sapiente ea proident.
+                            </CardBody>
+                        </Card>
+                    </Collapse>
                     <Table bordered hover className="table-margin">
                         <tr className="text-center">
                             <th>No</th>

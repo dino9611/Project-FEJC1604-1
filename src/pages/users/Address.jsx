@@ -95,7 +95,32 @@ class AddressList extends Component {
   };
 
   onDefaultClick = (index) => {
-
+    console.log(index);
+    const address_id = this.state.addresses[index].id;
+    const users_id = this.props.Auth.id;
+    Swal.fire({
+      title: `Are you sure want to make detault ${this.state.addresses[index].address} ?`,
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, make default'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post(`${API_URL}/auth/defaultaddress/${address_id}/${users_id}`)
+          .then((res) => {
+            this.setState({ addresses: res.data });
+            Swal.fire(
+              'Success!',
+              'Address updated.',
+              'success'
+            );
+          }).catch((error) => {
+            console.error(error);
+          });
+      }
+    });
   };
 
   onInputChange = (e) => {
