@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import Header from "../../components/Header";
 import {
   Table,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  InputGroup,
-  Button as ButtonStrap,
-  Pagination,
-  PaginationItem,
-  CustomInput,
-  Container,
 } from "reactstrap";
 import axios from "axios";
 import Sidebar from "../../components/SideBar";
@@ -33,7 +26,7 @@ class AddressList extends Component {
     axios
       .get(`${API_URL}/auth/address/${this.props.Auth.id}`)
       .then((res) => {
-        console.log(res.data);
+        console.log('isi res.data', res.data);
         this.setState({ addresses: res.data });
       })
       .catch((err) => {
@@ -48,23 +41,31 @@ class AddressList extends Component {
           key={index}
           style={{ backgroundColor: val.is_default == 1 ? "#D4EAF5" : "white" }}
         >
-          <td>{index + 1}</td>
+          <td className="text-center">{index + 1}</td>
           <td>{val.address}</td>
-          <td>{val.city}</td>
-          <td>{val.zip}</td>
+          <td className="text-center">{val.city}</td>
+          <td className="text-center">{val.zip}</td>
           <td>{val.description}</td>
-          <td>
+          <td className="text-center">
             {" "}
             {val.is_default ? (
               "Default"
             ) : (
-              <button className="button-second">Make Default</button>
+              <button className="button-second" onClick={() => this.onDefaultClick(index)}>Make Default</button>
             )}{" "}
           </td>
-          <td>Delete</td>
+          <td className="text-center">
+            <button className="button-delete">
+              Delete
+            </button>
+          </td>
         </tr>
       );
     });
+  };
+
+  onDefaultClick = (index) => {
+    console.log(index);
   };
 
   onInputChange = (e) => {
@@ -182,8 +183,8 @@ class AddressList extends Component {
         <Sidebar page="address">
           <Table>
             <thead>
-              <tr>
-                <th>#</th>
+              <tr className="text-center">
+                <th>No</th>
                 <th>Address</th>
                 <th>City</th>
                 <th>ZIP</th>
