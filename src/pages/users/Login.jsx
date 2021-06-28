@@ -50,7 +50,7 @@ class Login extends Component {
       <div>
         {this.props.dataUser.loading ? (
           <div className="login-loading">
-            <Loader
+            <LoaderComp
               type="ThreeDots"
               color="#052C43"
               height={70}

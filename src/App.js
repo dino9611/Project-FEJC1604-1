@@ -18,18 +18,12 @@ import HomeAdmin from "./pages/admin/Home";
 import AdminTransaction from "./pages/admin/Transaction";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
-import EmailVerification from "./pages/users/EmailVerification";
 import ManageProduct from "./pages/admin/ManageProduct";
 import "./App.css";
-import UserProfile from "./pages/users/UserProfile";
-import AddressList from "./pages/users/Address";
-import Security from "./pages/users/Security";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
 import History from "./pages/users/History";
-import Login from "./pages/users/Login";
-import Registration from "./pages/users/Registration";
+
 import "./App.css";
 
 class App extends Component {
