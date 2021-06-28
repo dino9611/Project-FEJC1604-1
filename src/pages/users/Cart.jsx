@@ -17,7 +17,6 @@ class Cart extends Component {
         modal: false,
         loading: false,
         productName: "",
-        modalVisible: false,
         stockByProduct: 0,
         qtyInput: 0,
         ordersdetail_id: 0,
@@ -27,11 +26,15 @@ class Cart extends Component {
             city: "",
             zip: "",
         },
-        modalAddress: false
+        modalVisible: false,
+        modalAddress: false,
+        modalPayment: false,
+        banks: [],
+        pilihanId: 0
     };
 
     componentDidMount() {
-        // console.log(this.props.dataUser);
+        console.log('ini dataUser', this.props.dataUser);
         axios.get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
             .then((res) => {
                 console.log('ini addresses', res.data);
@@ -40,21 +43,29 @@ class Cart extends Component {
             }).catch((error) => {
                 console.error(error);
             });
+        axios.get(`${API_URL}/transaction/bank`)
+            .then((res) => {
+                // console.log('ini bank', res.data);
+                this.setState({ banks: res.data });
+                console.log('banks', this.state.banks);
+            }).catch((error) => {
+                console.error('ini error', error);
+            });
     }
-
-    toggleAddress = () => {
-        this.setState({ modalAddress: !this.state.modalAddress });
-    };
 
     toggle = () => {
         this.setState({ modalVisible: !this.state.modalVisible, qtyInput: 0, productName: "", ordersdetail_id: 0 });
+    };
+
+    toggleAddress = () => {
+        this.setState({ modalAddress: !this.state.modalAddress });
     };
 
     toggleEdit = async (val) => {
         // pas klik edit nge get data availableToUser untuk barang tersebut
         try {
             const prod_id = val.product_id;
-            const result = await axios.get(`${API_URL}/transaction/stockbyproduct/${prod_id}`);
+            const result = await axios.get(`${API_URL} / transaction / stockbyproduct / ${prod_id}`);
             this.setState({
                 stockByProduct: result.data.availableToUser,
                 productName: val.name,
@@ -66,6 +77,10 @@ class Cart extends Component {
             console.error(error);
         }
 
+    };
+
+    togglePayment = () => {
+        this.setState({ modalPayment: !this.state.modalPayment });
     };
 
     updateQtyClick = () => {
@@ -87,7 +102,7 @@ class Cart extends Component {
                 progress: undefined,
             });
         } else {
-            axios.patch(`${API_URL}/transaction/editqty`, data)
+            axios.patch(`${API_URL} / transaction / editqty`, data)
                 .then((res) => {
                     this.props.CartAction(res.data);
                     this.toggle();
@@ -118,7 +133,7 @@ class Cart extends Component {
             if (result.isConfirmed) {
                 let ordersdetail_id = this.props.dataUser.cart[index].ordersdetail_id;
                 let users_id = this.props.dataUser.id;
-                axios.delete(`${API_URL}/transaction/deletecart/${ordersdetail_id}/${users_id}`, option)
+                axios.delete(`${API_URL} / transaction / deletecart / ${ordersdetail_id} / ${users_id}`, option)
                     .then((res) => {
                         this.props.CartAction(res.data);
                         Swal.fire(
@@ -198,7 +213,7 @@ class Cart extends Component {
     selectAddressClick = (index) => {
         // ketika tekan select akan mengubah this.state.selected_address dengan this.state.addresses[index]
         this.setState({ selected_address: this.state.addresses[index], modalAddress: !this.state.modalAddress });
-        toast.dark('Address Successfuly Changed', {
+        toast.dark('Address successfuly changed', {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -208,6 +223,61 @@ class Cart extends Component {
             progress: undefined,
             transition: Slide
         });
+
+    };
+
+    renderBanks = () => {
+        return this.state.banks.map((val, index) => {
+            return (
+                <label key={index} className="mx-2">
+                    <input
+                        type="radio"
+                        name="pilihanId"
+                        onChange={this.onInputChange}
+                        checked={this.state.pilihanId == val.id}
+                        value={val.id}
+                        className="mr-2"
+                    />
+                    {val.name}: {val.account_number}
+                </label>
+            );
+        });
+    };
+
+    checkOutClick = () => {
+        const users_id = this.props.dataUser.id;
+        const address_id = this.state.selected_address.id;
+        const bank_id = this.state.pilihanId;
+        if (!bank_id) {
+            alert('harus di isi');
+        } else {
+            let body = {
+                bank_id: bank_id,
+                address_id: address_id,
+                users_id: users_id
+            };
+            let tokenAccess = localStorage.getItem("TA");
+            let options = {
+                header: {
+                    Authorization: "Bearer " + tokenAccess
+                }
+            };
+            axios.post(`${API_URL}/transaction/checkout`, body)
+                .then((res) => {
+                    this.setState({ modalPayment: !this.state.modalPayment });
+                    this.props.CartAction(res.data);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Your work has been saved',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }).catch((error) => {
+                    console.error(error);
+                });
+        }
+
     };
 
     render() {
@@ -233,7 +303,7 @@ class Cart extends Component {
                         <button className="modal-btn2" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
-                {/* Modal Address */}
+                {/* Modal Choose Address */}
                 <Modal isOpen={this.state.modalAddress} toggle={this.toggleAddress} centered >
                     <ModalHeader className="modaladd-font">
                         Select Shipment Address
@@ -242,8 +312,27 @@ class Cart extends Component {
                         {this.addressOption()}
                     </ModalBody>
                 </Modal>
-                <Modal>
-                    <ModalHeader>Payment</ModalHeader>
+                {/* Modal Payment */}
+                <Modal isOpen={this.state.modalPayment} toggle={this.togglePayment} centered>
+                    <ModalHeader>Payment Method</ModalHeader>
+                    <ModalBody>
+                        <div style={{ display: "flex" }}>
+                            <div style={{ flex: 1 }}>
+                                Your Total Payment:
+                            </div>
+                            <div style={{ flex: 1 }}>
+                                {currencyFormatter(this.renderTotal())}
+                            </div>
+                        </div>
+                        <br />
+                        <div>
+                            {this.renderBanks()}
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className="modal-btn1" onClick={this.checkOutClick}>Check Out</button>
+                        <button className="modal-btn2" onClick={this.togglePayment}>Cancel</button>
+                    </ModalFooter>
                 </Modal>
                 <div className="cart-background">
                     <Header />
@@ -293,9 +382,7 @@ class Cart extends Component {
                             </tr>
                         </tbody>
                     </Table>
-                    {/* <Link to='/checkout'> */}
-                    <button className="checkout-btn">Choose Payment</button>
-                    {/* </Link> */}
+                    <button className="checkout-btn" onClick={this.togglePayment}>Choose Payment</button>
                 </Container>
             </div >
         );
@@ -308,4 +395,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { CartAction })(Cart);
+export default connect(mapStateToProps, { CartAction })(Cart);;
