@@ -17,7 +17,7 @@
   color: #052c43;
   background-color: red;
   margin-top: -5%;
-  margin-left: 105%;
+  margin-left: 94%;
 }
 
 .header-menu {
@@ -25,10 +25,11 @@
   align-items: center;
   justify-content: space-between;
   margin-right: 10%;
-  width: 40%;
+  width: 30%;
 }
 
 .header-menu > a {
+  font-weight: bold;
   color: #052c43;
   position: relative;
   transition: transform 300ms ease-in-out;
@@ -60,6 +61,29 @@
 }
 
 .log-button {
+}
+
+.header-menu > a:hover:after {
+  color: #052c43;
+  width: 100%;
+}
+
+.normal-link-header:hover {
+  color: #052c43;
+  text-decoration: none !important;
+}
+
+.log-button {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  background-color: #052c43;
+  width: 180%;
+  height: 40px;
+  border-style: none;
+}
+
+.log-button:hover {
   text-decoration: none;
   color: white;
   font-weight: bold;

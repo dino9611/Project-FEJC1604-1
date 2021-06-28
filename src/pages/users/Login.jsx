@@ -47,9 +47,24 @@ class Login extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <>
-        {this.props.dataUser.loading ? <LoaderComp /> : null}
-        <div className="login-content">
+      <div>
+        {this.props.dataUser.loading ? (
+          <div className="login-loading">
+            <Loader
+              type="ThreeDots"
+              color="#052C43"
+              height={70}
+              width={70}
+              timeout={3000}
+            />
+          </div>
+        ) : null}
+
+        <div
+          className={
+            this.props.dataUser.loading ? "login-content-off" : "login-content"
+          }
+        >
           <div className="left-content-login">
             <div className="login-form">
               <h1 className="login-text-1">Login to Fournir</h1>
@@ -218,7 +233,7 @@ class Login extends Component {
             <img alt="bg-login" />
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

@@ -1,5 +1,27 @@
+:root {
+  --textprimary: #052c43;
+}
+
 .home-content {
   display: flex;
+  flex-direction: column;
+}
+
+.jumbotron-one-home {
+  display: flex;
+}
+
+.jumbotron-two-home {
+  display: flex;
+  justify-content: center;
+  padding: 0 0.4%;
+}
+
+.jumbotron-three-home {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .left-content-home {
@@ -11,7 +33,7 @@
   flex: 1;
 }
 
-.inside-left-content {
+.inside-left-content-home {
   margin: 0px 13%;
 }
 
@@ -25,26 +47,26 @@
   width: 100%;
 }
 
-.fournir-text-1 {
+.fournir-text-1-home {
   font-size: 45px;
   color: #052c43;
   margin-bottom: -5px;
 }
 
-.fournir-text-2 {
+.fournir-text-2-home {
   font-size: 45px;
   font-weight: bold;
   color: #052c43;
   margin-bottom: 15px;
 }
 
-.fournir-text-3 {
+.fournir-text-3-home {
   font-size: 20px;
   color: grey;
   margin-bottom: 30px;
 }
 
-.btn-collection {
+.btn-collection-home {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,10 +80,64 @@
   -moz-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
 }
 
-.btn-collection:hover {
+.btn-collection-home:hover {
   box-shadow: none;
 }
 
-.normal-link {
-  text-decoration: none;
+.normal-link-home {
+  text-decoration: none !important;
+}
+
+.card-content-home {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 3.5%;
+  margin: 1% 0.5%;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: #89adc349;
+}
+
+.bg-image-home {
+  background: #89adc3;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  border-radius: 50%;
+  padding: 15px;
+  margin-bottom: 6%;
+}
+
+.card-judul-home {
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 2%;
+  color: #052c43;
+}
+
+.card-text-home {
+  color: grey;
+}
+
+.parallax-home {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-home {
+  font-size: 6rem;
+  color: white;
+}
+
+.three-one-home {
+  color: var(--textprimary);
+  margin-top: 3%;
+}
+
+.three-two-home {
+  font-weight: bold;
+  color: var(--textprimary);
 }

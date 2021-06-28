@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Header from "../../components/Header";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
+import Loader from "react-loader-spinner";
 import "../styles/ProductDetail.css";
 
 class ProductDetail extends Component {
@@ -56,6 +58,17 @@ class ProductDetail extends Component {
   render() {
     return (
       <div>
+        {this.props.dataUser.loading ? (
+          <div className="login-loading">
+            <Loader
+              type="ThreeDots"
+              color="#052C43"
+              height={70}
+              width={70}
+              timeout={3000}
+            />
+          </div>
+        ) : null}
         <Header />
         <div className="detail-content">
           <div className="detail-content-1">
@@ -107,6 +120,12 @@ class ProductDetail extends Component {
                   <div>+</div>
                 </button>
               </div>
+              <div className="stockinfo-detailp">
+                Stock available &nbsp;
+                {this.state.product.quantity > 0
+                  ? this.state.product.quantity
+                  : 0}
+              </div>
               <div className="detail-button-cart">
                 <button onClick={this.addToCart}>
                   <div>
@@ -123,4 +142,10 @@ class ProductDetail extends Component {
   }
 }
 
-export default ProductDetail;
+const MaptstatetoProps = (state) => {
+  return {
+    dataUser: state.Auth,
+  };
+};
+
+export default connect(MaptstatetoProps)(ProductDetail);
