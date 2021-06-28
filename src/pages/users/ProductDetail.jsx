@@ -60,23 +60,28 @@ class ProductDetail extends Component {
 
   //======================== Function Add To Cart ( Willy ) ===========================//
   addToCart = () => {
+    console.log(this.props.dataUser);
     if (this.props.dataUser.islogin === false) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: `You must login first!`,
       });
-    } if (this.props.dataUser.role != 1) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: `Admin can't buy product`,
-      });
-    } if (this.props.dataUser.is_verified === 0) {
+      return;
+    }
+    if (this.props.dataUser.is_verified === 0) {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: `Please verify your account`,
+      });
+      return;
+    }
+    if (this.props.dataUser.role != 1) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: `Admin can't buy product`,
       });
     } else {
       let users_id = this.props.dataUser.id;

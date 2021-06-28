@@ -9,28 +9,75 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
 
 
 class Cart extends Component {
     state = {
         modal: false,
-        stockWarehouse: [],
         loading: false,
-        products: [],
-        modalVisible: false
+        productName: "",
+        modalVisible: false,
+        stockByProduct: 0,
+        qtyInput: 0,
+        ordersdetail_id: 0
     };
 
     componentDidMount() {
         // * get data products
-        console.log('ini line 24', this.props.dataUser.cart);
+        console.log('ini line 24', this.props.dataUser);
     }
 
     toggle = () => {
-        this.setState({ modalVisible: !this.state.modalVisible });
+        this.setState({ modalVisible: !this.state.modalVisible, qtyInput: 0, productName: "", ordersdetail_id: 0 });
     };
 
-    editItemClick = (index) => {
-        console.log(index);
+    toggleEdit = async (val) => {
+        // pas klik edit nge get data availableToUser untuk barang tersebut
+        try {
+            const prod_id = val.product_id;
+            const result = await axios.get(`${API_URL}/transaction/stockbyproduct/${prod_id}`);
+            this.setState({
+                stockByProduct: result.data.availableToUser,
+                productName: val.name,
+                modalVisible: !this.state.modalVisible,
+                qtyInput: val.qty,
+                ordersdetail_id: val.ordersdetail_id
+            });
+        } catch (error) {
+            console.error(error);
+        }
+
+    };
+
+    updateQtyClick = () => {
+        const users_id = this.props.dataUser.id;
+        const { qtyInput, ordersdetail_id, stockByProduct } = this.state;
+        let data = {
+            users_id: users_id,
+            ordersdetail_id: ordersdetail_id,
+            qty: qtyInput
+        };
+        if (qtyInput > stockByProduct) {
+            toast.error('Qty input over!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            axios.patch(`${API_URL}/transaction/editqty`, data)
+                .then((res) => {
+                    this.props.CartAction(res.data);
+                    this.toggle();
+                }).catch((error) => {
+                    console.error(error);
+                });
+
+        }
 
     };
 
@@ -53,7 +100,7 @@ class Cart extends Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 let ordersdetail_id = this.props.dataUser.cart[index].ordersdetail_id;
-                let users_id = this.props.dataUser.cart[index].users_id;
+                let users_id = this.props.dataUser.id;
                 axios.delete(`${API_URL}/transaction/deletecart/${ordersdetail_id}/${users_id}`, option)
                     .then((res) => {
                         this.props.CartAction(res.data);
@@ -83,7 +130,7 @@ class Cart extends Component {
                     <td className="text-center">{val.qty}</td>
                     <td className="text-center">{currencyFormatter(val.price * val.qty)}</td>
                     <td className="text-center">
-                        <FiEdit onClick={this.toggle} className="edit-btn" />
+                        <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" />
                         <FiTrash2 onClick={() => this.deleteItemClick(index)} className="delete-btn" />
                     </td>
 
@@ -100,16 +147,29 @@ class Cart extends Component {
         return total;
     };
 
+    onInputChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
     render() {
         return (
             <div>
                 <Modal isOpen={this.state.modalVisible} toggle={this.toggle} centered>
-                    <ModalHeader>Edit Qty</ModalHeader>
+                    <ModalHeader>Edit Qty {this.state.productName}</ModalHeader>
                     <ModalBody>
-                        Qty
+                        Stock Available {this.state.stockByProduct}
+                        <div>
+                            <input
+                                name="qtyInput"
+                                placeholder="Input quantity"
+                                className="form-control"
+                                onChange={this.onInputChange}
+                                value={this.state.qtyInput}
+                            />
+                        </div>
                     </ModalBody>
                     <ModalFooter>
-                        <button className="modal-btn1">Update</button>
+                        <button className="modal-btn1" onClick={this.updateQtyClick}>Update</button>
                         <button className="modal-btn2" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
