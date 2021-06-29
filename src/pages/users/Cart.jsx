@@ -65,7 +65,7 @@ class Cart extends Component {
         // pas klik edit nge get data availableToUser untuk barang tersebut
         try {
             const prod_id = val.product_id;
-            const result = await axios.get(`${API_URL} / transaction / stockbyproduct / ${prod_id}`);
+            const result = await axios.get(`${API_URL}/transaction/stockbyproduct/${prod_id}`);
             this.setState({
                 stockByProduct: result.data.availableToUser,
                 productName: val.name,
@@ -102,7 +102,7 @@ class Cart extends Component {
                 progress: undefined,
             });
         } else {
-            axios.patch(`${API_URL} / transaction / editqty`, data)
+            axios.patch(`${API_URL}/transaction/editqty`, data)
                 .then((res) => {
                     this.props.CartAction(res.data);
                     this.toggle();
@@ -123,7 +123,7 @@ class Cart extends Component {
         };
         Swal.fire({
             title: 'Are you sure?',
-            text: `${prodName} will be deleted`,
+            text: `${prodName} will be deleted from your cart`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -133,7 +133,7 @@ class Cart extends Component {
             if (result.isConfirmed) {
                 let ordersdetail_id = this.props.dataUser.cart[index].ordersdetail_id;
                 let users_id = this.props.dataUser.id;
-                axios.delete(`${API_URL} / transaction / deletecart / ${ordersdetail_id} / ${users_id}`, option)
+                axios.delete(`${API_URL}/transaction/deletecart/${ordersdetail_id}/${users_id}`, option)
                     .then((res) => {
                         this.props.CartAction(res.data);
                         Swal.fire(
@@ -341,48 +341,56 @@ class Cart extends Component {
                     </div>
                 </div>
                 <Container>
-                    <h3 style={{ marginTop: "35px" }}>Shipping Address:</h3>
-                    <div className="alamat-box" >
-                        <div style={{ fontWeight: "700" }}>
-                            {this.props.dataUser.first_name + ' ' + this.props.dataUser.last_name}
+                    {!this.props.dataUser.cart.length ?
+                        <div>
+                            Your cart is empty
                         </div>
-                        {this.props.dataUser.phone_number}
-                        <br />
-                        <div style={{ color: 'gray' }}>
-                            {this.state.selected_address.address}
-                            <br />
-                            {this.state.selected_address.city + ', ' + this.state.selected_address.zip}
-                        </div>
-                        <div style={{ color: "#89ADC3" }}>
-                            {this.state.selected_address.is_default ? 'Default address' : null}
-                        </div>
-                    </div>
-                    <button className="other-address" onClick={this.toggleAddress}>Choose Other Address</button>
-                    <Table bordered hover className="table-margin">
-                        <tr className="text-center">
-                            <th>No</th>
-                            <th>Product Name</th>
-                            <th>Image</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Sub-Total</th>
-                            <th>Action</th>
-                        </tr>
-                        <tbody>
-                            {this.renderCart()}
-                            <tr className="text-center">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Total</td>
-                                <td>{currencyFormatter(this.renderTotal())}</td>
-                                <td>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </Table>
-                    <button className="checkout-btn" onClick={this.togglePayment}>Choose Payment</button>
+                        :
+                        <>
+                            <h3 style={{ marginTop: "35px" }}>Shipping Address:</h3>
+                            <div className="alamat-box" >
+                                <div style={{ fontWeight: "700" }}>
+                                    {this.props.dataUser.first_name + ' ' + this.props.dataUser.last_name}
+                                </div>
+                                {this.props.dataUser.phone_number}
+                                <br />
+                                <div style={{ color: 'gray' }}>
+                                    {this.state.selected_address.address}
+                                    <br />
+                                    {this.state.selected_address.city + ', ' + this.state.selected_address.zip}
+                                </div>
+                                <div style={{ color: "#89ADC3" }}>
+                                    {this.state.selected_address.is_default ? 'Default address' : null}
+                                </div>
+                            </div>
+                            <button className="other-address" onClick={this.toggleAddress}>Choose Other Address</button>
+                            <Table bordered hover className="table-margin">
+                                <tr className="text-center">
+                                    <th>No</th>
+                                    <th>Product Name</th>
+                                    <th>Image</th>
+                                    <th>Price</th>
+                                    <th>Qty</th>
+                                    <th>Sub-Total</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tbody>
+                                    {this.renderCart()}
+                                    <tr className="text-center">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td>{currencyFormatter(this.renderTotal())}</td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                            <button className="checkout-btn" onClick={this.togglePayment}>Choose Payment</button>
+                        </>
+                    }
                 </Container>
             </div >
         );

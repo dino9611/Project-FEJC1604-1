@@ -114,7 +114,7 @@ class ProductDetail extends Component {
           });
         }).catch((error) => {
           console.error('line 103', error);
-          // alert(error.response.data.message);
+          alert(error.response.data.message);
         });
     }
   };
