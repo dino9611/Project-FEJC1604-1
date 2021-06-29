@@ -51,12 +51,34 @@ class App extends Component {
         this.setState({ loading: false });
       });
   }
-
+  // PJ-8 As a non-admin, I can not access any the web app's admin dashboard
   render() {
     if (this.state.loading) {
       return <LoaderComp />;
     }
-    if (this.props.dataUser.role !== 1 && this.props.dataUser.islogin === false) {
+
+    const { islogin, role } = this.props.dataUser;
+    // ini untuk user yang baru pertama akses website
+    if (islogin === false) {
+      return (
+        <div>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/collection" exact component={Collection} />
+            <Route path="/productDetail/:id" exact component={ProductDetail} />
+            <Route path="/registration" exact component={Registration} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/verified-email/:token" component={EmailVerification} />
+            <Route path="/admin/login" exact component={LoginAdmin} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+          <ToastContainer />
+        </div>
+      );
+    }
+
+    // ini untuk user yang sudah terdaftar dan sudah login 
+    if (islogin && role === 1) {
       return (
         <div>
           <Switch>
@@ -64,50 +86,8 @@ class App extends Component {
             <Route path="/cart" exact component={Cart} />
             <Route path="/history" exact component={History} />
             <Route path="/collection" exact component={Collection} />
-            <Route path="/cart" component={Cart} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/collection" exact component={Collection} />
-            <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/verified-email/:token" component={EmailVerification} />
-            <Route path="/address" exact component={AddressList} />
-            <Route path="/security" exact component={Security} />
-            <Route path="/admin" exact component={ManageProduct} />
-            <Route path="/userprofile" exact component={UserProfile} />
-            <Route path="/admin/login" component={LoginAdmin} />
-            <Route path="/admin/home" component={HomeAdmin} />
-            <Route path="/admin/transaction" component={AdminTransaction} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-          <ToastContainer />
-        </div>
-      );
-    } else if (this.props.dataUser.islogin === false) { // tampilan untuk users
-      return (
-        <div>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/collection" exact component={Collection} />
-            <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/registration" exact component={Registration} />
-            <Route path="/verified-email/:token" component={EmailVerification} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-          <ToastContainer />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            {/* <Route path="/history" exact component={History} /> */}
-            <Route path="/collection" exact component={Collection} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/registration" exact component={Registration} />
+            {/* <Route path="/login" exact component={Login} /> */}
             <Route path="/verified-email/:token" component={EmailVerification} />
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
@@ -127,3 +107,29 @@ const MaptstatetoProps = (state) => {
   };
 };
 export default connect(MaptstatetoProps, { LoginAction })(App);
+
+
+// return (
+//   <div>
+//     <Switch>
+//       <Route path="/" exact component={Home} />
+//       <Route path="/cart" exact component={Cart} />
+//       <Route path="/history" exact component={History} />
+//       <Route path="/collection" exact component={Collection} />
+//       <Route path="/productDetail/:id" exact component={ProductDetail} />
+//       <Route path="/login" exact component={Login} />
+//       <Route path="/collection" exact component={Collection} />
+//       <Route path="/productDetail/:id" exact component={ProductDetail} />
+//       <Route path="/verified-email/:token" component={EmailVerification} />
+//       <Route path="/address" exact component={AddressList} />
+//       <Route path="/security" exact component={Security} />
+//       <Route path="/admin" exact component={ManageProduct} />
+//       <Route path="/userprofile" exact component={UserProfile} />
+//       <Route path="/admin/login" component={LoginAdmin} />
+//       <Route path="/admin/home" component={HomeAdmin} />
+//       <Route path="/admin/transaction" component={AdminTransaction} />
+//       <Route path="*" component={NotFound} />
+//     </Switch>
+//     <ToastContainer />
+//   </div>
+// );
