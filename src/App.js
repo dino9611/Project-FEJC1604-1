@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { LoginAction } from "./redux/actions";
 import { connect } from "react-redux";
 import { API_URL } from "./helper";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Login from "./pages/users/Login";
 import Registration from "./pages/users/Registration";
 import Home from "./pages/users/Home";
@@ -40,7 +40,7 @@ class App extends Component {
         },
       })
       .then((res) => {
-        // console.log(res);
+        console.log(res.data);
         this.props.LoginAction(res.data);
       })
       .catch((err) => {
