@@ -10,7 +10,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast, Slide, ToastContainer } from 'react-toastify';
-
+import emptyCart from '../../images/empty-cart.svg';
 
 class Cart extends Component {
     state = {
@@ -170,6 +170,39 @@ class Cart extends Component {
         });
     };
 
+    renderCart2 = () => {
+        return this.props.dataUser.cart.map((val, index) => {
+            return (
+                <div key={index} className="box-cart">
+                    <div style={{ border: '1px solid black', padding: '10px 10px 10px 10px' }}>
+                        <div style={{ fontWeight: '600' }}>{`Pesanan ${index + 1}`}</div>
+                        <div style={{ display: 'flex', paddingTop: '10px', paddingBottom: '10px' }}>
+                            <div style={{ background: 'yellow', flex: 2 }}>
+                                <div style={{ display: 'flex' }}>
+                                    <div style={{ border: '1px solid black', borderRadius: '7px', background: 'gray' }}>
+                                        <img src={API_URL + val.image} alt={val.name} width="150px" height="150px" />
+                                    </div>
+                                    <div style={{ background: 'green', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '20px' }}>
+                                        <div style={{ fontWeight: '700' }}>{val.name}</div>
+                                        <div style={{ color: 'gray' }}>{val.qty} {val.qty > 1 ? 'items' : 'item'} x {currencyFormatter(val.price)}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{ background: 'teal', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '50px', borderLeft: '1px solid gray' }}>
+                                <div style={{ background: 'tomato', display: 'flex', flexDirection: 'column', }}>
+                                    <div style={{ color: 'gray' }}>
+                                        Subtotal
+                                    </div>
+                                    <div style={{ fontWeight: 'bold', fontSize: '20px' }}>{currencyFormatter(val.price * val.qty)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div >
+            );
+        });
+    };
+
     renderTotal = () => {
         let total = 0;
         this.props.dataUser.cart.forEach((val) => {
@@ -182,7 +215,7 @@ class Cart extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
-    addressOption = () => {
+    renderAddressOptions = () => {
         return this.state.addresses.map((val, index) => {
             return (
                 <div key={index} style={{ color: 'gray', display: 'flex' }}>
@@ -194,10 +227,10 @@ class Cart extends Component {
                     </div>
                     <div>
                         {this.state.selected_address.id === this.state.addresses[index].id ?
-                            <div style={{ color: "#052C43", marginRight: '10px', marginTop: '15px' }}>Selected</div>
+                            <div style={{ color: "#052C43", marginRight: '12px', paddingTop: '15px', paddingBottom: '10px' }}>Selected</div>
                             :
                             <button
-                                style={{ flex: 1, justifyContent: "space-between" }}
+                                style={{ flex: 1, justifyContent: "space-between", marginTop: '5px', paddingBottom: '10px' }}
                                 className="modal-btn1"
                                 onClick={() => this.selectAddressClick(index)}
                             >
@@ -277,7 +310,6 @@ class Cart extends Component {
                     console.error(error);
                 });
         }
-
     };
 
     render() {
@@ -303,15 +335,19 @@ class Cart extends Component {
                         <button className="modal-btn2" onClick={this.toggle}>Cancel</button>
                     </ModalFooter>
                 </Modal>
+
                 {/* Modal Choose Address */}
                 <Modal isOpen={this.state.modalAddress} toggle={this.toggleAddress} centered >
-                    <ModalHeader className="modaladd-font">
-                        Select Shipment Address
+                    <ModalHeader>
+                        <div className="modaladd-font" >
+                            <div>Select Shipment Address</div>
+                        </div>
                     </ModalHeader>
                     <ModalBody>
-                        {this.addressOption()}
+                        {this.renderAddressOptions()}
                     </ModalBody>
                 </Modal>
+
                 {/* Modal Payment */}
                 <Modal isOpen={this.state.modalPayment} toggle={this.togglePayment} centered>
                     <ModalHeader>Payment Method</ModalHeader>
@@ -334,6 +370,7 @@ class Cart extends Component {
                         <button className="modal-btn2" onClick={this.togglePayment}>Cancel</button>
                     </ModalFooter>
                 </Modal>
+
                 <div className="cart-background">
                     <Header />
                     <div className="section-content">
@@ -342,12 +379,24 @@ class Cart extends Component {
                 </div>
                 <Container>
                     {!this.props.dataUser.cart.length ?
-                        <div>
-                            Your cart is empty
+                        <div className="container-cart">
+                            <div style={{ flex: 1 }}>
+                                <img
+                                    src={emptyCart}
+                                    alt="empty-cart-icon"
+                                    className="center-cart"
+                                />
+                            </div>
+                            <div style={{ flex: 1, marginTop: "15px" }}>
+                                <h2>Your Cart is Empty</h2>
+                                <Link to='/'>
+                                    <buton className="tombol-home">Shop Now</buton>
+                                </Link>
+                            </div>
                         </div>
                         :
                         <>
-                            <h3 style={{ marginTop: "35px" }}>Shipping Address:</h3>
+                            <h5 style={{ marginTop: "35px" }}>Shipping Address:</h5>
                             <div className="alamat-box" >
                                 <div style={{ fontWeight: "700" }}>
                                     {this.props.dataUser.first_name + ' ' + this.props.dataUser.last_name}
@@ -364,7 +413,11 @@ class Cart extends Component {
                                 </div>
                             </div>
                             <button className="other-address" onClick={this.toggleAddress}>Choose Other Address</button>
-                            <Table bordered hover className="table-margin">
+                            <div style={{ border: '4px solid #F3F4F5', marginTop: '20px' }}></div>
+                            <div className="table-margin">
+                                {this.renderCart2()}
+                            </div>
+                            {/* <Table bordered hover className="table-margin">
                                 <tr className="text-center">
                                     <th>No</th>
                                     <th>Product Name</th>
@@ -387,8 +440,8 @@ class Cart extends Component {
                                         </td>
                                     </tr>
                                 </tbody>
-                            </Table>
-                            <button className="checkout-btn" onClick={this.togglePayment}>Choose Payment</button>
+                            </Table> */}
+                            <button className="checkout-btn" style={{ marginTop: '20px' }} onClick={this.togglePayment}>Choose Payment</button>
                         </>
                     }
                 </Container>
