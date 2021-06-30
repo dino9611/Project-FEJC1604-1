@@ -317,6 +317,7 @@ class Cart extends Component {
         const users_latitude = this.state.selected_address.latitude;
         const users_longitude = this.state.selected_address.longitude;
         const orders_id = this.props.dataUser.cart[0].orders_id;
+        let cart = this.props.dataUser.cart;
 
         if (!bank_id) {
             alert('harus di isi');
@@ -327,7 +328,8 @@ class Cart extends Component {
                 users_id: users_id,
                 users_latitude: users_latitude,
                 users_longitude: users_longitude,
-                orders_id: orders_id
+                orders_id: orders_id,
+                cart
             };
             let tokenAccess = localStorage.getItem("TA");
             let options = {
@@ -350,32 +352,6 @@ class Cart extends Component {
                     console.error(error);
                 });
         }
-    };
-
-    getDistance = () => {
-        // ketika user klick check out, dari FE akan mengirimkan address_id, bank_id, warehouse_id ke BE
-        // warehouse_id didapat dengan membandingkan (lat, lng) 5 location dengan (lat, lng) pada selected_address user
-        // warehouse_id adalah id warehouse yang TERDEKAT dengan selected_address users
-        const lat_user = this.state.selected_address.latitude;
-        const lng_user = this.state.selected_address.longitude;
-        const lat1 = this.state.warehouses[0].latitude;
-        const lng1 = this.state.warehouses[0].longitude;
-        const lat2 = this.state.warehouses[1].latitude;
-        const lng2 = this.state.warehouses[1].longitude;
-        const lat3 = this.state.warehouses[2].latitude;
-        const lng3 = this.state.warehouses[2].longitude;
-        const lat4 = this.state.warehouses[3].latitude;
-        const lng4 = this.state.warehouses[3].longitude;
-        const lat5 = this.state.warehouses[4].latitude;
-        const lng5 = this.state.warehouses[4].longitude;
-
-        const nearest = geolib.findNearest({ lat_user, lng_user }, [
-            { lat1, lng1 }, { lat2, lng2 }, { lat3, lng3 },
-            { lat4, lng4 }, { lat5, lng5 }
-        ]);
-        console.log('ini terdekat', nearest);
-        const longitude = nearest.lng1.toString();
-        console.log(longitude);
     };
 
     render() {
