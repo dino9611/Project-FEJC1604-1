@@ -1,6 +1,6 @@
 .cart-background{
-    background-color:#89AEC2 ;
-    height: 30vh;
+    background-color:#89ADC3 ;
+    height: 27vh;
 }
 
 .section-content{
@@ -8,16 +8,15 @@
     justify-content: center;
     align-items: center;
     height: 40vh;
-
 }
 
 .title-top{
-font-size: 6rem;
-color: white;
+    font-size: 6rem;
+    color: white;
 }
 
 .table-margin{
-margin-top: 70px;
+margin-top: 20px;
 
 }
 
@@ -39,6 +38,7 @@ margin-top: 70px;
     font-size: 17px;
     text-decoration: none;
     padding: 15px 32px;
+    border-radius: 5px;
 }
 
 .modal-btn1{
@@ -50,6 +50,7 @@ margin-top: 70px;
     font-size: 15px;
     text-decoration: none;
     padding: 10px 20px;
+    border-radius: 5px;
 }
 
 .modal-btn2{
@@ -61,5 +62,76 @@ margin-top: 70px;
     font-size: 15px;
     text-decoration: none;
     padding: 10px 20px;
+    border-radius: 5px;
 }
 
+.alamat-box{
+    /* border: gray 1px solid; */
+    border-top: #DBDEE2 1px solid;
+    border-bottom: #DBDEE2 1px solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.other-address{
+    background-color:white ;
+    border: 2px solid #E5E7E9;
+    color: #052C43;
+    font-weight: 600;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 10px 15px 10px 15px ;
+    margin-top: 20px;
+    border-radius: 7px;
+}
+
+.modaladd-font{
+    color:#052C43 ;
+    font-weight: 620;
+    margin-left: 110px;
+    /* background-color: aqua; */
+}
+
+.font-modal{
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-select {
+    position: relative;
+}
+
+.container-cart{
+    /* background-color: green; */
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tombol-home{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 15px 40px;
+    border-radius: 5px;
+    margin-left: 25%;
+    margin-top: 10px;
+    transition: 750ms;
+}
+.tombol-home:hover{
+    background-color:#708fa1 ;
+    transition: 750ms;
+}
+
+.box-cart{
+    /* border: 1px solid black; */
+    background-color: burlywood;
+}
