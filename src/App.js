@@ -57,28 +57,11 @@ class App extends Component {
       return <LoaderComp />;
     }
 
-    const { islogin, role } = this.props.dataUser;
-    // ini untuk user yang baru pertama akses website
-    if (islogin === false) {
-      return (
-        <div>
-          <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/collection" exact component={Collection} />
-            <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/registration" exact component={Registration} />
-            <Route path="/login" exact component={Login} />
-            <Route path="/verified-email/:token" component={EmailVerification} />
-            <Route path="/admin/login" exact component={LoginAdmin} />
-            <Route path="*" component={NotFound} />
-          </Switch>
-          <ToastContainer />
-        </div>
-      );
-    }
+    const { role } = this.props.dataUser;
+
 
     // ini untuk user yang sudah terdaftar dan sudah login 
-    if (islogin && role === 1) {
+    if (role === 1) {
       return (
         <div>
           <Switch>
@@ -98,6 +81,55 @@ class App extends Component {
         </div>
       );
     }
+    if (role === 2) {
+      return (
+        <div>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/collection" exact component={Collection} />
+            <Route path="/productDetail/:id" exact component={ProductDetail} />
+            <Route path="/admin" exact component={ManageProduct} />
+            <Route path="/admin/login" component={LoginAdmin} />
+            <Route path="/admin/home" component={HomeAdmin} />
+            <Route path="/admin/transaction" component={AdminTransaction} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+          <ToastContainer />
+        </div>
+      );
+    }
+    if (role > 2) {
+      return (
+        <div>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/collection" exact component={Collection} />
+            <Route path="/productDetail/:id" exact component={ProductDetail} />
+            <Route path="/admin" exact component={ManageProduct} />
+            <Route path="/admin/login" component={LoginAdmin} />
+            <Route path="/admin/home" component={HomeAdmin} />
+            <Route path="/admin/transaction" component={AdminTransaction} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+          <ToastContainer />
+        </div>
+      );
+    }
+    return (
+      <div>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/collection" exact component={Collection} />
+          <Route path="/productDetail/:id" exact component={ProductDetail} />
+          <Route path="/registration" exact component={Registration} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/verified-email/:token" component={EmailVerification} />
+          <Route path="/admin/login" exact component={LoginAdmin} />
+          <Route path="*" component={NotFound} />
+        </Switch>
+        <ToastContainer />
+      </div>
+    );
   }
 }
 
