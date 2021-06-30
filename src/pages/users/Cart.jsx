@@ -155,30 +155,9 @@ class Cart extends Component {
     renderCart = () => {
         return this.props.dataUser.cart.map((val, index) => {
             return (
-                <tr key={index}>
-                    <td className="text-center">{index + 1}</td>
-                    <td>{val.name}</td>
-                    <td>
-                        <img src={API_URL + val.image} alt={val.name} width="200px" height="150px" />
-                    </td>
-                    <td className="text-center">{currencyFormatter(val.price)}</td>
-                    <td className="text-center">{val.qty}</td>
-                    <td className="text-center">{currencyFormatter(val.price * val.qty)}</td>
-                    <td className="text-center">
-                        <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" />
-                        <FiTrash2 onClick={() => this.deleteItemClick(index)} className="delete-btn" />
-                    </td>
-                </tr>
-            );
-        });
-    };
-
-    renderCart2 = () => {
-        return this.props.dataUser.cart.map((val, index) => {
-            return (
                 <div key={index} className="box-cart">
                     <div style={{
-                        // border: '1px solid black', 
+                        // border: '1px solid black',
                         padding: '10px 10px 10px 10px'
                     }}>
                         <div style={{ fontWeight: '600' }}>{`Pesanan ${index + 1}`}</div>
@@ -455,35 +434,16 @@ class Cart extends Component {
                                 </div>
                             </div>
                             <button className="other-address" onClick={this.toggleAddress}>Choose Other Address</button>
-                            <button className="other-address" onClick={this.getDistance}>Geolib</button>
                             <div style={{ border: '4px solid #F3F4F5', marginTop: '20px' }}></div>
                             <div className="table-margin">
-                                {this.renderCart2()}
+                                {this.renderCart()}
                             </div>
-                            {/* <Table bordered hover className="table-margin">
-                                <tr className="text-center">
-                                    <th>No</th>
-                                    <th>Product Name</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>Sub-Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tbody>
-                                    {this.renderCart()}
-                                    <tr className="text-center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total</td>
-                                        <td>{currencyFormatter(this.renderTotal())}</td>
-                                        <td>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table> */}
+                            {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                <div style={{ flex: 1, background: 'yellow', paddingLeft: '500px' }}>
+                                    TOTAL
+                                </div>
+                                <div style={{ flex: 1, background: 'tomato' }}>{currencyFormatter(this.renderTotal())}</div>
+                            </div> */}
                             <button className="checkout-btn" style={{ marginTop: '20px' }} onClick={this.togglePayment}>Choose Payment</button>
                         </>
                     }

@@ -1,0 +1,136 @@
+.container-1{
+    height: 100vh;
+    /* background-color: yellow; */
+}
+
+.container-2{
+    height: 50%;
+    display: flex;
+    /* justify-content: center; */
+    /* background-color: teal; */
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-1{
+    /* background-color: tomato; */
+    width: 55%;
+    text-align: center;
+    flex-direction: column;
+    order: 1;
+    margin-top: 10vh;
+    font-size: 25px;
+    height: 150px;
+    color:#052c43 ;
+    font-weight: 600;
+}
+.box-2{
+    border: 2px solid #DBDEE2;
+    order: 2;
+    width: 55%;
+    /* background-color: thistle; */
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px 10px 15px ;
+    border-bottom: none;
+    border-radius: 7px 7px 0px 0px;
+    font-size: 20px;
+    
+}
+
+.box-3{
+    order: 3;
+    border: 2px solid #DBDEE2;
+    width: 55%;
+    padding: 10px 15px 10px 15px ;
+    border-radius: 0px 0px 7px 7px;
+}
+
+.box-3-x{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-bottom: 20px;
+}
+
+.detail{
+    cursor: pointer;
+    font-weight: 700;
+    text-decoration: none;
+    color:#89ADC3 ;
+    /* background-color: blanchedalmond; */
+    padding-top: 10px;
+}
+
+.judul{
+    color:gray;
+    font-size: 15px;
+}
+
+.box-4{
+    order: 4;
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.btn-1{
+    background-color: white;
+    border: 1px solid #89ADC3;
+    color: #89ADC3;
+    /* border: 1px solid #052c43; */
+    /* color: #052c43; */
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 104px;
+    border-radius: 7px;
+    transition: 750ms;
+}
+
+.btn-2{
+    background-color:#89ADC3 ;
+    /* background-color:#052c43; */
+    border: none;
+    color: white;
+    text-align: center;
+    /* display: inline-block; */
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 95px;
+    border-radius: 7px;
+    transition: 750ms;
+}
+.btn-2:hover{
+    background-color:#708fa1 ;
+    /* background-color:rgb(33, 90, 122) ; */
+    transition: 750ms;
+}
+
+.nomor{
+    font-size: 18px;
+    font-weight: 650;
+}
+
+.btn-upload{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.btn-cancel{
+    background-color:gray ;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+}

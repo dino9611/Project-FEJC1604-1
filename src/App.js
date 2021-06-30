@@ -20,6 +20,9 @@ import Security from "./pages/users/Security";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from './pages/users/Cart';
+import Payment from './pages/users/Payment';
+
+
 
 class App extends Component {
   state = {
@@ -65,6 +68,7 @@ class App extends Component {
           <Route path="/userprofile" exact component={UserProfile} />
           <Route path="/address" exact component={AddressList} />
           <Route path="/security" exact component={Security} />
+          <Route path='/payment' exact component={Payment} />
         </Switch>
         <ToastContainer />
       </div>
