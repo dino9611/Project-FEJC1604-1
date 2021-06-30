@@ -4,16 +4,10 @@ import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import "../styles/ProductDetail.css";
-<<<<<<< Updated upstream
-import { connect } from 'react-redux';
-import { CartAction } from '../../redux/actions/authAction';
-import Swal from 'sweetalert2';
-import { toast } from 'react-toastify';
-=======
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
->>>>>>> Stashed changes
+import { connect } from 'react-redux';
 
 class ProductDetail extends Component {
   state = {

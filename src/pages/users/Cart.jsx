@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast, Slide, ToastContainer } from 'react-toastify';
 import emptyCart from '../../images/empty-cart.svg';
+import * as geolib from 'geolib';
 
 class Cart extends Component {
     state = {
@@ -30,7 +31,9 @@ class Cart extends Component {
         modalAddress: false,
         modalPayment: false,
         banks: [],
-        pilihanId: 0
+        pilihanId: 0,
+        warehouses: [],
+        selected_warehouse: 0
     };
 
     componentDidMount() {
@@ -174,27 +177,53 @@ class Cart extends Component {
         return this.props.dataUser.cart.map((val, index) => {
             return (
                 <div key={index} className="box-cart">
-                    <div style={{ border: '1px solid black', padding: '10px 10px 10px 10px' }}>
+                    <div style={{
+                        // border: '1px solid black', 
+                        padding: '10px 10px 10px 10px'
+                    }}>
                         <div style={{ fontWeight: '600' }}>{`Pesanan ${index + 1}`}</div>
                         <div style={{ display: 'flex', paddingTop: '10px', paddingBottom: '10px' }}>
-                            <div style={{ background: 'yellow', flex: 2 }}>
+                            <div style={{
+                                // background: 'yellow', 
+                                flex: 2
+                            }}>
                                 <div style={{ display: 'flex' }}>
-                                    <div style={{ border: '1px solid black', borderRadius: '7px', background: 'gray' }}>
+                                    <div style={{
+                                        border: '1px solid black', borderRadius: '7px',
+                                        // background: 'gray' 
+                                    }}>
                                         <img src={API_URL + val.image} alt={val.name} width="150px" height="150px" />
                                     </div>
-                                    <div style={{ background: 'green', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '20px' }}>
+                                    <div style={{
+                                        // background: 'green',
+                                        display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '20px'
+                                    }}>
                                         <div style={{ fontWeight: '700' }}>{val.name}</div>
-                                        <div style={{ color: 'gray' }}>{val.qty} {val.qty > 1 ? 'items' : 'item'} x {currencyFormatter(val.price)}</div>
-                                        <div style={{ display: 'flex', background: 'purple', marginTop: '10px' }}>
+                                        <div style={{
+                                            // color: 'gray' 
+                                        }}>{val.qty} {val.qty > 1 ? 'items' : 'item'} x {currencyFormatter(val.price)}</div>
+                                        <div style={{
+                                            display: 'flex',
+                                            // background: 'purple', 
+                                            marginTop: '10px'
+                                        }}>
                                             <div> <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" /> </div>
                                             <div> <FiTrash2 onClick={() => this.deleteItemClick(index)} className="delete-btn" /> </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div style={{ background: 'teal', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '50px', borderLeft: '1px solid gray' }}>
-                                <div style={{ background: 'tomato', display: 'flex', flexDirection: 'column', }}>
-                                    <div style={{ color: 'gray' }}>
+                            <div style={{
+                                // background: 'teal',
+                                flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '50px', borderLeft: '2px solid #DBDEE2'
+                            }}>
+                                <div style={{
+                                    // background: 'tomato', 
+                                    display: 'flex', flexDirection: 'column',
+                                }}>
+                                    <div style={{
+                                        // color: 'gray'
+                                    }}>
                                         Subtotal
                                     </div>
                                     <div style={{ fontWeight: 'bold', fontSize: '20px' }}>{currencyFormatter(val.price * val.qty)}</div>
@@ -285,13 +314,20 @@ class Cart extends Component {
         const users_id = this.props.dataUser.id;
         const address_id = this.state.selected_address.id;
         const bank_id = this.state.pilihanId;
+        const users_latitude = this.state.selected_address.latitude;
+        const users_longitude = this.state.selected_address.longitude;
+        const orders_id = this.props.dataUser.cart[0].orders_id;
+
         if (!bank_id) {
             alert('harus di isi');
         } else {
             let body = {
                 bank_id: bank_id,
                 address_id: address_id,
-                users_id: users_id
+                users_id: users_id,
+                users_latitude: users_latitude,
+                users_longitude: users_longitude,
+                orders_id: orders_id
             };
             let tokenAccess = localStorage.getItem("TA");
             let options = {
@@ -299,7 +335,7 @@ class Cart extends Component {
                     Authorization: "Bearer " + tokenAccess
                 }
             };
-            axios.post(`${API_URL}/transaction/checkout`, body)
+            axios.post(`${API_URL}/transaction/checkout`, body, options)
                 .then((res) => {
                     this.setState({ modalPayment: !this.state.modalPayment });
                     this.props.CartAction(res.data);
@@ -314,6 +350,32 @@ class Cart extends Component {
                     console.error(error);
                 });
         }
+    };
+
+    getDistance = () => {
+        // ketika user klick check out, dari FE akan mengirimkan address_id, bank_id, warehouse_id ke BE
+        // warehouse_id didapat dengan membandingkan (lat, lng) 5 location dengan (lat, lng) pada selected_address user
+        // warehouse_id adalah id warehouse yang TERDEKAT dengan selected_address users
+        const lat_user = this.state.selected_address.latitude;
+        const lng_user = this.state.selected_address.longitude;
+        const lat1 = this.state.warehouses[0].latitude;
+        const lng1 = this.state.warehouses[0].longitude;
+        const lat2 = this.state.warehouses[1].latitude;
+        const lng2 = this.state.warehouses[1].longitude;
+        const lat3 = this.state.warehouses[2].latitude;
+        const lng3 = this.state.warehouses[2].longitude;
+        const lat4 = this.state.warehouses[3].latitude;
+        const lng4 = this.state.warehouses[3].longitude;
+        const lat5 = this.state.warehouses[4].latitude;
+        const lng5 = this.state.warehouses[4].longitude;
+
+        const nearest = geolib.findNearest({ lat_user, lng_user }, [
+            { lat1, lng1 }, { lat2, lng2 }, { lat3, lng3 },
+            { lat4, lng4 }, { lat5, lng5 }
+        ]);
+        console.log('ini terdekat', nearest);
+        const longitude = nearest.lng1.toString();
+        console.log(longitude);
     };
 
     render() {
@@ -417,6 +479,7 @@ class Cart extends Component {
                                 </div>
                             </div>
                             <button className="other-address" onClick={this.toggleAddress}>Choose Other Address</button>
+                            <button className="other-address" onClick={this.getDistance}>Geolib</button>
                             <div style={{ border: '4px solid #F3F4F5', marginTop: '20px' }}></div>
                             <div className="table-margin">
                                 {this.renderCart2()}
@@ -460,4 +523,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { CartAction })(Cart);;
+export default connect(mapStateToProps, { CartAction })(Cart);;;
