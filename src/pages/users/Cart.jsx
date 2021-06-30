@@ -185,6 +185,10 @@ class Cart extends Component {
                                     <div style={{ background: 'green', display: 'flex', flexDirection: 'column', justifyContent: 'center', marginLeft: '20px' }}>
                                         <div style={{ fontWeight: '700' }}>{val.name}</div>
                                         <div style={{ color: 'gray' }}>{val.qty} {val.qty > 1 ? 'items' : 'item'} x {currencyFormatter(val.price)}</div>
+                                        <div style={{ display: 'flex', background: 'purple', marginTop: '10px' }}>
+                                            <div> <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" /> </div>
+                                            <div> <FiTrash2 onClick={() => this.deleteItemClick(index)} className="delete-btn" /> </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
