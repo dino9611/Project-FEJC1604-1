@@ -1,0 +1,75 @@
+.whdashboard-container {
+  display: flex;
+}
+
+.whdashboard-sidebar {
+  flex: 1;
+  background-color: #f1f1f1;
+  box-shadow: -14px 0px 15px #555;
+}
+
+.whdashboard-content {
+  flex: 4.5;
+}
+
+.wh-sidebar-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.wh-sb-content-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20%;
+  margin-left: 20%;
+  height: 25vh;
+  border-bottom: 1px solid #afafaf;
+}
+
+.wh-sb-content-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 20%;
+  margin-left: 20%;
+  padding-top: 35px;
+  height: 100vh;
+}
+
+.wh-sb-text-2 {
+  font-size: 20px;
+}
+
+.wh-sb-text-1 {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-weight: bold;
+  color: #535353;
+  font-size: 18px;
+}
+
+.wh-sb-admin-information {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.wh-sb-profile-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.wh-sb-admin-name {
+ font-size: 15px;
+ margin-bottom: 4%;
+ font-weight: bold;
+ color: #b4b4b4; 
+}
+
+.wh-sb-admin-warehouse {
+  font-size: 15px;
+  color: #b4b4b4; 
+}

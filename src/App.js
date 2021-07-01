@@ -15,7 +15,7 @@ import EmailVerification from "./pages/users/EmailVerification";
 import ProductDetail from "./pages/users/ProductDetail";
 import LoginAdmin from "./pages/admin/Login";
 import HomeAdmin from "./pages/admin/Home";
-import AdminTransaction from "./pages/admin/Transaction";
+import AdminDashboard from "./pages/admin/WarehouseDashboard";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
@@ -74,7 +74,7 @@ class App extends Component {
           <Route path="/userprofile" exact component={UserProfile} />
           <Route path="/admin/login" component={LoginAdmin} />
           <Route path="/admin/home" component={HomeAdmin} />
-          <Route path="/admin/transaction" component={AdminTransaction} />
+          <Route path="/admin/dashboard" component={AdminDashboard} />
         </Switch>
         <ToastContainer />
       </div>
