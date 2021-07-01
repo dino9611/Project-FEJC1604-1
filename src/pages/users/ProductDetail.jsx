@@ -6,10 +6,10 @@ import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import Loader from "react-loader-spinner";
 import "../styles/ProductDetail.css";
-import { connect } from "react-redux";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { connect } from "react-redux";
 
 class ProductDetail extends Component {
   state = {
@@ -215,4 +215,4 @@ const MaptstatetoProps = (state) => {
   };
 };
 
-export default connect(MaptstatetoProps)(ProductDetail);
+export default connect(MaptstatetoProps, { CartAction })(ProductDetail);

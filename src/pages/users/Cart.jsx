@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import emptyCart from "../../images/empty-cart.svg";
+import * as geolib from "geolib";
 
 class Cart extends Component {
   state = {
@@ -39,6 +40,8 @@ class Cart extends Component {
     modalPayment: false,
     banks: [],
     pilihanId: 0,
+    warehouses: [],
+    selected_warehouse: 0,
   };
 
   componentDidMount() {
@@ -205,7 +208,7 @@ class Cart extends Component {
         <div key={index} className="box-cart">
           <div
             style={{
-              border: "1px solid black",
+              // border: '1px solid black',
               padding: "10px 10px 10px 10px",
             }}
           >
@@ -217,13 +220,18 @@ class Cart extends Component {
                 paddingBottom: "10px",
               }}
             >
-              <div style={{ background: "yellow", flex: 2 }}>
+              <div
+                style={{
+                  // background: 'yellow',
+                  flex: 2,
+                }}
+              >
                 <div style={{ display: "flex" }}>
                   <div
                     style={{
                       border: "1px solid black",
                       borderRadius: "7px",
-                      background: "gray",
+                      // background: 'gray'
                     }}
                   >
                     <img
@@ -235,7 +243,7 @@ class Cart extends Component {
                   </div>
                   <div
                     style={{
-                      background: "green",
+                      // background: 'green',
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
@@ -243,32 +251,68 @@ class Cart extends Component {
                     }}
                   >
                     <div style={{ fontWeight: "700" }}>{val.name}</div>
-                    <div style={{ color: "gray" }}>
+                    <div
+                      style={
+                        {
+                          // color: 'gray'
+                        }
+                      }
+                    >
                       {val.qty} {val.qty > 1 ? "items" : "item"} x{" "}
                       {currencyFormatter(val.price)}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        // background: 'purple',
+                        marginTop: "10px",
+                      }}
+                    >
+                      <div>
+                        {" "}
+                        <FiEdit
+                          onClick={() => this.toggleEdit(val)}
+                          className="edit-btn"
+                        />{" "}
+                      </div>
+                      <div>
+                        {" "}
+                        <FiTrash2
+                          onClick={() => this.deleteItemClick(index)}
+                          className="delete-btn"
+                        />{" "}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div
                 style={{
-                  background: "teal",
+                  // background: 'teal',
                   flex: 1,
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   paddingLeft: "50px",
-                  borderLeft: "1px solid gray",
+                  borderLeft: "2px solid #DBDEE2",
                 }}
               >
                 <div
                   style={{
-                    background: "tomato",
+                    // background: 'tomato',
                     display: "flex",
                     flexDirection: "column",
                   }}
                 >
-                  <div style={{ color: "gray" }}>Subtotal</div>
+                  <div
+                    style={
+                      {
+                        // color: 'gray'
+                      }
+                    }
+                  >
+                    Subtotal
+                  </div>
                   <div style={{ fontWeight: "bold", fontSize: "20px" }}>
                     {currencyFormatter(val.price * val.qty)}
                   </div>
@@ -378,6 +422,11 @@ class Cart extends Component {
     const users_id = this.props.dataUser.id;
     const address_id = this.state.selected_address.id;
     const bank_id = this.state.pilihanId;
+    const users_latitude = this.state.selected_address.latitude;
+    const users_longitude = this.state.selected_address.longitude;
+    const orders_id = this.props.dataUser.cart[0].orders_id;
+    let cart = this.props.dataUser.cart;
+
     if (!bank_id) {
       alert("harus di isi");
     } else {
@@ -385,6 +434,10 @@ class Cart extends Component {
         bank_id: bank_id,
         address_id: address_id,
         users_id: users_id,
+        users_latitude: users_latitude,
+        users_longitude: users_longitude,
+        orders_id: orders_id,
+        cart,
       };
       let tokenAccess = localStorage.getItem("TA");
       let options = {
@@ -393,7 +446,7 @@ class Cart extends Component {
         },
       };
       axios
-        .post(`${API_URL}/transaction/checkout`, body)
+        .post(`${API_URL}/transaction/checkout`, body, options)
         .then((res) => {
           this.setState({ modalPayment: !this.state.modalPayment });
           this.props.CartAction(res.data);
@@ -534,30 +587,6 @@ class Cart extends Component {
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
               <div className="table-margin">{this.renderCart2()}</div>
-              {/* <Table bordered hover className="table-margin">
-                                <tr className="text-center">
-                                    <th>No</th>
-                                    <th>Product Name</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Qty</th>
-                                    <th>Sub-Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                <tbody>
-                                    {this.renderCart()}
-                                    <tr className="text-center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total</td>
-                                        <td>{currencyFormatter(this.renderTotal())}</td>
-                                        <td>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </Table> */}
               <button
                 className="checkout-btn"
                 style={{ marginTop: "20px" }}
