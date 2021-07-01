@@ -11,7 +11,8 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { toast, Slide, ToastContainer } from 'react-toastify';
 import emptyCart from '../../images/empty-cart.svg';
-import * as geolib from 'geolib';
+import LoaderComp from '../../components/Loader';
+
 
 class Cart extends Component {
     state = {
@@ -336,6 +337,7 @@ class Cart extends Component {
     render() {
         return (
             <div>
+                {this.state.loading ? <LoaderComp /> : null}
                 {/* Modal QTY */}
                 <Modal isOpen={this.state.modalVisible} toggle={this.toggle} centered>
                     <ModalHeader>Edit Qty {this.state.productName}</ModalHeader>
@@ -459,4 +461,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { CartAction })(Cart);;;
+export default connect(mapStateToProps, { CartAction })(Cart);

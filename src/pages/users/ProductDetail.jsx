@@ -65,7 +65,7 @@ class ProductDetail extends Component {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: `You must login first!`,
+        text: `You must register and login first!`,
       });
       return;
     }

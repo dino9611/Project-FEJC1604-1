@@ -11,6 +11,8 @@ import Sidebar from "../../components/SideBar";
 import { API_URL } from "../../helper";
 import { connect } from "react-redux";
 import Swal from 'sweetalert2';
+import LoaderComp from '../../components/Loader';
+
 class AddressList extends Component {
   state = {
     addAddress: {
@@ -21,6 +23,7 @@ class AddressList extends Component {
     },
     addresses: [],
     modalVisible: false,
+    loading: false
   };
 
   componentDidMount() {
@@ -187,6 +190,7 @@ class AddressList extends Component {
   render() {
     return (
       <div>
+        {this.state.loading ? <LoaderComp /> : null}
         <Modal
           isOpen={this.state.modalVisible}
           toggle={this.toggle}
