@@ -25,6 +25,7 @@ import Cart from "./pages/users/Cart";
 import History from "./pages/users/History";
 import "./App.css";
 import NotFound from "./pages/NotFound";
+import Payment from "./pages/users/Payment";
 
 class App extends Component {
   state = {
@@ -77,6 +78,7 @@ class App extends Component {
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
+            <Route path="/payment" exact component={Payment} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -95,6 +97,7 @@ class App extends Component {
             <Route path="/admin/home" component={HomeAdmin} />
             <Route path="/admin/transaction" component={AdminTransaction} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
+
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />

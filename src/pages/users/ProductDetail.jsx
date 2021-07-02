@@ -66,7 +66,7 @@ class ProductDetail extends Component {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: `You must login first!`,
+        text: `You must register and login first!`,
       });
       return;
     }
@@ -178,7 +178,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                      this.state.product.quantity == null
+                    this.state.product.quantity == null
                       ? true
                       : false
                   }

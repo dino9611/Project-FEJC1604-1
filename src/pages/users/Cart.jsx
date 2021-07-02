@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import emptyCart from "../../images/empty-cart.svg";
-import * as geolib from "geolib";
+import LoaderComp from "../../components/Loader";
 
 class Cart extends Component {
   state = {
@@ -133,6 +133,128 @@ class Cart extends Component {
           console.error(error);
         });
     }
+  };
+  renderCart = () => {
+    return this.props.dataUser.cart.map((val, index) => {
+      return (
+        <div key={index} className="box-cart">
+          <div
+            style={{
+              // border: '1px solid black',
+              padding: "10px 10px 10px 10px",
+            }}
+          >
+            <div style={{ fontWeight: "600" }}>{`Pesanan ${index + 1}`}</div>
+            <div
+              style={{
+                display: "flex",
+                paddingTop: "10px",
+                paddingBottom: "10px",
+              }}
+            >
+              <div
+                style={{
+                  // background: 'yellow',
+                  flex: 2,
+                }}
+              >
+                <div style={{ display: "flex" }}>
+                  <div
+                    style={{
+                      border: "1px solid black",
+                      borderRadius: "7px",
+                      // background: 'gray'
+                    }}
+                  >
+                    <img
+                      src={API_URL + val.image}
+                      alt={val.name}
+                      width="150px"
+                      height="150px"
+                    />
+                  </div>
+                  <div
+                    style={{
+                      // background: 'green',
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      marginLeft: "20px",
+                    }}
+                  >
+                    <div style={{ fontWeight: "700" }}>{val.name}</div>
+                    <div
+                      style={
+                        {
+                          // color: 'gray'
+                        }
+                      }
+                    >
+                      {val.qty} {val.qty > 1 ? "items" : "item"} x{" "}
+                      {currencyFormatter(val.price)}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        // background: 'purple',
+                        marginTop: "10px",
+                      }}
+                    >
+                      <div>
+                        {" "}
+                        <FiEdit
+                          onClick={() => this.toggleEdit(val)}
+                          className="edit-btn"
+                        />{" "}
+                      </div>
+                      <div>
+                        {" "}
+                        <FiTrash2
+                          onClick={() => this.deleteItemClick(index)}
+                          className="delete-btn"
+                        />{" "}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                style={{
+                  // background: 'teal',
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  paddingLeft: "50px",
+                  borderLeft: "2px solid #DBDEE2",
+                }}
+              >
+                <div
+                  style={{
+                    // background: 'tomato',
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    style={
+                      {
+                        // color: 'gray'
+                      }
+                    }
+                  >
+                    Subtotal
+                  </div>
+                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>
+                    {currencyFormatter(val.price * val.qty)}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    });
   };
 
   deleteItemClick = (index) => {
@@ -467,6 +589,7 @@ class Cart extends Component {
   render() {
     return (
       <div>
+        {this.state.loading ? <LoaderComp /> : null}
         {/* Modal QTY */}
         <Modal isOpen={this.state.modalVisible} toggle={this.toggle} centered>
           <ModalHeader>Edit Qty {this.state.productName}</ModalHeader>
@@ -586,7 +709,13 @@ class Cart extends Component {
               <div
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
-              <div className="table-margin">{this.renderCart2()}</div>
+              <div className="table-margin">{this.renderCart()}</div>
+              {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                          <div style={{ flex: 1, background: 'yellow', paddingLeft: '500px' }}>
+                              TOTAL
+                          </div>
+                          <div style={{ flex: 1, background: 'tomato' }}>{currencyFormatter(this.renderTotal())}</div>
+                      </div> */}
               <button
                 className="checkout-btn"
                 style={{ marginTop: "20px" }}
