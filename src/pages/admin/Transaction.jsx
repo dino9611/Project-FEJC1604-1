@@ -251,7 +251,7 @@ class Transaction extends Component {
               input={<BootstrapInput />}
             >
               <MenuItem value="" disabled>
-               Show status
+                Show status
               </MenuItem>
               <MenuItem value="All">
                 <span>All</span>
@@ -292,7 +292,7 @@ class Transaction extends Component {
                 .map((row, index) => {
                   let idDrop = index;
                   return (
-                    <>
+                    <div>
                       <TableRow
                         hover
                         role="checkbox"
@@ -385,8 +385,13 @@ class Transaction extends Component {
                             timeout="auto"
                             unmountOnExit
                           >
-                            <Box style={{ backgroundColor: "white", marginBottom: '3px', marginTop: "3px"}}>
-                              
+                            <Box
+                              style={{
+                                backgroundColor: "white",
+                                marginBottom: "3px",
+                                marginTop: "3px",
+                              }}
+                            >
                               <Table size="small" aria-label="purchases">
                                 <TableHead>
                                   <TableRow>
@@ -430,7 +435,7 @@ class Transaction extends Component {
                           </Collapse>
                         </TableCell>
                       </TableRow>
-                    </>
+                    </div>
                   );
                 })}
             </TableBody>

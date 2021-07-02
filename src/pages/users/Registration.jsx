@@ -101,7 +101,7 @@ class Registration extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <>
+      <div>
         {this.props.dataUser.loading ? <LoaderComp /> : null}
         <div className="regist-content">
           <div className="left-content-regist">
@@ -397,7 +397,7 @@ class Registration extends Component {
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

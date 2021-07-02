@@ -5,7 +5,6 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 import { BsChevronRight, BsChevronLeft, BsSearch } from "react-icons/bs";
 import { API_URL, currencyFormatter } from "../../helper";
-import Loader from "react-loader-spinner";
 import "./../styles/Collection.css";
 
 class Collection extends Component {
@@ -131,17 +130,6 @@ class Collection extends Component {
   render() {
     return (
       <div>
-        {this.props.dataUser.loading ? (
-          <div className="login-loading">
-            <Loader
-              type="ThreeDots"
-              color="#052C43"
-              height={70}
-              width={70}
-              timeout={3000}
-            />
-          </div>
-        ) : null}
         <Header />
         <div className="jumbotron-1-collection">
           <div className="page-2-collection">

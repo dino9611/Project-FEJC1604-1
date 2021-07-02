@@ -9,21 +9,19 @@
   box-shadow: 0px 7px 19px -16px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 0px 7px 19px -16px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 7px 19px -16px rgba(0, 0, 0, 0.75);
+  padding: 0 6.7%;
 }
 
 .header-brand {
   font-weight: bold;
   font-size: 1.5rem;
   color: #052c43;
-  margin-top: -5%;
-  margin-left: 94%;
 }
 
 .header-menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 10%;
   width: 30%;
 }
 
@@ -59,9 +57,6 @@
   text-decoration: none !important;
 }
 
-.log-button {
-}
-
 .header-menu > a:hover:after {
   color: #052c43;
   width: 100%;
@@ -74,30 +69,18 @@
 
 .log-button {
   text-decoration: none;
-  color: white;
+  color: #052c43;
   font-weight: bold;
-  background-color: #052c43;
-  width: 180%;
+  background-color: transparent;
+  border-color: #052c43;
+  width: 100px;
   height: 40px;
-  border-style: none;
+  border-style: solid;
+  border-radius: 5px;
 }
 
 .log-button:hover {
   text-decoration: none;
-  color: white;
   font-weight: bold;
-  background-color: #052c43;
-  width: 180%;
   height: 40px;
-  border-style: none;
-}
-
-.log-button:hover {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  background-color: #052c43;
-  width: 180%;
-  height: 40px;
-  border-style: none;
 }

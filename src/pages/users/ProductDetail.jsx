@@ -6,7 +6,6 @@ import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import Loader from "react-loader-spinner";
 import "../styles/ProductDetail.css";
-import { connect } from "react-redux";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -125,7 +124,7 @@ class ProductDetail extends Component {
   render() {
     return (
       <div>
-        {this.props.dataUser.loading ? (
+        {/* {this.props.dataUser.loading ? (
           <div className="login-loading">
             <Loader
               type="ThreeDots"
@@ -135,7 +134,7 @@ class ProductDetail extends Component {
               timeout={3000}
             />
           </div>
-        ) : null}
+        ) : null} */}
         <Header />
         <div className="detail-content">
           <div className="detail-content-1">

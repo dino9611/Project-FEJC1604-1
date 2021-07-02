@@ -66,6 +66,10 @@ class ManageProd extends Component {
                   products: res1.data.dataProduct,
                   categories: res2.data,
                   locations: res3.data,
+                  qty: res3.data.map(({ id }) => ({
+                    warehouse_id: id,
+                    qty: 0,
+                  })),
                 });
               })
               .catch((err) => {
@@ -193,7 +197,7 @@ class ManageProd extends Component {
                   image: "",
                   category: "",
                 },
-                qty: [],
+                qty: this.state.qty.map((data) => ({ ...data, qty: 0 })),
                 totaldata: res1.data.totaldata,
               });
             })
@@ -397,7 +401,7 @@ class ManageProd extends Component {
             className="form-control"
             type="number"
             name="quantity"
-            value={this.state.qty[index]?.qty}
+            value={this.state.qty[index].qty}
             placeholder="Quantity"
             onChange={(e) => this.onAddQtyChange(e, index, val.id)}
           />

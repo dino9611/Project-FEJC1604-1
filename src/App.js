@@ -19,6 +19,8 @@ import AdminTransaction from "./pages/admin/Transaction";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
+import ModalDP from "./components/ModalDP";
+import Report from "./pages/admin/Report";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -40,7 +42,6 @@ class App extends Component {
         },
       })
       .then((res) => {
-        // console.log(res);
         this.props.LoginAction(res.data);
       })
       .catch((err) => {
@@ -76,6 +77,8 @@ class App extends Component {
           <Route path="/admin/login" component={LoginAdmin} />
           <Route path="/admin/home" component={HomeAdmin} />
           <Route path="/admin/transaction" component={AdminTransaction} />
+          <Route path="/admin/report" component={Report} />
+          <Route path="/modalDP" component={ModalDP} />
         </Switch>
         <ToastContainer />
       </div>

@@ -1,0 +1,20 @@
+.kiri-sidebar {
+  display: flex;
+  position: fixed;
+  height: 100vh;
+  width: 250px;
+  justify-content: center;
+  background-color: #89adc3;
+  margin: 0;
+}
+
+.nama-admin-sidebar {
+  display: flex;
+  align-content: center;
+  text-align: center;
+  height: fit-content;
+  background-color: #89adc3;
+  margin: 10px 0px;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
