@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Header from "../../components/Header";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
@@ -179,7 +178,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                    this.state.product.quantity == null
+                      this.state.product.quantity == null
                       ? true
                       : false
                   }
