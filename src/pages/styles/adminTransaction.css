@@ -1,13 +1,13 @@
 body {
-  background-color: #f5f5f5;
+  background-color: #f8f8f8 !important;
 }
 
 .transaction-container {
   height: 100Vh;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 4.8%;
+  margin-right: 4.8%;
   margin-bottom: 7%;
-  margin-top: 3%;
+  margin-top: 5.2%;
 }
 
 .transaction-content {
@@ -24,16 +24,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-bottom: 50px;
   /* background-color: red; */
 }
 
 .transaction-text-1{
-  font-size: 22px;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .transaction-show {
-  font-size: 17px;
+  margin-top: 8px;
+  font-size: 14px;
   margin-right: 20px;
   font-weight: 500;
   color: rgb(117, 117, 117);
