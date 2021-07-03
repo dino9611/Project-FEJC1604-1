@@ -50,7 +50,14 @@ class Cart extends Component {
       .get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
       .then((res) => {
         console.log("ini addresses", res.data);
-        this.setState({ addresses: res.data, selected_address: res.data[0] });
+        if (res.data.length) {
+          this.setState({ addresses: res.data, selected_address: res.data[0] });
+        } else {
+          this.setState({
+            addresses: [{ address: "no data", zip: 0, city: "no data" }],
+            selected_address: { address: "no data", zip: 0, city: "no data" },
+          });
+        }
         console.log("ini selected_address", this.state.selected_address);
       })
       .catch((error) => {

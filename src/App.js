@@ -16,6 +16,7 @@ import ProductDetail from "./pages/users/ProductDetail";
 import LoginAdmin from "./pages/admin/Login";
 import HomeAdmin from "./pages/admin/Home";
 import AdminDashboard from "./pages/admin/WarehouseDashboard";
+import AdminTransaction from "./pages/admin/Transaction";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
