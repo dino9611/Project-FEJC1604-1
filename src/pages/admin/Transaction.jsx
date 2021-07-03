@@ -14,25 +14,44 @@ import {
   Typography,
   Select,
   MenuItem,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import { IconButton } from "@material-ui/core";
-import { API_URL, currencyFormatter } from "../../helper";
 import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
-import LoaderCompAdmin from "../../components/LoaderAdmin";
-import Swal from "sweetalert2";
+import { API_URL, currencyFormatter } from "../../helper";
 import axios from "axios";
 import "../styles/adminTransaction.css";
+
+const useStyles = (theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+});
 
 class Transaction extends Component {
   state = {
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 10,
     transaction: [],
     transactionDetail: [],
     open: false,
+    openDialogConfirm: false,
+    openDialogRejected: false,
+    openSnack: false,
+    openSnackRejected: false,
     loading: false,
     currentOpen: -1,
     statusTransaction: "",
@@ -42,6 +61,8 @@ class Transaction extends Component {
     totalData: 0,
     orders_id: 0,
     roleAdmin: 0,
+
+    confirmOrRejectedId: 0,
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -54,46 +75,52 @@ class Transaction extends Component {
         prevState.monthFrom != this.state.monthFrom ||
         prevState.monthTo != this.state.monthTo ||
         prevState.warehouse_id != this.state.warehouse_id
-        // || prevState.transaction != this.state.transaction
       ) {
         this.setState({ loading: true });
-        // console.log(prevState.transaction != this.state.transaction)
         let tokenAccess = localStorage.getItem("TA");
-        let res = await axios.get(`${API_URL}/admin/transaction`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            status:
-              this.state.statusTransaction === "All"
-                ? ""
-                : this.state.statusTransaction,
-            page: this.state.page,
-            rowPerPage: this.state.rowsPerPage,
-            monthFrom:
-              this.state.monthFrom === "none" ? "" : this.state.monthFrom,
-            monthTo: this.state.monthTo === "none" ? "" : this.state.monthTo,
-            warehouse_id:
-              this.state.warehouse_id == "none" ? "" : this.state.warehouse_id,
-          },
-        });
+        let getTransactionRow = await axios.get(
+          `${API_URL}/admin/transaction`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              status:
+                this.state.statusTransaction === "All"
+                  ? ""
+                  : this.state.statusTransaction,
+              page: this.state.page,
+              rowPerPage: this.state.rowsPerPage,
+              monthFrom:
+                this.state.monthFrom === "none" ? "" : this.state.monthFrom,
+              monthTo: this.state.monthTo === "none" ? "" : this.state.monthTo,
+              warehouse_id:
+                this.state.warehouse_id == "none"
+                  ? ""
+                  : this.state.warehouse_id,
+            },
+          }
+        );
         this.setState({
-          transaction: res.data.dataTransaction,
-          totalData: res.data.totalData,
+          transaction: getTransactionRow.data.dataTransaction,
+          totalData: getTransactionRow.data.totalData,
           loading: false,
         });
 
-        let res2 = await axios.get(`${API_URL}/admin/detail-transaction`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            orders_id: this.state.orders_id,
-          },
-        });
+        let getDetailTransactionRow = await axios.get(
+          `${API_URL}/admin/detail-transaction`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              orders_id: this.state.orders_id,
+            },
+          }
+        );
         console.log(this.state.orders_id);
         this.setState({
-          transactionDetail: res2.data,
+          transactionDetail: getDetailTransactionRow.data,
           loading: false,
         });
       }
@@ -104,116 +131,104 @@ class Transaction extends Component {
 
   async componentDidMount() {
     try {
+      const {
+        statusTransaction,
+        page,
+        rowsPerPage,
+        monthFrom,
+        monthTo,
+        warehouse_id,
+      } = this.state;
       let tokenAccess = localStorage.getItem("TA");
-      let res = await axios.get(`${API_URL}/admin/transaction`, {
+      let getTransactionRow = await axios.get(`${API_URL}/admin/transaction`, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
         params: {
-          status: this.state.statusTransaction,
-          page: this.state.page,
-          rowPerPage: this.state.rowsPerPage,
-          monthFrom: this.state.monthFrom,
-          monthTo: this.state.monthTo,
-          warehouse_id: this.state.warehouse_id,
+          status: statusTransaction,
+          page: page,
+          rowPerPage: rowsPerPage,
+          monthFrom: monthFrom,
+          monthTo: monthTo,
+          warehouse_id: warehouse_id,
         },
       });
       this.setState({
-        transaction: res.data.dataTransaction,
-        totalData: res.data.totalData,
-        roleAdmin: res.data.roleAdmin,
-      });
-      let res2 = await axios.get(`${API_URL}/admin/detail-transaction`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-        params: {
-          orders_id: this.state.orders_id,
-        },
-      });
-      console.log(this.state.orders_id);
-      this.setState({
-        transactionDetail: res2.data,
+        transaction: getTransactionRow.data.dataTransaction,
+        totalData: getTransactionRow.data.totalData,
+        roleAdmin: getTransactionRow.data.roleAdmin,
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  onCofirmClick = (row) => {
-    let id = row.id;
-    let tokenAccess = localStorage.getItem("TA");
-    let data = {
-      id: id,
-    };
-    Swal.fire({
-      title: "Do you wanna to confirm this transaction?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, confirm!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`${API_URL}/admin/confirm-transaction`, data, {
-            headers: {
-              Authorization: "Bearer " + tokenAccess,
-            },
-          })
-          .then((res3) => {
-            this.setState({ transaction: res3.data });
-            // console.log(this.state.page, this.state.rowsPerPage);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        Swal.fire("Confirm!", "The transaction has been confirm.", "success");
-      }
+  handleConfirm = (row) => {
+    this.setState({
+      openDialogConfirm: true,
+      confirmOrRejectedId: row.id,
     });
   };
 
-  onRejectClick = (row) => {
-    let id = row.id;
-    let invoice = row.invoice;
-    let amount = row.amountTotal;
+  handleRejected = (row) => {
+    this.setState({
+      openDialogRejected: true,
+      confirmOrRejectedId: row.id,
+    });
+  };
+
+  onCofirmClick = () => {
+    const { confirmOrRejectedId } = this.state;
     let tokenAccess = localStorage.getItem("TA");
     let data = {
-      id: id,
+      id: confirmOrRejectedId,
     };
-    Swal.fire({
-      title: `Do you wanna to reject this transaction?`,
-      text: `Invoice ${invoice}, Amount ${amount}`,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, rejected!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(`${API_URL}/admin/reject-transaction`, data, {
-            headers: {
-              Authorization: "Bearer " + tokenAccess,
-            },
-          })
-          .then((res3) => {
-            this.setState({ transaction: res3.data });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        Swal.fire("Rejected!", "The transaction has been rejected.", "success");
-      }
-    });
+    axios
+      .put(`${API_URL}/admin/confirm-transaction`, data, {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res3) => {
+        this.setState({
+          transaction: res3.data,
+          openDialogConfirm: false,
+          openSnack: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  onRejectClick = (row) => {
+    const { confirmOrRejectedId } = this.state;
+    let tokenAccess = localStorage.getItem("TA");
+    let data = {
+      id: confirmOrRejectedId,
+    };
+    axios
+      .put(`${API_URL}/admin/reject-transaction`, data, {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res3) => {
+        this.setState({
+          transaction: res3.data,
+          openDialogRejected: false,
+          openSnackRejected: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   handleChangePage = (e, newPage) => {
     this.setState({
       page: newPage,
     });
-    // console.log(newPage);
   };
 
   handleStatus = (e) => {
@@ -225,6 +240,22 @@ class Transaction extends Component {
       rowsPerPage: e.target.value,
       page: 0,
     });
+  };
+
+  handleDialogCofirm = () => {
+    this.setState({ openDialogConfirm: false });
+  };
+
+  handleDialogRejected = () => {
+    this.setState({ openDialogRejected: false });
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false });
+  };
+
+  handleSnackRejected = () => {
+    this.setState({ openSnackRejected: false });
   };
 
   handleChange = (e) => {
@@ -251,11 +282,19 @@ class Transaction extends Component {
       rowsPerPage,
       page,
       open,
+      openDialogConfirm,
+      openDialogRejected,
+      openSnack,
+      openSnackRejected,
       currentOpen,
       monthFrom,
       monthTo,
       warehouse_id,
     } = this.state;
+
+    const Alert = (props) => {
+      return <MuiAlert elevation={6} variant="filled" {...props} />;
+    };
 
     const columns = [
       { id: "dateTime", label: "DATE", minWidth: 120, align: "left" },
@@ -281,13 +320,14 @@ class Transaction extends Component {
 
     const detail = [
       { id: "hourTime", label: "HOUR", minWidth: 80, align: "left" },
-      { id: "invoice_number", label: "INVOICE", minWidth: 80, align: "left" },
       { id: "productName", label: "PRODUCT", minWidth: 150, align: "left" },
       { id: "category", label: "CATEGORY", minWidth: 100, align: "left" },
       { id: "price", label: "PRICE", minWidth: 130, align: "left" },
       { id: "quantity", label: "QUANTITY", minWidth: 50, align: "left" },
       { id: "amount", label: "TOTAL", minWidth: 130, align: "left" },
     ];
+
+    const { classes } = this.props;
 
     const StyledTableCell = withStyles(() => ({
       head: {
@@ -343,32 +383,91 @@ class Transaction extends Component {
       },
     }))(InputBase);
 
-    transaction.map((val) => {
-      if (val.status === "awaiting confirmation") {
-        val.status = "Awaiting Confirmation";
-      }
-      if (val.status === "awaiting payment") {
-        val.status = "Awaiting Payment";
-      }
-      if (val.status === "sending") {
-        val.status = "Sending";
-      }
-      if (val.status === "processed") {
-        val.status = "Processed";
-      }
-      if (val.status === "rejected") {
-        val.status = "Rejected";
-      }
-      if (val.status === "delivered") {
-        val.status = "Delivered";
-      }
-    });
-
     let arrMap = this.state.roleAdmin == 2 ? columnsSuper : columns;
 
     return (
       <>
-        {this.state.loading ? <LoaderCompAdmin /> : null}
+        {
+          <div className={classes.root}>
+            <Snackbar
+              open={openSnack}
+              autoHideDuration={10000}
+              onClose={this.handleSnack}
+            >
+              <Alert
+                onClose={this.handleSnack}
+                severity="success"
+              >
+                Confirmation is successful!
+              </Alert>
+            </Snackbar>
+          </div>
+        }
+        {
+          <div className={classes.root}>
+            <Snackbar
+              open={openSnackRejected}
+              autoHideDuration={10000}
+              onClose={this.handleSnackRejected}
+            >
+              <Alert
+                onClose={this.handleSnackRejected}
+                severity="info"
+              >
+                Transaction has been rejected!
+              </Alert>
+            </Snackbar>
+          </div>
+        }
+        {
+          <div>
+            <Dialog
+              open={openDialogConfirm}
+              onClose={this.handleDialogCofirm}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">
+                Do you want to confirm this transaction?
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  The transaction will be entered into the processing component
+                  and checked first wheter the stock in warehouse can reach
+                  customer requests, and after tha the next process will take
+                  place.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.onCofirmClick} style={{color: "#4aa96c"}}>Confirm</Button>
+                <Button onClick={this.handleDialogCofirm}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        }
+        {
+          <div>
+            <Dialog
+              open={openDialogRejected}
+              onClose={this.handleRejected}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogTitle id="form-dialog-title">
+                Do you want to reject this transaction?
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  If the transaction is rejected then the transaction can't be
+                  resumed, but can still be accessed on the transaction
+                  component.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.onRejectClick} style={{color: "#da0037"}}>Reject</Button>
+                <Button onClick={this.handleDialogRejected}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        }
         <div className="transaction-container">
           <div className="transaction-content">
             <div className="transaction-content-left">
@@ -504,23 +603,23 @@ class Transaction extends Component {
                 <MenuItem value="All">
                   <span>All</span>
                 </MenuItem>
-                <MenuItem value="Processed">
-                  <span>Processed</span>
+                <MenuItem value="processed">
+                  <span>processed</span>
                 </MenuItem>
-                <MenuItem value="Rejected">
-                  <span>Rejected</span>
+                <MenuItem value="rejected">
+                  <span>rejected</span>
                 </MenuItem>
-                <MenuItem value="Awaiting Confirmation">
-                  <span>Awaiting Confirmation</span>
+                <MenuItem value="awaiting confirmation">
+                  <span>awaiting confirmation</span>
                 </MenuItem>
-                <MenuItem value="Delivered">
-                  <span>Delivered</span>
+                <MenuItem value="delivered">
+                  <span>delivered</span>
                 </MenuItem>
-                <MenuItem value="Awaiting Payment">
-                  <span>Awaiting Payment</span>
+                <MenuItem value="awaiting payment">
+                  <span>awaiting payment</span>
                 </MenuItem>
-                <MenuItem value="Sending">
-                  <span>Sending</span>
+                <MenuItem value="sending">
+                  <span>sending</span>
                 </MenuItem>
               </Select>
             </div>
@@ -541,200 +640,237 @@ class Transaction extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {transaction
-                  .map((row, index) => {
-                    let idDrop = index;
-                    return (
-                      <>
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.id}
-                        >
-                          {arrMap.map((column, index) => {
-                            let value = row[column.id];
-                            let style1 = row.status === "Processed" && column.id === "status";
-                            let style2 = row.status === "Delivered" && column.id === "status";
-                            let style3 = row.status === "Awaiting Confirmation" && column.id === "status";
-                            let style4 = row.status === "Rejected" && column.id === "status";
-                            let style5 = row.status === "Awaiting Payment" && column.id === "status";
-                            let style6 = row.status === "Sending" && column.id === "status";
-                            return (
-                              <StyledTableCell align={column.align}>
-                                <p
-                                  className="transaction-text-2"
-                                  style={{
-                                    textAlign: style1 || style3 || style2 || style4 || style5 || style6 ? "center" : "",
-                                    fontSize: style3 ? '13px' : "",
-                                    backgroundColor: style1 ? "#1859db77" : style2 ? "#4aa96b5e" : style4 ? "#da003773" : style6 ? "#ff77005b" : "none",
-                                    color: style1
-                                      ? "#185adb"
-                                      : style2
-                                      ? "#4aa96c"
-                                      : style4
-                                      ? "#da0037"
-                                      : style6
-                                      ? "#ff7600"
-                                      : column.id === "productName"
-                                      ? "#535353"
-                                      : "#797979",
-                                    fontWeight: style1 || style2 || style3 || style4 || style5 || style6 ? "bold" : 600,
-                                  }}
-                                >
-                                  {column.id === "amountTotal" ? (
-                                    (value =
-                                      currencyFormatter(value).split(",")[0])
-                                  ) : column.id === "drop" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => {
-                                        this.setState({
-                                          open: !open,
-                                          currentOpen: idDrop,
-                                          orders_id: row.orders_id,
-                                        });
-                                      }}
-                                    >
-                                      {open && currentOpen === idDrop ? (
-                                        <KeyboardArrowUpIcon />
-                                      ) : (
-                                        <KeyboardArrowDownIcon />
-                                      )}
-                                    </IconButton>
-                                  ) : column.id === "confirm" &&
-                                    row.status === "Awaiting Confirmation" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => this.onCofirmClick(row)}
-                                    >
-                                      <CheckIcon />
-                                    </IconButton>
-                                  ) : column.id === "reject" &&
-                                    row.status === "Awaiting Confirmation" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => this.onRejectClick(row)}
-                                    >
-                                      <CloseIcon />
-                                    </IconButton>
-                                  ) : (
-                                    value
-                                  )}
-                                </p>
-                              </StyledTableCell>
-                            );
-                          })}
-                        </TableRow>
-
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              paddingRight: 0,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingTop: 0,
-                              border: "none",
-                            }}
-                            colSpan={9}
-                          >
-                            <Collapse
-                              in={open && currentOpen === idDrop}
-                              timeout="auto"
-                              unmountOnExit
-                            >
-                              <Box
+                {transaction.map((row, index) => {
+                  let idDrop = index;
+                  return (
+                    <>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                      >
+                        {arrMap.map((column, index) => {
+                          let value = row[column.id];
+                          let style1 =
+                            row.status === "processed" &&
+                            column.id === "status";
+                          let style2 =
+                            row.status === "delivered" &&
+                            column.id === "status";
+                          let style3 =
+                            row.status === "awaiting confirmation" &&
+                            column.id === "status";
+                          let style4 =
+                            row.status === "rejected" && column.id === "status";
+                          let style5 =
+                            row.status === "awaiting payment" &&
+                            column.id === "status";
+                          let style6 =
+                            row.status === "sending" && column.id === "status";
+                          return (
+                            <StyledTableCell align={column.align}>
+                              <p
+                                className="transaction-text-2"
                                 style={{
-                                  marginBottom: "40px",
-                                  marginTop: "3px",
+                                  textAlign:
+                                    style1 ||
+                                    style3 ||
+                                    style2 ||
+                                    style4 ||
+                                    style5 ||
+                                    style6
+                                      ? "center"
+                                      : "",
+                                  fontSize: style3 ? "13px" : "",
+                                  backgroundColor: style1
+                                    ? "#1859db77"
+                                    : style2
+                                    ? "#4aa96b5e"
+                                    : style4
+                                    ? "#da003773"
+                                    : style6
+                                    ? "#ff77005b"
+                                    : "none",
+                                  color: style1
+                                    ? "#185adb"
+                                    : style2
+                                    ? "#4aa96c"
+                                    : style4
+                                    ? "#da0037"
+                                    : style6
+                                    ? "#ff7600"
+                                    : column.id === "productName"
+                                    ? "#535353"
+                                    : "#797979",
+                                  fontWeight:
+                                    style1 ||
+                                    style2 ||
+                                    style3 ||
+                                    style4 ||
+                                    style5 ||
+                                    style6
+                                      ? "bold"
+                                      : 600,
                                 }}
                               >
-                                <Typography
-                                  variant="h6"
-                                  gutterBottom
-                                  component="div"
-                                  style={{
-                                    paddingLeft: "30px",
-                                    paddingTop: "20px",
-                                  }}
-                                >
-                                  <p
-                                    style={{
-                                      fontSize: "20px",
-                                      fontWeight: "bold",
+                                {column.id === "amountTotal" ? (
+                                  (value =
+                                    currencyFormatter(value).split(",")[0])
+                                ) : column.id === "drop" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => {
+                                      this.setState({
+                                        open: !open,
+                                        currentOpen: idDrop,
+                                        orders_id: row.orders_id,
+                                      });
                                     }}
                                   >
-                                    DETAIL ORDER
-                                  </p>
-                                </Typography>
-                                <Table size="small" aria-label="purchases">
-                                  <TableHead>
-                                    <TableRow>
-                                      {detail.map((column) => (
-                                        <StyledTableCell2
-                                          key={column.id}
-                                          align={column.align}
-                                          style={{ minWidth: column.minWidth }}
-                                        >
-                                          <p className="transaction-text-2">
-                                            {column.label}
-                                          </p>
-                                        </StyledTableCell2>
-                                      ))}
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {transactionDetail.map(
-                                      (rowdetail, index) => {
-                                        return (
-                                          <>
-                                            <TableRow>
-                                              {detail.map((column) => {
-                                                let value =
-                                                  rowdetail[column.id];
-                                                return (
-                                                  <StyledTableCell2
-                                                    align={column.align}
-                                                  >
-                                                    {rowdetail.invoice_number ==
-                                                    row.invoice
-                                                      ? column.id === "price" ||
-                                                        column.id === "amount"
-                                                        ? (value =
-                                                            currencyFormatter(
-                                                              value
-                                                            ).split(",")[0])
-                                                        : value
-                                                      : value}
-                                                    {/* {value} */}
-                                                  </StyledTableCell2>
-                                                );
-                                              })}
-                                            </TableRow>
-                                          </>
-                                        );
-                                      }
+                                    {open && currentOpen === idDrop ? (
+                                      <KeyboardArrowUpIcon />
+                                    ) : (
+                                      <KeyboardArrowDownIcon />
                                     )}
-                                  </TableBody>
-                                </Table>
-                              </Box>
-                            </Collapse>
-                          </TableCell>
-                        </TableRow>
-                      </>
-                    );
-                  })}
+                                  </IconButton>
+                                ) : column.id === "confirm" &&
+                                  row.status === "awaiting confirmation" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => this.handleConfirm(row)}
+                                    style={{
+                                      color: "#4aa96c"
+                                    }}
+                                  >
+                                    <CheckIcon />
+                                  </IconButton>
+                                ) : column.id === "reject" &&
+                                  row.status === "awaiting confirmation" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => this.handleRejected(row)}
+                                    style={{
+                                      color: "#da0037"
+                                    }}
+                                  >
+                                    <CloseIcon />
+                                  </IconButton>
+                                ) : (
+                                  value
+                                )}
+                              </p>
+                            </StyledTableCell>
+                          );
+                        })}
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell
+                          style={{
+                            paddingRight: 0,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingTop: 0,
+                            border: "none",
+                          }}
+                          colSpan={10}
+                        >
+                          <Collapse
+                            in={open && currentOpen === idDrop}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <Box
+                              style={{
+                                marginBottom: "40px",
+                                marginTop: "3px",
+                              }}
+                            >
+                              <Typography
+                                variant="h6"
+                                gutterBottom
+                                component="div"
+                                style={{
+                                  paddingLeft: "30px",
+                                  paddingTop: "20px",
+                                  paddingBottom: "10px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    fontSize: "20px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  DETAIL ORDER
+                                </p>
+                              </Typography>
+                              <Table size="small" aria-label="purchases">
+                                <TableHead>
+                                  <TableRow>
+                                    {detail.map((column) => (
+                                      <StyledTableCell2
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                      >
+                                        <p className="transaction-text-2">
+                                          {column.label}
+                                        </p>
+                                      </StyledTableCell2>
+                                    ))}
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {transactionDetail.map((rowdetail, index) => {
+                                    return (
+                                      <>
+                                        <TableRow>
+                                          {detail.map((column) => {
+                                            let value = rowdetail[column.id];
+                                            return (
+                                              <StyledTableCell2
+                                                align={column.align}
+                                              >
+                                                {rowdetail.invoice_number ==
+                                                row.invoice
+                                                  ? column.id === "price" ||
+                                                    column.id === "amount"
+                                                    ? (value =
+                                                        currencyFormatter(
+                                                          value
+                                                        ).split(",")[0])
+                                                    : value
+                                                  : "loading.."}
+                                                {/* {value} */}
+                                              </StyledTableCell2>
+                                            );
+                                          })}
+                                        </TableRow>
+                                      </>
+                                    );
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </Box>
+                          </Collapse>
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  );
+                })}
               </TableBody>
             </StyledTable>
           </TableContainer>
           <p>
             <TablePagination
               rowsPerPageOptions={[
-                5,
                 10,
+                15,
                 { label: "All", value: this.state.totalData },
               ]}
               component="div"
@@ -752,4 +888,4 @@ class Transaction extends Component {
   }
 }
 
-export default Transaction;
+export default withStyles(useStyles)(Transaction);
