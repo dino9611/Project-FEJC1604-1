@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import ParallaxImg from "../../images/parallax.jpg";
-import { Parallax } from "react-parallax";
 import ChairHome from "../../images/chair-home.jpg";
 import Deal from "../../images/great-deal.png";
 import Design from "../../images/great-design.png";
@@ -17,12 +15,7 @@ class Home extends Component {
     cardText:
       "Far far away, behind the word mountains, far from the countries Vokalia.",
   };
-  onLogout = () => {
-    localStorage.removeItem("TA");
-    localStorage.removeItem("TR");
-    localStorage.removeItem("data");
-    this.props.LogoutAction();
-  };
+
 
   render() {
     return (

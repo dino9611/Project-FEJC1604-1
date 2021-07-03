@@ -107,6 +107,7 @@ export const LoginAdminActionThunk = (input) => {
     axios
       .post(`${API_URL}/admin/login`, data)
       .then((res) => {
+        localStorage.setItem('data', JSON.stringify(res.data));
         localStorage.setItem("TA", res.headers["x-token-access"]);
         localStorage.setItem("TR", res.headers["x-token-refresh"]);
         dispatch({ type: "LOGIN", payload: res.data });

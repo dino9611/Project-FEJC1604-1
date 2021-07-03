@@ -1,0 +1,18 @@
+.logout{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 7px 30px;
+    border-radius: 7px;
+    margin-top: 0px;
+    transition: 800ms;
+}
+
+.logout:hover{
+    background-color:#4a7e9e ;
+    transition: 800ms;
+}
