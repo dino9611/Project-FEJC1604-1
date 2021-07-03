@@ -78,6 +78,7 @@
   box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
   -webkit-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
   -moz-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
+  border-radius: 5px;
 }
 
 .btn-collection-home:hover {

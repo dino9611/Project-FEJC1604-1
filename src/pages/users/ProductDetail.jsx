@@ -124,7 +124,7 @@ class ProductDetail extends Component {
   render() {
     return (
       <div>
-        {this.props.dataUser.loading ? (
+        {/* {this.props.dataUser.loading ? (
           <div className="login-loading">
             <Loader
               type="ThreeDots"
@@ -134,7 +134,7 @@ class ProductDetail extends Component {
               timeout={3000}
             />
           </div>
-        ) : null}
+        ) : null} */}
         <Header />
         <div className="detail-content">
           <div className="detail-content-1">

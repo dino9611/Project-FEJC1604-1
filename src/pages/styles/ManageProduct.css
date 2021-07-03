@@ -64,7 +64,6 @@
 
 .kanan {
   background-color: white;
-  /* position: relative; */
   display: flex;
   flex: 1;
   margin-left: 250px;
@@ -78,7 +77,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: red; */
   width: 88.6%;
   margin: 10px 0px;
 }
@@ -182,10 +180,3 @@
 .page-number li button:focus {
   outline: none;
 }
-
-/* .table-td {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-width: 2px;
-} */

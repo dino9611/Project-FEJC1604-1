@@ -19,6 +19,8 @@ import AdminDashboard from "./pages/admin/WarehouseDashboard";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
+import ModalDP from "./components/ModalDP";
+import Report from "./pages/admin/Report";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -79,6 +81,7 @@ class App extends Component {
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
+
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -97,7 +100,8 @@ class App extends Component {
             <Route path="/admin/home" component={HomeAdmin} />
             <Route path="/admin/transaction" component={AdminTransaction} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
-
+            <Route path="/admin/report" component={Report} />
+            <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -116,6 +120,7 @@ class App extends Component {
             <Route path="/admin/home" component={HomeAdmin} />
             <Route path="/admin/transaction" component={AdminTransaction} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
+            <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />

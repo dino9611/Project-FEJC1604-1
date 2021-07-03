@@ -11,7 +11,9 @@ class Header extends Component {
   };
 
   onLogoutClick = () => {
-    localStorage.removeItem("id");
+    localStorage.removeItem("TA");
+    localStorage.removeItem("TR");
+    localStorage.removeItem("data");
     this.props.LogoutAction();
   };
 
@@ -57,12 +59,14 @@ class Header extends Component {
 
           <div>
             {this.props.dataUser.islogin ? (
-              <button className="log-button" onClick={this.onLogoutClick}>
-                LOGOUT
-              </button>
+              <Link to="/" className="normal-link-header">
+                <button className="log-button" onClick={this.onLogoutClick}>
+                  Logout
+                </button>
+              </Link>
             ) : (
               <Link to="/login" className="normal-link-header">
-                <button className="log-button">LOGIN</button>
+                <button className="log-button">Login</button>
               </Link>
             )}
           </div>
