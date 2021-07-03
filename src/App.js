@@ -73,7 +73,7 @@ class App extends Component {
             <Route path="/history" exact component={History} />
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
-            {/* <Route path="/login" exact component={Login} /> */}
+            <Route path="/login" exact component={Login} />
             <Route
               path="/verified-email/:token"
               component={EmailVerification}
