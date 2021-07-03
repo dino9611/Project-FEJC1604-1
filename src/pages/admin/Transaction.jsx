@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -367,7 +367,7 @@ class Transaction extends Component {
     let arrMap = this.state.roleAdmin == 2 ? columnsSuper : columns;
 
     return (
-      <>
+      <Fragment>
         {this.state.loading ? <LoaderCompAdmin /> : null}
         <div className="transaction-container">
           <div className="transaction-content">
@@ -545,7 +545,7 @@ class Transaction extends Component {
                   .map((row, index) => {
                     let idDrop = index;
                     return (
-                      <>
+                      <Fragment>
                         <TableRow
                           hover
                           role="checkbox"
@@ -571,14 +571,14 @@ class Transaction extends Component {
                                     color: style1
                                       ? "#185adb"
                                       : style2
-                                      ? "#4aa96c"
-                                      : style4
-                                      ? "#da0037"
-                                      : style6
-                                      ? "#ff7600"
-                                      : column.id === "productName"
-                                      ? "#535353"
-                                      : "#797979",
+                                        ? "#4aa96c"
+                                        : style4
+                                          ? "#da0037"
+                                          : style6
+                                            ? "#ff7600"
+                                            : column.id === "productName"
+                                              ? "#535353"
+                                              : "#797979",
                                     fontWeight: style1 || style2 || style3 || style4 || style5 || style6 ? "bold" : 600,
                                   }}
                                 >
@@ -690,7 +690,7 @@ class Transaction extends Component {
                                     {transactionDetail.map(
                                       (rowdetail, index) => {
                                         return (
-                                          <>
+                                          <Fragment>
                                             <TableRow>
                                               {detail.map((column) => {
                                                 let value =
@@ -700,13 +700,13 @@ class Transaction extends Component {
                                                     align={column.align}
                                                   >
                                                     {rowdetail.invoice_number ==
-                                                    row.invoice
+                                                      row.invoice
                                                       ? column.id === "price" ||
                                                         column.id === "amount"
                                                         ? (value =
-                                                            currencyFormatter(
-                                                              value
-                                                            ).split(",")[0])
+                                                          currencyFormatter(
+                                                            value
+                                                          ).split(",")[0])
                                                         : value
                                                       : value}
                                                     {/* {value} */}
@@ -714,7 +714,7 @@ class Transaction extends Component {
                                                 );
                                               })}
                                             </TableRow>
-                                          </>
+                                          </Fragment>
                                         );
                                       }
                                     )}
@@ -724,7 +724,7 @@ class Transaction extends Component {
                             </Collapse>
                           </TableCell>
                         </TableRow>
-                      </>
+                      </Fragment>
                     );
                   })}
               </TableBody>
@@ -747,7 +747,7 @@ class Transaction extends Component {
             />
           </p>
         </div>
-      </>
+      </Fragment>
     );
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Header from "../../components/Header";
 import "../styles/cart.css";
 import { CartAction } from "../../redux/actions";
@@ -473,7 +473,7 @@ class Cart extends Component {
           </div>
           <div>
             {this.state.selected_address.id ===
-            this.state.addresses[index].id ? (
+              this.state.addresses[index].id ? (
               <div
                 style={{
                   color: "#052C43",
@@ -680,7 +680,7 @@ class Cart extends Component {
               </div>
             </div>
           ) : (
-            <>
+            <Fragment>
               <h5 style={{ marginTop: "35px" }}>Shipping Address:</h5>
               <div className="alamat-box">
                 <div style={{ fontWeight: "700" }}>
@@ -723,7 +723,7 @@ class Cart extends Component {
               >
                 Choose Payment
               </button>
-            </>
+            </Fragment>
           )}
         </Container>
       </div>

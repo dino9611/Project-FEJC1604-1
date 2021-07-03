@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Container } from 'reactstrap';
 import '../styles/payment.css';
@@ -144,7 +144,7 @@ class Payment extends Component {
 
     render() {
         return (
-            <>
+            <Fragment>
                 {this.state.loading ? <LoaderComp /> : null}
                 {/* MODAL DETAILS */}
                 <Modal isOpen={this.state.modalDetails} toggle={this.toggle} centered>
@@ -209,7 +209,7 @@ class Payment extends Component {
                     </div>
                     {this.renderPayment()}
                 </Container>
-            </>
+            </Fragment>
         );
     }
 }

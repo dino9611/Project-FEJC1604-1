@@ -81,7 +81,6 @@ class App extends Component {
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
-
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -98,7 +97,7 @@ class App extends Component {
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" component={LoginAdmin} />
             <Route path="/admin/home" component={HomeAdmin} />
-            <Route path="/admin/transaction" component={AdminTransaction} />
+            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/admin/report" component={Report} />
             <Route path="/modalDP" component={ModalDP} />
@@ -118,7 +117,7 @@ class App extends Component {
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" component={LoginAdmin} />
             <Route path="/admin/home" component={HomeAdmin} />
-            <Route path="/admin/transaction" component={AdminTransaction} />
+            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
@@ -152,27 +151,3 @@ const MaptstatetoProps = (state) => {
 };
 export default connect(MaptstatetoProps, { LoginAction })(App);
 
-// return (
-//   <div>
-//     <Switch>
-//       <Route path="/" exact component={Home} />
-//       <Route path="/cart" exact component={Cart} />
-//       <Route path="/history" exact component={History} />
-//       <Route path="/collection" exact component={Collection} />
-//       <Route path="/productDetail/:id" exact component={ProductDetail} />
-//       <Route path="/login" exact component={Login} />
-//       <Route path="/collection" exact component={Collection} />
-//       <Route path="/productDetail/:id" exact component={ProductDetail} />
-//       <Route path="/verified-email/:token" component={EmailVerification} />
-//       <Route path="/address" exact component={AddressList} />
-//       <Route path="/security" exact component={Security} />
-//       <Route path="/admin" exact component={ManageProduct} />
-//       <Route path="/userprofile" exact component={UserProfile} />
-//       <Route path="/admin/login" component={LoginAdmin} />
-//       <Route path="/admin/home" component={HomeAdmin} />
-//       <Route path="/admin/transaction" component={AdminTransaction} />
-//       <Route path="*" component={NotFound} />
-//     </Switch>
-//     <ToastContainer />
-//   </div>
-// );
