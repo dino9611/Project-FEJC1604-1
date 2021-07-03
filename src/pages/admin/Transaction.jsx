@@ -367,7 +367,7 @@ class Transaction extends Component {
     let arrMap = this.state.roleAdmin == 2 ? columnsSuper : columns;
 
     return (
-      <>
+      <React.Fragment>
         {this.state.loading ? <LoaderCompAdmin /> : null}
         <div className="transaction-container">
           <div className="transaction-content">
@@ -541,192 +541,222 @@ class Transaction extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {transaction
-                  .map((row, index) => {
-                    let idDrop = index;
-                    return (
-                      <>
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={row.id}
-                        >
-                          {arrMap.map((column, index) => {
-                            let value = row[column.id];
-                            let style1 = row.status === "Processed" && column.id === "status";
-                            let style2 = row.status === "Delivered" && column.id === "status";
-                            let style3 = row.status === "Awaiting Confirmation" && column.id === "status";
-                            let style4 = row.status === "Rejected" && column.id === "status";
-                            let style5 = row.status === "Awaiting Payment" && column.id === "status";
-                            let style6 = row.status === "Sending" && column.id === "status";
-                            return (
-                              <StyledTableCell align={column.align}>
-                                <p
-                                  className="transaction-text-2"
-                                  style={{
-                                    textAlign: style1 || style3 || style2 || style4 || style5 || style6 ? "center" : "",
-                                    fontSize: style3 ? '13px' : "",
-                                    backgroundColor: style1 ? "#1859db77" : style2 ? "#4aa96b5e" : style4 ? "#da003773" : style6 ? "#ff77005b" : "none",
-                                    color: style1
-                                      ? "#185adb"
-                                      : style2
-                                      ? "#4aa96c"
-                                      : style4
-                                      ? "#da0037"
-                                      : style6
-                                      ? "#ff7600"
-                                      : column.id === "productName"
-                                      ? "#535353"
-                                      : "#797979",
-                                    fontWeight: style1 || style2 || style3 || style4 || style5 || style6 ? "bold" : 600,
-                                  }}
-                                >
-                                  {column.id === "amountTotal" ? (
-                                    (value =
-                                      currencyFormatter(value).split(",")[0])
-                                  ) : column.id === "drop" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => {
-                                        this.setState({
-                                          open: !open,
-                                          currentOpen: idDrop,
-                                          orders_id: row.orders_id,
-                                        });
-                                      }}
-                                    >
-                                      {open && currentOpen === idDrop ? (
-                                        <KeyboardArrowUpIcon />
-                                      ) : (
-                                        <KeyboardArrowDownIcon />
-                                      )}
-                                    </IconButton>
-                                  ) : column.id === "confirm" &&
-                                    row.status === "Awaiting Confirmation" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => this.onCofirmClick(row)}
-                                    >
-                                      <CheckIcon />
-                                    </IconButton>
-                                  ) : column.id === "reject" &&
-                                    row.status === "Awaiting Confirmation" ? (
-                                    <IconButton
-                                      aria-label="expand row"
-                                      size="small"
-                                      onClick={() => this.onRejectClick(row)}
-                                    >
-                                      <CloseIcon />
-                                    </IconButton>
-                                  ) : (
-                                    value
-                                  )}
-                                </p>
-                              </StyledTableCell>
-                            );
-                          })}
-                        </TableRow>
-
-                        <TableRow>
-                          <TableCell
-                            style={{
-                              paddingRight: 0,
-                              paddingLeft: 0,
-                              paddingBottom: 0,
-                              paddingTop: 0,
-                              border: "none",
-                            }}
-                            colSpan={9}
-                          >
-                            <Collapse
-                              in={open && currentOpen === idDrop}
-                              timeout="auto"
-                              unmountOnExit
-                            >
-                              <Box
+                {transaction.map((row, index) => {
+                  let idDrop = index;
+                  return (
+                    <React.Fragment>
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                      >
+                        {arrMap.map((column, index) => {
+                          let value = row[column.id];
+                          let style1 =
+                            row.status === "Processed" &&
+                            column.id === "status";
+                          let style2 =
+                            row.status === "Delivered" &&
+                            column.id === "status";
+                          let style3 =
+                            row.status === "Awaiting Confirmation" &&
+                            column.id === "status";
+                          let style4 =
+                            row.status === "Rejected" && column.id === "status";
+                          let style5 =
+                            row.status === "Awaiting Payment" &&
+                            column.id === "status";
+                          let style6 =
+                            row.status === "Sending" && column.id === "status";
+                          return (
+                            <StyledTableCell align={column.align}>
+                              <p
+                                className="transaction-text-2"
                                 style={{
-                                  marginBottom: "40px",
-                                  marginTop: "3px",
+                                  textAlign:
+                                    style1 ||
+                                    style3 ||
+                                    style2 ||
+                                    style4 ||
+                                    style5 ||
+                                    style6
+                                      ? "center"
+                                      : "",
+                                  fontSize: style3 ? "13px" : "",
+                                  backgroundColor: style1
+                                    ? "#1859db77"
+                                    : style2
+                                    ? "#4aa96b5e"
+                                    : style4
+                                    ? "#da003773"
+                                    : style6
+                                    ? "#ff77005b"
+                                    : "none",
+                                  color: style1
+                                    ? "#185adb"
+                                    : style2
+                                    ? "#4aa96c"
+                                    : style4
+                                    ? "#da0037"
+                                    : style6
+                                    ? "#ff7600"
+                                    : column.id === "productName"
+                                    ? "#535353"
+                                    : "#797979",
+                                  fontWeight:
+                                    style1 ||
+                                    style2 ||
+                                    style3 ||
+                                    style4 ||
+                                    style5 ||
+                                    style6
+                                      ? "bold"
+                                      : 600,
                                 }}
                               >
-                                <Typography
-                                  variant="h6"
-                                  gutterBottom
-                                  component="div"
-                                  style={{
-                                    paddingLeft: "30px",
-                                    paddingTop: "20px",
-                                  }}
-                                >
-                                  <p
-                                    style={{
-                                      fontSize: "20px",
-                                      fontWeight: "bold",
+                                {column.id === "amountTotal" ? (
+                                  (value = currencyFormatter(value).split(
+                                    ","
+                                  )[0])
+                                ) : column.id === "drop" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => {
+                                      this.setState({
+                                        open: !open,
+                                        currentOpen: idDrop,
+                                        orders_id: row.orders_id,
+                                      });
                                     }}
                                   >
-                                    DETAIL ORDER
-                                  </p>
-                                </Typography>
-                                <Table size="small" aria-label="purchases">
-                                  <TableHead>
-                                    <TableRow>
-                                      {detail.map((column) => (
-                                        <StyledTableCell2
-                                          key={column.id}
-                                          align={column.align}
-                                          style={{ minWidth: column.minWidth }}
-                                        >
-                                          <p className="transaction-text-2">
-                                            {column.label}
-                                          </p>
-                                        </StyledTableCell2>
-                                      ))}
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {transactionDetail.map(
-                                      (rowdetail, index) => {
-                                        return (
-                                          <>
-                                            <TableRow>
-                                              {detail.map((column) => {
-                                                let value =
-                                                  rowdetail[column.id];
-                                                return (
-                                                  <StyledTableCell2
-                                                    align={column.align}
-                                                  >
-                                                    {rowdetail.invoice_number ==
-                                                    row.invoice
-                                                      ? column.id === "price" ||
-                                                        column.id === "amount"
-                                                        ? (value =
-                                                            currencyFormatter(
-                                                              value
-                                                            ).split(",")[0])
-                                                        : value
-                                                      : value}
-                                                    {/* {value} */}
-                                                  </StyledTableCell2>
-                                                );
-                                              })}
-                                            </TableRow>
-                                          </>
-                                        );
-                                      }
+                                    {open && currentOpen === idDrop ? (
+                                      <KeyboardArrowUpIcon />
+                                    ) : (
+                                      <KeyboardArrowDownIcon />
                                     )}
-                                  </TableBody>
-                                </Table>
-                              </Box>
-                            </Collapse>
-                          </TableCell>
-                        </TableRow>
-                      </>
-                    );
-                  })}
+                                  </IconButton>
+                                ) : column.id === "confirm" &&
+                                  row.status === "Awaiting Confirmation" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => this.onCofirmClick(row)}
+                                  >
+                                    <CheckIcon />
+                                  </IconButton>
+                                ) : column.id === "reject" &&
+                                  row.status === "Awaiting Confirmation" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => this.onRejectClick(row)}
+                                  >
+                                    <CloseIcon />
+                                  </IconButton>
+                                ) : (
+                                  value
+                                )}
+                              </p>
+                            </StyledTableCell>
+                          );
+                        })}
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell
+                          style={{
+                            paddingRight: 0,
+                            paddingLeft: 0,
+                            paddingBottom: 0,
+                            paddingTop: 0,
+                            border: "none",
+                          }}
+                          colSpan={9}
+                        >
+                          <Collapse
+                            in={open && currentOpen === idDrop}
+                            timeout="auto"
+                            unmountOnExit
+                          >
+                            <Box
+                              style={{
+                                marginBottom: "40px",
+                                marginTop: "3px",
+                              }}
+                            >
+                              <Typography
+                                variant="h6"
+                                gutterBottom
+                                component="div"
+                                style={{
+                                  paddingLeft: "30px",
+                                  paddingTop: "20px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    fontSize: "20px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  DETAIL ORDER
+                                </p>
+                              </Typography>
+                              <Table size="small" aria-label="purchases">
+                                <TableHead>
+                                  <TableRow>
+                                    {detail.map((column) => (
+                                      <StyledTableCell2
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                      >
+                                        <p className="transaction-text-2">
+                                          {column.label}
+                                        </p>
+                                      </StyledTableCell2>
+                                    ))}
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {transactionDetail.map((rowdetail, index) => {
+                                    return (
+                                      <React.Fragment>
+                                        <TableRow>
+                                          {detail.map((column) => {
+                                            let value = rowdetail[column.id];
+                                            return (
+                                              <StyledTableCell2
+                                                align={column.align}
+                                              >
+                                                {rowdetail.invoice_number ==
+                                                row.invoice
+                                                  ? column.id === "price" ||
+                                                    column.id === "amount"
+                                                    ? (value = currencyFormatter(
+                                                        value
+                                                      ).split(",")[0])
+                                                    : value
+                                                  : value}
+                                                {/* {value} */}
+                                              </StyledTableCell2>
+                                            );
+                                          })}
+                                        </TableRow>
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </Box>
+                          </Collapse>
+                        </TableCell>
+                      </TableRow>
+                    </React.Fragment>
+                  );
+                })}
               </TableBody>
             </StyledTable>
           </TableContainer>
@@ -747,7 +777,7 @@ class Transaction extends Component {
             />
           </p>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }
