@@ -110,7 +110,7 @@ export const LoginAdminActionThunk = (input) => {
         localStorage.setItem('data', JSON.stringify(res.data));
         localStorage.setItem("TA", res.headers["x-token-access"]);
         localStorage.setItem("TR", res.headers["x-token-refresh"]);
-        dispatch({ type: "LOGIN", payload: res.data });
+        dispatch({ type: "LOGIN", payload: res.data, message: res.data.message });
       })
       .catch((err) => {
         dispatch({ type: "ERROR", error: err.response.data.message });

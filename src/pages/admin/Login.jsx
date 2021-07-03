@@ -93,6 +93,7 @@ class LoginAdmin extends Component {
                                         <button type="submit" className="login-btn">
                                             Login
                                         </button>
+                                        {/* {this.props.dataAdmin.error} */}
                                     </div>
                                 </div>
 

@@ -523,7 +523,7 @@ class Cart extends Component {
               </div>
             </div>
           ) : (
-            <>
+            <React.Fragment>
               <h5 style={{ marginTop: "35px" }}>Shipping Address:</h5>
               <div className="alamat-box">
                 <div style={{ fontWeight: "700" }}>
@@ -560,7 +560,7 @@ class Cart extends Component {
               >
                 Choose Payment
               </button>
-            </>
+            </React.Fragment>
           )}
         </Container>
       </div>

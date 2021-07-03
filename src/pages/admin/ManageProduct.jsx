@@ -397,7 +397,7 @@ class ManageProd extends Component {
             className="form-control"
             type="number"
             name="quantity"
-            value={this.state.qty[index]?.qty}
+            value={this.state.qty[index].qty}
             placeholder="Quantity"
             onChange={(e) => this.onAddQtyChange(e, index, val.id)}
           />
@@ -580,7 +580,7 @@ class ManageProd extends Component {
                 <button
                   disabled={
                     this.state.page ==
-                    Math.ceil(this.state.totaldata / this.state.limit)
+                      Math.ceil(this.state.totaldata / this.state.limit)
                       ? true
                       : false
                   }

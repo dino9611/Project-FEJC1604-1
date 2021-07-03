@@ -101,7 +101,7 @@ class Registration extends Component {
       return <Redirect to="/" />;
     }
     return (
-      <>
+      <React.Fragment>
         {this.props.dataUser.loading ? <LoaderComp /> : null}
         <div className="regist-content">
           <div className="left-content-regist">
@@ -333,8 +333,8 @@ class Registration extends Component {
                     width: "100%",
                     backgroundColor:
                       this.state.password &&
-                      this.state.email &&
-                      this.state.confirmPassword
+                        this.state.email &&
+                        this.state.confirmPassword
                         ? "#89ADC3"
                         : "#aec7d6",
                     color: "white",
@@ -397,7 +397,7 @@ class Registration extends Component {
             </div>
           </div>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

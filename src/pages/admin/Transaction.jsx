@@ -251,7 +251,7 @@ class Transaction extends Component {
               input={<BootstrapInput />}
             >
               <MenuItem value="" disabled>
-               Show status
+                Show status
               </MenuItem>
               <MenuItem value="All">
                 <span>All</span>
@@ -292,7 +292,7 @@ class Transaction extends Component {
                 .map((row, index) => {
                   let idDrop = index;
                   return (
-                    <>
+                    <React.Fragment>
                       <TableRow
                         hover
                         role="checkbox"
@@ -308,36 +308,36 @@ class Transaction extends Component {
                                 style={{
                                   color:
                                     row.status === "Processed" &&
-                                    column.id === "status"
+                                      column.id === "status"
                                       ? "blue"
                                       : row.status === "Delivered" &&
                                         column.id === "status"
-                                      ? "green"
-                                      : row.status ===
+                                        ? "green"
+                                        : row.status ===
                                           "Awaiting Confirmation" &&
-                                        column.id === "status"
-                                      ? "#5a5a5a"
-                                      : row.status === "Sending" &&
-                                        column.id === "status"
-                                      ? "orange"
-                                      : column.id === "productName"
-                                      ? "#535353"
-                                      : "#797979",
+                                          column.id === "status"
+                                          ? "#5a5a5a"
+                                          : row.status === "Sending" &&
+                                            column.id === "status"
+                                            ? "orange"
+                                            : column.id === "productName"
+                                              ? "#535353"
+                                              : "#797979",
                                   fontWeight:
                                     row.status === "Processed" &&
-                                    column.id === "status"
+                                      column.id === "status"
                                       ? "bold"
                                       : row.status === "Delivered" &&
                                         column.id === "status"
-                                      ? "bold"
-                                      : row.status ===
+                                        ? "bold"
+                                        : row.status ===
                                           "Awaiting Confirmation" &&
-                                        column.id === "status"
-                                      ? "bold"
-                                      : row.status === "Sending" &&
-                                        column.id === "status"
-                                      ? "bold"
-                                      : 600,
+                                          column.id === "status"
+                                          ? "bold"
+                                          : row.status === "Sending" &&
+                                            column.id === "status"
+                                            ? "bold"
+                                            : 600,
                                 }}
                               >
                                 {column.id === "amount" ? (
@@ -385,8 +385,8 @@ class Transaction extends Component {
                             timeout="auto"
                             unmountOnExit
                           >
-                            <Box style={{ backgroundColor: "white", marginBottom: '3px', marginTop: "3px"}}>
-                              
+                            <Box style={{ backgroundColor: "white", marginBottom: '3px', marginTop: "3px" }}>
+
                               <Table size="small" aria-label="purchases">
                                 <TableHead>
                                   <TableRow>
@@ -411,15 +411,15 @@ class Transaction extends Component {
                                         <p>
                                           {column.id === "amount"
                                             ? (value =
-                                                currencyFormatter(value).split(
-                                                  ","
-                                                )[0])
+                                              currencyFormatter(value).split(
+                                                ","
+                                              )[0])
                                             : column.id == "price"
-                                            ? (value =
+                                              ? (value =
                                                 currencyFormatter(value).split(
                                                   ","
                                                 )[0])
-                                            : value}
+                                              : value}
                                         </p>
                                       </StyledTableCell2>
                                     );
@@ -430,7 +430,7 @@ class Transaction extends Component {
                           </Collapse>
                         </TableCell>
                       </TableRow>
-                    </>
+                    </React.Fragment>
                   );
                 })}
             </TableBody>
