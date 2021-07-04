@@ -19,7 +19,6 @@ import AdminDashboard from "./pages/admin/WarehouseDashboard";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
-import ModalDP from "./components/ModalDP";
 import Report from "./pages/admin/Report";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +53,7 @@ class App extends Component {
         this.setState({ loading: false });
       });
   }
-  // PJ-8 As a non-admin, I can not access any the web app's admin dashboard
+
   render() {
     if (this.state.loading) {
       return <LoaderComp />;
@@ -62,7 +61,6 @@ class App extends Component {
 
     const { role } = this.props.dataUser;
 
-    // ini untuk user yang sudah terdaftar dan sudah login
     if (role === 1) {
       return (
         <div>
@@ -72,7 +70,7 @@ class App extends Component {
             <Route path="/history" exact component={History} />
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
-            {/* <Route path="/login" exact component={Login} /> */}
+            <Route path="/login" exact component={Login} />
             <Route
               path="/verified-email/:token"
               component={EmailVerification}
@@ -81,7 +79,7 @@ class App extends Component {
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
-            <Route path="*" component={NotFound} />
+            <Route path="*" exact component={NotFound} />
           </Switch>
           <ToastContainer />
         </div>
@@ -95,12 +93,10 @@ class App extends Component {
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin" exact component={ManageProduct} />
-            <Route path="/admin/login" component={LoginAdmin} />
-            <Route path="/admin/home" component={HomeAdmin} />
-            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
+            <Route path="/admin/login" exact component={LoginAdmin} />
+            <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/admin/report" component={Report} />
-            <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -115,11 +111,9 @@ class App extends Component {
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin" exact component={ManageProduct} />
-            <Route path="/admin/login" component={LoginAdmin} />
-            <Route path="/admin/home" component={HomeAdmin} />
-            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
+            <Route path="/admin/login" exact component={LoginAdmin} />
+            <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
-            <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -134,7 +128,6 @@ class App extends Component {
           <Route path="/productDetail/:id" exact component={ProductDetail} />
           <Route path="/registration" exact component={Registration} />
           <Route path="/login" exact component={Login} />
-          <Route path="/verified-email/:token" component={EmailVerification} />
           <Route path="/admin/login" exact component={LoginAdmin} />
           <Route path="*" component={NotFound} />
         </Switch>
