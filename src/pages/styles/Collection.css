@@ -38,10 +38,13 @@
 .filter-content-collection {
   width: 87.5%;
   margin-bottom: 2%;
-  height: 6vh;
+  height: 45px;
   display: flex;
   justify-content: space-between;
-  background-color: lightblue;
+}
+
+.dropdown-collection {
+  margin-right: 10px;
 }
 
 .totalprod-info-collection > p {
@@ -51,31 +54,39 @@
 }
 
 .search-content-collection {
-  background-color: indianred;
   display: flex;
-  width: 50%;
-}
-
-.dropdown-collection {
-  background-color: khaki;
 }
 
 .searchbar-content-collection {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
+  width: 100%;
   height: 100%;
-  padding: 0 1%;
-  border: solid rgba(128, 128, 128, 0.726);
+  justify-content: space-between;
+  border: solid gainsboro;
   border-width: 1px;
-  border-radius: 3px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.searchbar-content-collection:focus-within {
+  border: solid 2px #d4eaf5;
 }
 
 .searchbar-collection {
   border: none;
   outline: none;
-  background-color: transparent;
+  margin: 5px 10px;
+}
+
+.searchbar-collection:focus {
+  width: 250px;
+}
+
+.search-logo-collection {
+  display: flex;
+  justify-content: center;
+  background-color: whitesmoke;
+  width: 50px;
 }
 
 .card-content {
@@ -84,7 +95,6 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-column-gap: 30px;
   grid-row-gap: 30px;
-  /* background-color: tomato; */
   margin-bottom: 30px;
 }
 
@@ -118,7 +128,6 @@
 }
 
 .card-name-content > p:first-child {
-  /* color: var(--textprimary); */
   color: grey;
   letter-spacing: -1px;
   font-weight: bold;
@@ -126,14 +135,12 @@
 }
 
 .card-name-content > p:last-child {
-  /* color: var(--textprimary); */
   color: grey;
   margin-top: -20px;
 }
 
 .card-price-content > p {
   font-size: 1.5rem;
-  /* color: var(--textprimary); */
   color: #89adc3;
   width: fit-content;
   letter-spacing: -1px;

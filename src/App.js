@@ -78,6 +78,7 @@ class App extends Component {
           <Route path="/admin/home" component={HomeAdmin} />
           <Route path="/admin/transaction" component={AdminTransaction} />
           <Route path="/admin/report" component={Report} />
+          {/* <Route path="/admin/itemsFlow" component={AdminInOut} /> */}
           <Route path="/modalDP" component={ModalDP} />
         </Switch>
         <ToastContainer />

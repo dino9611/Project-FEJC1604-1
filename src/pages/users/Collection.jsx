@@ -4,6 +4,7 @@ import Header from "../../components/Header";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { BsChevronRight, BsChevronLeft, BsSearch } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
 import { API_URL, currencyFormatter } from "../../helper";
 import { withStyles } from "@material-ui/core/styles";
 import { Select, MenuItem, InputBase } from "@material-ui/core";
@@ -19,7 +20,10 @@ class Collection extends Component {
     maxPage: 5,
     pageLimit: 5,
     categories: [],
+    // filter
     statusCategory: [],
+    sortPrice: [],
+    searchInput: "",
   };
 
   componentDidMount() {
@@ -48,7 +52,9 @@ class Collection extends Component {
   componentDidUpdate(prevprops, prevstate) {
     if (
       this.state.page !== prevstate.page ||
-      this.state.statusCategory !== prevstate.statusCategory
+      this.state.statusCategory !== prevstate.statusCategory ||
+      this.state.searchInput !== prevstate.searchInput ||
+      this.state.sortPrice !== prevstate.sortPrice
     ) {
       Axios.get(
         `${API_URL}/product/paging?pages=${this.state.page}&limit=${this.state.limit}`,
@@ -58,6 +64,8 @@ class Collection extends Component {
               this.state.statusCategory === "All"
                 ? ""
                 : this.state.statusCategory,
+            search: this.state.searchInput,
+            price: this.state.sortPrice === "All" ? "" : this.state.sortPrice,
           },
         }
       )
@@ -168,15 +176,23 @@ class Collection extends Component {
     this.setState({ statusCategory: e.target.value });
   };
 
+  searchChange = (e) => {
+    this.setState({ searchInput: e.target.value });
+  };
+
+  priceChange = (e) => {
+    this.setState({ sortPrice: e.target.value });
+  };
+
   render() {
     const BootstrapInput = withStyles(() => ({
       input: {
         position: "relative",
         backgroundColor: "none",
         border: "none",
-        width: "200px",
+        width: "150px",
         fontSize: "1rem",
-        color: "#e8e8e8",
+        color: "gainsboro",
         background: "none",
       },
     }))(InputBase);
@@ -193,6 +209,22 @@ class Collection extends Component {
                 <p>Total Products {this.state.totaldata}</p>
               </div>
               <div className="search-content-collection">
+                <div className="dropdown-collection">
+                  <Select
+                    input={<BootstrapInput />}
+                    value={this.state.sortPrice}
+                    onChange={this.priceChange}
+                    displayEmpty
+                    className="history-select-status"
+                  >
+                    <MenuItem value="" disabled>
+                      Sort price
+                    </MenuItem>
+                    <MenuItem value="All">All Price</MenuItem>
+                    <MenuItem value="asc">Lowest - Highest</MenuItem>
+                    <MenuItem value="desc">Highest - Lowest</MenuItem>
+                  </Select>
+                </div>
                 <div className="dropdown-collection">
                   <Select
                     input={<BootstrapInput />}
@@ -213,15 +245,19 @@ class Collection extends Component {
                     className="searchbar-collection"
                     type="text"
                     placeholder="Search..."
+                    value={this.state.searchInput}
+                    onChange={this.searchChange}
                   />
-                  <BsSearch
-                    style={{
-                      fontSize: "1.5rem",
-                      color: "black",
-                      // marginLeft: "4%",
-                      color: "grey",
-                    }}
-                  />
+                  <div className="search-logo-collection">
+                    <FiSearch
+                      style={{
+                        fontSize: "1.2rem",
+                        color: "black",
+                        height: "100%",
+                        color: "grey",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

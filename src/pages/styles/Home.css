@@ -9,6 +9,8 @@
 
 .jumbotron-one-home {
   display: flex;
+  height: 100vh;
+  background-color: red;
 }
 
 .jumbotron-two-home {
@@ -39,11 +41,12 @@
 
 .right-content-home {
   background-color: #89adc3;
+  overflow: hidden;
   flex: 1;
 }
 
 .chair-home {
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
 }
 
