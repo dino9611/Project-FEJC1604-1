@@ -386,7 +386,7 @@ class Transaction extends Component {
     let arrMap = this.state.roleAdmin == 2 ? columnsSuper : columns;
 
     return (
-      <>
+      <React.Fragment>
         {
           <div className={classes.root}>
             <Snackbar
@@ -394,10 +394,7 @@ class Transaction extends Component {
               autoHideDuration={10000}
               onClose={this.handleSnack}
             >
-              <Alert
-                onClose={this.handleSnack}
-                severity="success"
-              >
+              <Alert onClose={this.handleSnack} severity="success">
                 Confirmation is successful!
               </Alert>
             </Snackbar>
@@ -410,10 +407,7 @@ class Transaction extends Component {
               autoHideDuration={10000}
               onClose={this.handleSnackRejected}
             >
-              <Alert
-                onClose={this.handleSnackRejected}
-                severity="info"
-              >
+              <Alert onClose={this.handleSnackRejected} severity="info">
                 Transaction has been rejected!
               </Alert>
             </Snackbar>
@@ -438,7 +432,12 @@ class Transaction extends Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.onCofirmClick} style={{color: "#4aa96c"}}>Confirm</Button>
+                <Button
+                  onClick={this.onCofirmClick}
+                  style={{ color: "#4aa96c" }}
+                >
+                  Confirm
+                </Button>
                 <Button onClick={this.handleDialogCofirm}>Cancel</Button>
               </DialogActions>
             </Dialog>
@@ -462,7 +461,12 @@ class Transaction extends Component {
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.onRejectClick} style={{color: "#da0037"}}>Reject</Button>
+                <Button
+                  onClick={this.onRejectClick}
+                  style={{ color: "#da0037" }}
+                >
+                  Reject
+                </Button>
                 <Button onClick={this.handleDialogRejected}>Cancel</Button>
               </DialogActions>
             </Dialog>
@@ -643,7 +647,7 @@ class Transaction extends Component {
                 {transaction.map((row, index) => {
                   let idDrop = index;
                   return (
-                    <>
+                    <React.Fragment>
                       <TableRow
                         hover
                         role="checkbox"
@@ -715,8 +719,9 @@ class Transaction extends Component {
                                 }}
                               >
                                 {column.id === "amountTotal" ? (
-                                  (value =
-                                    currencyFormatter(value).split(",")[0])
+                                  (value = currencyFormatter(value).split(
+                                    ","
+                                  )[0])
                                 ) : column.id === "drop" ? (
                                   <IconButton
                                     aria-label="expand row"
@@ -742,7 +747,7 @@ class Transaction extends Component {
                                     size="small"
                                     onClick={() => this.handleConfirm(row)}
                                     style={{
-                                      color: "#4aa96c"
+                                      color: "#4aa96c",
                                     }}
                                   >
                                     <CheckIcon />
@@ -754,7 +759,7 @@ class Transaction extends Component {
                                     size="small"
                                     onClick={() => this.handleRejected(row)}
                                     style={{
-                                      color: "#da0037"
+                                      color: "#da0037",
                                     }}
                                   >
                                     <CloseIcon />
@@ -828,7 +833,7 @@ class Transaction extends Component {
                                 <TableBody>
                                   {transactionDetail.map((rowdetail, index) => {
                                     return (
-                                      <>
+                                      <React.Fragment>
                                         <TableRow>
                                           {detail.map((column) => {
                                             let value = rowdetail[column.id];
@@ -840,10 +845,9 @@ class Transaction extends Component {
                                                 row.invoice
                                                   ? column.id === "price" ||
                                                     column.id === "amount"
-                                                    ? (value =
-                                                        currencyFormatter(
-                                                          value
-                                                        ).split(",")[0])
+                                                    ? (value = currencyFormatter(
+                                                        value
+                                                      ).split(",")[0])
                                                     : value
                                                   : "loading.."}
                                                 {/* {value} */}
@@ -851,7 +855,7 @@ class Transaction extends Component {
                                             );
                                           })}
                                         </TableRow>
-                                      </>
+                                      </React.Fragment>
                                     );
                                   })}
                                 </TableBody>
@@ -860,7 +864,7 @@ class Transaction extends Component {
                           </Collapse>
                         </TableCell>
                       </TableRow>
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </TableBody>
@@ -883,7 +887,7 @@ class Transaction extends Component {
             />
           </p>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

@@ -4,6 +4,7 @@ import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import Loader from "react-loader-spinner";
+import { connect } from "react-redux";
 import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
@@ -177,7 +178,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                      this.state.product.quantity == null
+                    this.state.product.quantity == null
                       ? true
                       : false
                   }

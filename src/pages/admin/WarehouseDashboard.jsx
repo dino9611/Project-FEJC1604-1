@@ -4,12 +4,12 @@ import { API_URL } from "../../helper";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import SettingsIcon from '@material-ui/icons/Settings';
+import SettingsIcon from "@material-ui/icons/Settings";
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
-
+import { Switch, Route } from "react-router-dom";
 class WarehouseDashboard extends Component {
   state = {
     transactionComp: true,
@@ -21,6 +21,7 @@ class WarehouseDashboard extends Component {
   };
 
   async componentDidMount() {
+    console.log(this.props.match.params.status);
     try {
       let tokenAccess = localStorage.getItem("TA");
       let res = await axios.get(`${API_URL}/admin/data-admin`, {
@@ -100,7 +101,7 @@ class WarehouseDashboard extends Component {
               </ButtonBase>
 
               {role == 2 ? null : (
-                <>
+                <React.Fragment>
                   <ButtonBase
                     disableRipple
                     style={{
@@ -137,7 +138,7 @@ class WarehouseDashboard extends Component {
                     />
                     Processing
                   </ButtonBase>
-                </>
+                </React.Fragment>
               )}
 
               <div className="wh-sb-admin-information">
@@ -158,9 +159,28 @@ class WarehouseDashboard extends Component {
           </div>
         </div>
         <div className="whdashboard-content">
-          {transactionComp ? <Transaction /> : null}
+          <Switch>
+            <Route
+              path="/admin/dashboard/trans"
+              exact
+              component={Transaction}
+            />
+            <Route
+              path="/admin/dashboard/processing"
+              exact
+              component={Processing}
+            />
+            <Route
+              path="/admin/dashboard/request"
+              exact
+              component={() => {
+                return <h1>request comp</h1>;
+              }}
+            />
+          </Switch>
+          {/* {transactionComp ? <Transaction /> : null}
           {requestComp ? <h1>request comp</h1> : null}
-          {processingComp ? <Processing /> : null}
+          {processingComp ? <Processing /> : null} */}
         </div>
       </div>
     );

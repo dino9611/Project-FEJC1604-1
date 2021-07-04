@@ -460,7 +460,7 @@ class Processing extends Component {
     }))(Table);
 
     return (
-      <>
+      <React.Fragment>
         {
           <div className={classes.root}>
             <Snackbar
@@ -513,7 +513,7 @@ class Processing extends Component {
                 {transaction.map((row, index) => {
                   let idDrop = index;
                   return (
-                    <>
+                    <React.Fragment>
                       <TableRow
                         hover
                         role="checkbox"
@@ -543,8 +543,9 @@ class Processing extends Component {
                                 }}
                               >
                                 {column.id === "amountTotal" ? (
-                                  (value =
-                                    currencyFormatter(value).split(",")[0])
+                                  (value = currencyFormatter(value).split(
+                                    ","
+                                  )[0])
                                 ) : column.id === "drop" ? (
                                   <IconButton
                                     aria-label="expand row"
@@ -632,7 +633,7 @@ class Processing extends Component {
                                 <TableBody>
                                   {transactionDetail.map((rowdetail, index) => {
                                     return (
-                                      <>
+                                      <React.Fragment>
                                         <TableRow>
                                           {detail.map((column) => {
                                             let value = rowdetail[column.id];
@@ -641,7 +642,7 @@ class Processing extends Component {
                                                 align={column.align}
                                               >
                                                 {column.id === "request" ? (
-                                                  <>
+                                                  <React.Fragment>
                                                     {rowdetail.on_request ? (
                                                       <div
                                                         style={{
@@ -685,7 +686,7 @@ class Processing extends Component {
                                                         )}
                                                       </IconButton>
                                                     )}
-                                                  </>
+                                                  </React.Fragment>
                                                 ) : (
                                                   value
                                                 )}
@@ -693,7 +694,7 @@ class Processing extends Component {
                                             );
                                           })}
                                         </TableRow>
-                                      </>
+                                      </React.Fragment>
                                     );
                                   })}
                                 </TableBody>
@@ -703,7 +704,7 @@ class Processing extends Component {
                           </Collapse>
                         </TableCell>
                       </TableRow>
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </TableBody>
@@ -726,7 +727,7 @@ class Processing extends Component {
             />
           </p>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

@@ -43,7 +43,7 @@ class Header extends Component {
               Cart
             </a>
           )}
-          {/* {this.props.dataUser.islogin ? (
+          {this.props.dataUser.islogin ? (
             <Link to="/history" className="normal-link-header">
               <a>History</a>
             </Link>
@@ -54,7 +54,7 @@ class Header extends Component {
             >
               History
             </a>
-          )} */}
+          )}
           <div>
             {this.props.dataUser.islogin ? (
               <Link to="/" className="normal-link-header">
