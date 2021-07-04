@@ -4,13 +4,11 @@ import "../styles/cart.css";
 import { CartAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import {
-  Table,
   Container,
   Modal,
   ModalBody,
   ModalHeader,
   ModalFooter,
-  Alert,
 } from "reactstrap";
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -686,12 +684,6 @@ class Cart extends Component {
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
               <div className="table-margin">{this.renderCart()}</div>
-              {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                          <div style={{ flex: 1, background: 'yellow', paddingLeft: '500px' }}>
-                              TOTAL
-                          </div>
-                          <div style={{ flex: 1, background: 'tomato' }}>{currencyFormatter(this.renderTotal())}</div>
-                      </div> */}
               <button
                 className="checkout-btn"
                 style={{ marginTop: "20px" }}
