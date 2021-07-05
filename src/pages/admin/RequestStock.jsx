@@ -301,8 +301,8 @@ class RequestStock extends Component {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  The stock of these item will
-                  decrease in your warehouse after you do this action..
+                  The stock of these item will decrease in your warehouse after
+                  you do this action..
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -330,9 +330,8 @@ class RequestStock extends Component {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  The item requested by the original warehouse
-                  will be canceled and the warehouse will not receive stock
-                  from you..
+                  The item requested by the original warehouse will be canceled
+                  and the warehouse will not receive stock from you..
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -363,17 +362,29 @@ class RequestStock extends Component {
             <TableContainer>
               <StyledTable stickyHeader aria-label="sticky table">
                 <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <StyledTableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        <p className="transaction-text-2">{column.label}</p>
-                      </StyledTableCell>
-                    ))}
-                  </TableRow>
+                  {request_list.length == 0 ? (
+                    <div
+                      style={{
+                        margin: 20,
+                      }}
+                    >
+                      <p style={{ fontSize: "14px" }}>
+                         Table is empty.. no transaction yet on this section.
+                      </p>
+                    </div>
+                  ) : (
+                    <TableRow>
+                      {columns.map((column) => (
+                        <StyledTableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          <p className="transaction-text-2">{column.label}</p>
+                        </StyledTableCell>
+                      ))}
+                    </TableRow>
+                  )}
                 </TableHead>
                 <TableBody>
                   {request_list.map((row, index) => {
@@ -423,7 +434,8 @@ class RequestStock extends Component {
                                       style1 || style2 || style3 ? "bold" : 600,
                                   }}
                                 >
-                                  {column.id === "accept" && row.status === "propose" ? (
+                                  {column.id === "accept" &&
+                                  row.status === "propose" ? (
                                     <IconButton
                                       aria-label="expand row"
                                       size="small"
@@ -432,9 +444,12 @@ class RequestStock extends Component {
                                         color: "#4aa96c",
                                       }}
                                     >
-                                      <DoneAllIcon style={{fontSize: "19px"}} />
+                                      <DoneAllIcon
+                                        style={{ fontSize: "19px" }}
+                                      />
                                     </IconButton>
-                                  ) : column.id === "reject" && row.status === "propose" ? (
+                                  ) : column.id === "reject" &&
+                                    row.status === "propose" ? (
                                     <IconButton
                                       aria-label="expand row"
                                       size="small"
@@ -445,7 +460,7 @@ class RequestStock extends Component {
                                         color: "#da0037",
                                       }}
                                     >
-                                      <CloseIcon style={{fontSize: "19px"}} />
+                                      <CloseIcon style={{ fontSize: "19px" }} />
                                     </IconButton>
                                   ) : (
                                     value

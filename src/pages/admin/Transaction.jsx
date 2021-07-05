@@ -51,6 +51,7 @@ class Transaction extends Component {
     open: false,
     openDialogConfirm: false,
     openDialogRejected: false,
+    openDialogBukti: false,
     openSnack: false,
     openSnackRejected: false,
     loading: false,
@@ -62,21 +63,22 @@ class Transaction extends Component {
     totalData: 0,
     orders_id: 0,
     roleAdmin: 0,
-    confirmOrRejectedId: 0
+    confirmOrRejectedId: 0,
+    bukti: "",
   };
 
   async componentDidUpdate(prevProps, prevState) {
     try {
       if (
-        prevState.page != this.state.page ||
-        prevState.statusTransaction != this.state.statusTransaction ||
-        prevState.rowsPerPage != this.state.rowsPerPage ||
-        prevState.orders_id != this.state.orders_id ||
-        prevState.monthFrom != this.state.monthFrom ||
-        prevState.monthTo != this.state.monthTo ||
-        prevState.warehouse_id != this.state.warehouse_id ||
-        prevState.openSnackRejected != this.state.openSnackRejected ||
-        prevState.openSnack != this.state.openSnack
+        prevState.page !== this.state.page ||
+        prevState.statusTransaction !== this.state.statusTransaction ||
+        prevState.rowsPerPage !== this.state.rowsPerPage ||
+        prevState.orders_id !== this.state.orders_id ||
+        prevState.monthFrom !== this.state.monthFrom ||
+        prevState.monthTo !== this.state.monthTo ||
+        prevState.warehouse_id !== this.state.warehouse_id ||
+        prevState.openSnackRejected !== this.state.openSnackRejected ||
+        prevState.openSnack !== this.state.openSnack
       ) {
         this.setState({ loading: true });
         let tokenAccess = localStorage.getItem("TA");
@@ -162,6 +164,7 @@ class Transaction extends Component {
         transaction: getTransactionRow.data.dataTransaction,
         totalData: getTransactionRow.data.totalData,
         roleAdmin: getTransactionRow.data.roleAdmin,
+        bukti: getTransactionRow.data.bukti,
       });
     } catch (error) {
       console.log(error);
@@ -183,7 +186,7 @@ class Transaction extends Component {
   };
 
   handleShowProof = (row) => {
-    alert(row.bukti)
+    this.setState({ openDialogBukti: true, bukti: row.bukti });
   };
 
   onCofirmClick = () => {
@@ -249,6 +252,10 @@ class Transaction extends Component {
     });
   };
 
+  handleDialogBukti = () => {
+    this.setState({ openDialogBukti: false });
+  };
+
   handleDialogCofirm = () => {
     this.setState({ openDialogConfirm: false });
   };
@@ -293,6 +300,7 @@ class Transaction extends Component {
       openDialogRejected,
       openSnack,
       openSnackRejected,
+      openDialogBukti,
       currentOpen,
       monthFrom,
       monthTo,
@@ -321,12 +329,13 @@ class Transaction extends Component {
     ];
 
     const columnsSuper = [
-      { id: "dateTime", label: "DATE", minWidth: 80, align: "left" },
-      { id: "invoice", label: "INVOICE", minWidth: 80, align: "left" },
-      { id: "name", label: "CUSTOMER", minWidth: 80, align: "left" },
-      { id: "status", label: "STATUS", minWidth: 130, align: "left" },
+      { id: "dateTime", label: "DATE", minWidth: 130, align: "left" },
+      { id: "invoice", label: "INVOICE", minWidth: 130, align: "left" },
+      { id: "name", label: "CUSTOMER", minWidth: 100, align: "left" },
+      { id: "status", label: "STATUS", minWidth: 80, align: "left" },
       { id: "amountTotal", label: "AMOUNT", minWidth: 130, align: "left" },
       { id: "warehouse", label: "WAREHOUSE", minWidth: 50, align: "left" },
+      { id: "showBukti", minWidth: 10, label: "", align: "right" },
       { id: "drop", label: "", minWidth: 30, align: "center" },
     ];
 
@@ -399,6 +408,24 @@ class Transaction extends Component {
 
     return (
       <React.Fragment>
+        {
+          <div>
+            <Dialog
+              open={openDialogBukti}
+              onClose={this.handleDialogBukti}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogContent>
+                <img
+                  src={API_URL + this.state.bukti}
+                  alt="bukti-pembayaran"
+                  width="100%"
+                  height="auto"
+                />
+              </DialogContent>
+            </Dialog>
+          </div>
+        }
         {
           <div className={classes.root}>
             <Snackbar
@@ -643,17 +670,29 @@ class Transaction extends Component {
           <TableContainer>
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
-                  {arrMap.map((column) => (
-                    <StyledTableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      <p className="transaction-text-2">{column.label}</p>
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
+                {transaction.length == 0 ? (
+                  <div
+                    style={{
+                      margin: 20,
+                    }}
+                  >
+                    <p style={{ fontSize: "14px" }}>
+                      Table is empty.. no transaction yet on this section.
+                    </p>
+                  </div>
+                ) : (
+                  <TableRow>
+                    {arrMap.map((column) => (
+                      <StyledTableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        <p className="transaction-text-2">{column.label}</p>
+                      </StyledTableCell>
+                    ))}
+                  </TableRow>
+                )}
               </TableHead>
               <TableBody>
                 {transaction.map((row, index) => {

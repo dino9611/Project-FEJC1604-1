@@ -204,11 +204,11 @@ class Processing extends Component {
   handleSnack = () => {
     this.setState({ openSnack: false });
   };
-  
+
   handleSnackSending = () => {
     this.setState({ openSnackSending: false });
-  }
-  
+  };
+
   handleClose = () => {
     this.setState({ openDialog: false });
   };
@@ -555,17 +555,29 @@ class Processing extends Component {
           <TableContainer>
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <StyledTableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      <p className="transaction-text-2">{column.label}</p>
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
+                {transaction.length == 0 ? (
+                  <div
+                    style={{
+                      margin: 20,
+                    }}
+                  >
+                    <p style={{ fontSize: "14px" }}>
+                    Table is empty.. no transaction yet on this section.
+                    </p>
+                  </div>
+                ) : (
+                  <TableRow>
+                    {columns.map((column) => (
+                      <StyledTableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        <p className="transaction-text-2">{column.label}</p>
+                      </StyledTableCell>
+                    ))}
+                  </TableRow>
+                )}
               </TableHead>
               <TableBody>
                 {transaction.map((row, index) => {
@@ -629,7 +641,6 @@ class Processing extends Component {
                           );
                         })}
                       </TableRow>
-
                       <TableRow>
                         <TableCell
                           style={{
