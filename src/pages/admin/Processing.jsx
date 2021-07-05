@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/lab";
 import { API_URL, currencyFormatter } from "../../helper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -51,6 +52,7 @@ class Processing extends Component {
     openDialog: false,
     openSnack: false,
     loading: false,
+    stockTomuch: false,
     currentOpen: -1,
     productId: 0,
     totalData: 0,
@@ -69,42 +71,51 @@ class Processing extends Component {
         prevState.openSnack != this.state.openSnack
       ) {
         this.setState({ loading: true });
-        let res = await axios.get(`${API_URL}/admin/transaction`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            status: "processed",
-            page: this.state.page,
-            rowPerPage: this.state.rowsPerPage,
-          },
-        });
+        let res = await axios.get(
+          `${API_URL}/admin-warehouse-transaction/transaction`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              status: "processed",
+              page: this.state.page,
+              rowPerPage: this.state.rowsPerPage,
+            },
+          }
+        );
         this.setState({
           transaction: res.data.dataTransaction,
           totalData: res.data.totalData,
           loading: false,
         });
 
-        let res2 = await axios.get(`${API_URL}/admin/processing-product`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            orders_id: this.state.orders_id,
-          },
-        });
+        let res2 = await axios.get(
+          `${API_URL}/admin-warehouse-processing/processing-product`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              orders_id: this.state.orders_id,
+            },
+          }
+        );
         this.setState({
           transactionDetail: res2.data,
         });
       } else if (prevState.productId != this.state.productId) {
-        let res2 = await axios.get(`${API_URL}/admin/warehouse-location`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            productId: this.state.productId,
-          },
-        });
+        let res2 = await axios.get(
+          `${API_URL}/admin-warehouse-processing/warehouse-location`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              productId: this.state.productId,
+            },
+          }
+        );
         // untuk nambah propery
         let newData = res2.data.map((val) => {
           return {
@@ -125,16 +136,19 @@ class Processing extends Component {
   async componentDidMount() {
     try {
       let tokenAccess = localStorage.getItem("TA");
-      let res = await axios.get(`${API_URL}/admin/transaction`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-        params: {
-          status: "processed",
-          page: this.state.page,
-          rowPerPage: this.state.rowsPerPage,
-        },
-      });
+      let res = await axios.get(
+        `${API_URL}/admin-warehouse-transaction/transaction`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+          params: {
+            status: "processed",
+            page: this.state.page,
+            rowPerPage: this.state.rowsPerPage,
+          },
+        }
+      );
       this.setState({
         transaction: res.data.dataTransaction,
         totalData: res.data.totalData,
@@ -142,11 +156,14 @@ class Processing extends Component {
       });
 
       //get location
-      let res2 = await axios.get(`${API_URL}/admin/warehouse-location`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-      });
+      let res2 = await axios.get(
+        `${API_URL}/admin-warehouse-processing/warehouse-location`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+        }
+      );
       console.log(res2.data);
     } catch (error) {
       console.log(error);
@@ -201,7 +218,7 @@ class Processing extends Component {
       let tokenAccess = localStorage.getItem("TA");
       axios
         .post(
-          `${API_URL}/admin/request-stock`,
+          `${API_URL}/admin-warehouse-processing/request-stock`,
           {
             productId: productId,
             transactionOrder: transactionOrder,
@@ -224,7 +241,7 @@ class Processing extends Component {
           console.log(err);
         });
     } else {
-      alert("kurang pas");
+      this.setState({stockTomuch: true})
     }
   };
 
@@ -232,7 +249,6 @@ class Processing extends Component {
     let transactionDetail = this.state.transactionDetail.filter(
       (val) => val.qty > val.stock
     );
-    let orderId = rowId;
     if (transactionDetail.length) {
       return (
         <div
@@ -305,33 +321,38 @@ class Processing extends Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
+                {this.state.stockTomuch ? (
+                  <Alert severity="error" style={{ marginBottom: "10px" }}>
+                    Stock requests don't mactch your needs.
+                  </Alert>
+                ) : null}
                 <p>
                   Items can't be shipped because there's not enough stock in the
                   warehouse..
                 </p>
                 <p>
                   <span className="less-request">
-                    {" "}
-                    {transactionObj.productName}{" "}
-                  </span>{" "}
-                  only have{" "}
+                    {transactionObj.productName}
+                  </span>
+                  only have
                   <span className="less-request"> {transactionObj.stock} </span>
                   stock in warehouse, meanwhile the order quantity is{" "}
-                  <span className="less-request">
-                    {" "}
-                    {transactionObj.qty}{" "}
-                  </span>{" "}
+                  <span className="less-request">{transactionObj.qty}</span>
                   ... You only need to request{" "}
                   <span className="less-request">
-                    {" "}
-                    {transactionObj.qty - transactionObj.stock}{" "}
+                    {transactionObj.qty - transactionObj.stock}
                   </span>{" "}
                   stock in different warehouse
                 </p>
               </DialogContentText>
               {this.state.transactionOrder.map((val, index) => {
                 return (
-                  <div>
+                  <div
+                    style={{
+                      paddingTop: 15,
+                      paddingBottom: 15,
+                    }}
+                  >
                     <p>
                       Warehouse {val.location} have {val.stock || 0} stock.
                     </p>

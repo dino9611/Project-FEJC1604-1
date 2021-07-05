@@ -7,6 +7,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SettingsIcon from "@material-ui/icons/Settings";
 import Transaction from "./Transaction";
 import Processing from "./Processing";
+import RequestStock from "./RequestStock";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
 import { Switch, Route } from "react-router-dom";
@@ -24,11 +25,14 @@ class WarehouseDashboard extends Component {
     console.log(this.props.match.params.status);
     try {
       let tokenAccess = localStorage.getItem("TA");
-      let res = await axios.get(`${API_URL}/admin/data-admin`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-      });
+      let res = await axios.get(
+        `${API_URL}/admin-warehouse-transaction/data-admin`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+        }
+      );
       this.setState({
         role: res.data[0].role,
         name: res.data[0].name,
@@ -173,9 +177,7 @@ class WarehouseDashboard extends Component {
             <Route
               path="/admin/dashboard/request"
               exact
-              component={() => {
-                return <h1>request comp</h1>;
-              }}
+              component={RequestStock}
             />
           </Switch>
           {/* {transactionComp ? <Transaction /> : null}

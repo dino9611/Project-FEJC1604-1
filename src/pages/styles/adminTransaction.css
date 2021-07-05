@@ -1,13 +1,10 @@
-body {
-  background-color: #f8f8f8 !important;
-}
-
 .transaction-container {
-  height: 100Vh;
-  margin-left: 4.8%;
-  margin-right: 4.8%;
-  margin-bottom: 7%;
-  margin-top: 5.2%;
+  background-color: #f8f8f8 !important;
+  height: auto;
+  padding-left: 4.8%;
+  padding-right: 4.8%;
+  padding-bottom: 40%;
+  padding-top: 5.2%;
 }
 
 .transaction-content {
@@ -16,7 +13,6 @@ body {
 
 .transaction-content-left {
   flex: 1;
-  /* background-color: red; */
 }
 
 .transaction-content-right {
@@ -25,7 +21,6 @@ body {
   align-items: center;
   justify-content: flex-end;
   margin-bottom: 50px;
-  /* background-color: red; */
 }
 
 .transaction-text-1{
