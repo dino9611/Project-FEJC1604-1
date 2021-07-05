@@ -27,6 +27,10 @@ import History from "./pages/users/History";
 import "./App.css";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
+import ForgotPassword from './pages/users/ForgotPassword';
+import ResetPassword from './pages/users/ResetPassword';
+
+
 
 class App extends Component {
   state = {
@@ -79,9 +83,8 @@ class App extends Component {
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
-            <Route path="*" exact component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
-          <ToastContainer />
         </div>
       );
     }
@@ -97,9 +100,8 @@ class App extends Component {
             <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/admin/report" component={Report} />
-            <Route path="*" component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
-          <ToastContainer />
         </div>
       );
     }
@@ -114,9 +116,8 @@ class App extends Component {
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
-            <Route path="*" component={NotFound} />
+            <Route component={NotFound} />
           </Switch>
-          <ToastContainer />
         </div>
       );
     }
@@ -129,9 +130,10 @@ class App extends Component {
           <Route path="/registration" exact component={Registration} />
           <Route path="/login" exact component={Login} />
           <Route path="/admin/login" exact component={LoginAdmin} />
-          <Route path="*" component={NotFound} />
+          <Route path='/forgotPassword' component={ForgotPassword} />
+          <Route path='/resetpassword/:token' component={ResetPassword} />
+          <Route component={NotFound} />
         </Switch>
-        <ToastContainer />
       </div>
     );
   }

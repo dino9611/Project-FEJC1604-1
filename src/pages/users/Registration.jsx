@@ -333,8 +333,8 @@ class Registration extends Component {
                     width: "100%",
                     backgroundColor:
                       this.state.password &&
-                      this.state.email &&
-                      this.state.confirmPassword
+                        this.state.email &&
+                        this.state.confirmPassword
                         ? "#89ADC3"
                         : "#aec7d6",
                     color: "white",

@@ -7,13 +7,11 @@ class HomeAdmin extends Component {
     };
 
     render() {
-        if (this.props.dataAdmin.islogin) {
-            return (
-                <div>
-                    <h1>HOME ADMIN</h1>
-                </div>
-            );
-        }
+        return (
+            <div>
+                <h1>HOME ADMIN</h1>
+            </div>
+        );
     }
 }
 

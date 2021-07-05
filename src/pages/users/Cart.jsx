@@ -134,6 +134,7 @@ class Cart extends Component {
         });
     }
   };
+
   renderCart = () => {
     return this.props.dataUser.cart.map((val, index) => {
       return (
@@ -293,160 +294,6 @@ class Cart extends Component {
     });
   };
 
-  // renderCart = () => {
-  //   return this.props.dataUser.cart.map((val, index) => {
-  //     return (
-  //       <tr key={index}>
-  //         <td className="text-center">{index + 1}</td>
-  //         <td>{val.name}</td>
-  //         <td>
-  //           <img
-  //             src={API_URL + val.image}
-  //             alt={val.name}
-  //             width="200px"
-  //             height="150px"
-  //           />
-  //         </td>
-  //         <td className="text-center">{currencyFormatter(val.price)}</td>
-  //         <td className="text-center">{val.qty}</td>
-  //         <td className="text-center">
-  //           {currencyFormatter(val.price * val.qty)}
-  //         </td>
-  //         <td className="text-center">
-  //           <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" />
-  //           <FiTrash2
-  //             onClick={() => this.deleteItemClick(index)}
-  //             className="delete-btn"
-  //           />
-  //         </td>
-  //       </tr>
-  //     );
-  //   });
-  // };
-
-  renderCart2 = () => {
-    return this.props.dataUser.cart.map((val, index) => {
-      return (
-        <div key={index} className="box-cart">
-          <div
-            style={{
-              // border: '1px solid black',
-              padding: "10px 10px 10px 10px",
-            }}
-          >
-            <div style={{ fontWeight: "600" }}>{`Pesanan ${index + 1}`}</div>
-            <div
-              style={{
-                display: "flex",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-              }}
-            >
-              <div
-                style={{
-                  // background: 'yellow',
-                  flex: 2,
-                }}
-              >
-                <div style={{ display: "flex" }}>
-                  <div
-                    style={{
-                      border: "1px solid black",
-                      borderRadius: "7px",
-                      // background: 'gray'
-                    }}
-                  >
-                    <img
-                      src={API_URL + val.image}
-                      alt={val.name}
-                      width="150px"
-                      height="150px"
-                    />
-                  </div>
-                  <div
-                    style={{
-                      // background: 'green',
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      marginLeft: "20px",
-                    }}
-                  >
-                    <div style={{ fontWeight: "700" }}>{val.name}</div>
-                    <div
-                      style={
-                        {
-                          // color: 'gray'
-                        }
-                      }
-                    >
-                      {val.qty} {val.qty > 1 ? "items" : "item"} x{" "}
-                      {currencyFormatter(val.price)}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        // background: 'purple',
-                        marginTop: "10px",
-                      }}
-                    >
-                      <div>
-                        {" "}
-                        <FiEdit
-                          onClick={() => this.toggleEdit(val)}
-                          className="edit-btn"
-                        />{" "}
-                      </div>
-                      <div>
-                        {" "}
-                        <FiTrash2
-                          onClick={() => this.deleteItemClick(index)}
-                          className="delete-btn"
-                        />{" "}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  // background: 'teal',
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  paddingLeft: "50px",
-                  borderLeft: "2px solid #DBDEE2",
-                }}
-              >
-                <div
-                  style={{
-                    // background: 'tomato',
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    style={
-                      {
-                        // color: 'gray'
-                      }
-                    }
-                  >
-                    Subtotal
-                  </div>
-                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>
-                    {currencyFormatter(val.price * val.qty)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
   renderTotal = () => {
     let total = 0;
     this.props.dataUser.cart.forEach((val) => {
@@ -590,9 +437,10 @@ class Cart extends Component {
     return (
       <div>
         {this.state.loading ? <LoaderComp /> : null}
+
         {/* Modal QTY */}
         <Modal isOpen={this.state.modalVisible} toggle={this.toggle} centered>
-          <ModalHeader>Edit Qty {this.state.productName}</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Edit Qty {this.state.productName}</ModalHeader>
           <ModalBody>
             Stock Available {this.state.stockByProduct}
             <div>
@@ -621,7 +469,7 @@ class Cart extends Component {
           toggle={this.toggleAddress}
           centered
         >
-          <ModalHeader>
+          <ModalHeader toggle={this.toggleAddress}>
             <div className="modaladd-font">
               <div>Select Shipment Address</div>
             </div>
@@ -635,7 +483,7 @@ class Cart extends Component {
           toggle={this.togglePayment}
           centered
         >
-          <ModalHeader>Payment Method</ModalHeader>
+          <ModalHeader toggle={this.togglePayment}>Payment Method</ModalHeader>
           <ModalBody>
             <div style={{ display: "flex" }}>
               <div style={{ flex: 1 }}>Your Total Payment:</div>
@@ -659,7 +507,7 @@ class Cart extends Component {
         <div className="cart-background">
           <Header />
           <div className="section-content">
-            <h1 className="title-top">Cart</h1>
+            {/* <h1 className="title-top">Cart</h1> */}
           </div>
         </div>
         <Container>
@@ -709,7 +557,7 @@ class Cart extends Component {
               <div
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
-              <div className="table-margin">{this.renderCart2()}</div>
+              <div className="table-margin">{this.renderCart()}</div>
               {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                           <div style={{ flex: 1, background: 'yellow', paddingLeft: '500px' }}>
                               TOTAL

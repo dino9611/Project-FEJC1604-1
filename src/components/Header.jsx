@@ -10,8 +10,6 @@ class Header extends Component {
     isOpenModalCH: false,
   };
 
-
-
   onLogoutClick = () => {
     localStorage.removeItem("TA");
     localStorage.removeItem("TR");
@@ -51,12 +49,7 @@ class Header extends Component {
               <a>History</a>
             </Link>
           ) : (
-            <a
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ isOpenModalCH: true })}
-            >
-              History
-            </a>
+            null
           )}
 
           <div>

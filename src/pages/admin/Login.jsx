@@ -3,7 +3,7 @@ import '../styles/adminLogin.css';
 import Loader from "react-loader-spinner";
 import { Form, Button } from 'react-bootstrap';
 import { connect } from "react-redux";
-import { LoginAdminActionThunk } from "../../redux/actions";
+import { LoginAdminActionThunk, ResetActionthunk } from "../../redux/actions";
 import { Redirect } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -85,4 +85,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { LoginAdminActionThunk })(LoginAdmin);
+export default connect(mapStateToProps, { LoginAdminActionThunk, ResetActionthunk })(LoginAdmin);
