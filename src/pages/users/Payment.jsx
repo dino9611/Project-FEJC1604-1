@@ -167,103 +167,76 @@ class Payment extends Component {
     });
   };
 
-  render() {
-    return (
-      <React.Fragment>
-        {this.state.loading ? <LoaderComp /> : null}
-        {/* MODAL DETAILS */}
-        <Modal isOpen={this.state.modalDetails} toggle={this.toggle} centered>
-          <ModalHeader toggle={this.toggle}>
-            <div
-              style={{
-                marginLeft: "150px",
-                color: "#052c43",
-                fontWeight: "650",
-              }}
-            >
-              Payment Details
-            </div>
-          </ModalHeader>
-          <ModalBody>
-            {this.renderDetails()}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px",
-                color: "gray",
-                borderBottom: "1px solid gray",
-              }}
-            >
-              <div>Ongkos Kirim</div>
-              <div>{currencyFormatter(this.state.ongkir)}</div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontWeight: "700",
-                marginTop: "15px",
-              }}
-            >
-              <div>Grand Total</div>
-              <div>
-                {currencyFormatter(this.state.total + this.state.ongkir)}
-              </div>
-            </div>
-          </ModalBody>
-        </Modal>
+    render() {
+        return (
+            <React.Fragment>
+                {this.state.loading ? <LoaderComp /> : null}
+                {/* MODAL DETAILS */}
+                <Modal isOpen={this.state.modalDetails} toggle={this.toggle} centered>
+                    <ModalHeader toggle={this.toggle}>
+                        <div style={{ marginLeft: '150px', color: '#052c43', fontWeight: '650' }}>
+                            Payment Details
+                        </div>
+                    </ModalHeader>
+                    <ModalBody>
+                        {this.renderDetails()}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px', color: 'gray', borderBottom: '1px solid gray' }}>
+                            <div>
+                                Ongkos Kirim
+                            </div>
+                            <div>
+                                {currencyFormatter(this.state.ongkir)}
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: '700', marginTop: '15px' }}>
+                            <div>
+                                Grand Total
+                            </div>
+                            <div>
+                                {currencyFormatter(this.state.total + this.state.ongkir)}
+                            </div>
+                        </div>
+                    </ModalBody>
+                </Modal>
 
-        {/* MODAL UPLOAD PAYMENT */}
-        <Modal
-          isOpen={this.state.modalUpload}
-          toggle={this.toggleUpload}
-          centered
-        >
-          <ModalHeader toggle={this.toggleUpload}>
-            <div
-              style={{
-                marginLeft: "130px",
-                color: "#052c43",
-                fontWeight: "650",
-              }}
-            >
-              Upload Your Payment
-            </div>
-          </ModalHeader>
-          <ModalBody>
-            {this.state.photo ? (
-              <img
-                style={{ marginLeft: "80px", height: "200px" }}
-                src={URL.createObjectURL(this.state.photo)}
-                alt="photo"
-              />
-            ) : null}
-            <input
-              type="file"
-              // placeholder='Input payment'
-              className="form-control mt-3"
-              onChange={this.addFileChange}
-            />
-          </ModalBody>
-          <ModalFooter>
-            <button className="btn-upload" onClick={this.uploadPayment}>
-              Upload
-            </button>
-            <button className="btn-cancel" onClick={this.toggleUpload}>
-              Cancel
-            </button>
-          </ModalFooter>
-        </Modal>
-        <Container className="container-1">
-          <div className="box-1">
-            <div>Finish your payment</div>
-          </div>
-          {this.renderPayment()}
-        </Container>
-      </React.Fragment>
-    );
-  }
+                {/* MODAL UPLOAD PAYMENT */}
+                <Modal isOpen={this.state.modalUpload} toggle={this.toggleUpload} centered>
+                    <ModalHeader toggle={this.toggleUpload}>
+                        <div style={{ marginLeft: '130px', color: '#052c43', fontWeight: '650' }}>
+                            Upload Your Payment
+                        </div>
+                    </ModalHeader>
+                    <ModalBody>
+                        {this.state.photo ?
+                            <img
+                                style={{ marginLeft: '80px', height: '200px' }}
+                                src={URL.createObjectURL(this.state.photo)}
+                                alt='photo'
+                            />
+                            :
+                            null
+                        }
+                        <input
+                            type='file'
+                            // placeholder='Input payment'
+                            className='form-control mt-3'
+                            onChange={this.addFileChange}
+                        />
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className="btn-upload" onClick={this.uploadPayment} >Upload</button>
+                        <button className='btn-cancel' onClick={this.toggleUpload}>Cancel</button>
+                    </ModalFooter>
+                </Modal>
+                <Container className='container-1'>
+                    <div className='box-1'>
+                        <div>Finish your payment</div>
+                    </div>
+                    {this.renderPayment()}
+                </Container>
+            </React.Fragment>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {

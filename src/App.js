@@ -98,11 +98,10 @@ class App extends Component {
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" component={LoginAdmin} />
-            <Route path="/admin/home" component={HomeAdmin} />
-            <Route path="/admin/transaction" component={AdminTransaction} />
-            <Route path="/admin/dashboard" component={AdminDashboard} />
-            <Route path="/admin/report" component={Report} />
-            <Route path="/modalDP" component={ModalDP} />
+            <Route path="/admin/home" exact component={HomeAdmin} />
+            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
+            <Route path="/admin/dashboard" exact component={AdminDashboard} />
+            <Route path="/admin/report" exact component={Report} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -118,8 +117,8 @@ class App extends Component {
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" component={LoginAdmin} />
-            <Route path="/admin/home" component={HomeAdmin} />
-            <Route path="/admin/transaction" component={AdminTransaction} />
+            <Route path="/admin/home" exact component={HomeAdmin} />
+            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
