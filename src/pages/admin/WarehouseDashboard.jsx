@@ -5,15 +5,16 @@ import { Switch, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { LogoutAction } from "../../redux/actions";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
+import BallotIcon from '@material-ui/icons/Ballot';
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
+import ManageProduct from "./ManageProduct"
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
 
@@ -165,6 +166,40 @@ class WarehouseDashboard extends Component {
                       Processing
                     </ButtonBase>
                   </Link>
+
+                  <Link
+                    to="/admin/dashboard/manage-product"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          window.location.href ===
+                          "http://localhost:3000/admin/dashboard/manage-product"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <BallotIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            window.location.href ===
+                            "http://localhost:3000/admin/dashboard/manage-product"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Manage Product
+                    </ButtonBase>
+                  </Link>
                 </React.Fragment>
               )}
 
@@ -215,7 +250,10 @@ class WarehouseDashboard extends Component {
         </div>
         <div className="whdashboard-content">
           <Switch>
-            <Route path="/admin/dashboard" exact component={Transaction} />
+            <Route 
+              path="/admin/dashboard"
+              exact 
+              component={Transaction} />
             <Route
               path="/admin/dashboard/requeststock"
               exact
@@ -225,6 +263,11 @@ class WarehouseDashboard extends Component {
               path="/admin/dashboard/processing"
               exact
               component={Processing}
+            />
+            <Route
+              path="/admin/dashboard/manage-product"
+              exact
+              component={ManageProduct}
             />
           </Switch>
         </div>
