@@ -1,4 +1,4 @@
-.overlay-modal {
+.overlay-modal-ch {
   position: fixed;
   display: flex;
   justify-content: center;
@@ -28,12 +28,12 @@
   padding: 20px 50px;
 } */
 
-.modal-image {
+.modal-image-ch {
   margin-top: 6%;
   height: 150px;
 }
 
-.text-1-modal {
+.text-1-modal-ch {
   letter-spacing: -2px;
   color: white;
   font-size: 3rem;
@@ -41,14 +41,14 @@
   margin-bottom: -1px;
 }
 
-.text-2-modal {
+.text-2-modal-ch {
   font-size: 1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.822);
   text-align: center;
 }
 
-.text-3-modal {
+.text-3-modal-ch {
   font-size: 1rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.822);
@@ -57,7 +57,7 @@
   margin-bottom: 5%;
 }
 
-.button-modal {
+.button-modal-ch {
   font-weight: bold;
   background-color: white;
   color: #89adc3;
@@ -76,7 +76,7 @@
   text-decoration: none !important;
 }
 
-.close-button-modal {
+.close-button-modal-ch {
   margin-right: -117%;
   margin-top: -3.8%;
   font-size: 1.8rem;

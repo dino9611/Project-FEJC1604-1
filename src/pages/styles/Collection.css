@@ -13,10 +13,12 @@
 
 .jumbotron-1-collection {
   display: flex;
+  width: 100vw;
 }
 
 .page-2-collection {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   margin-top: 2%;
@@ -36,76 +38,114 @@
 .filter-content-collection {
   width: 87.5%;
   margin-bottom: 2%;
-  height: 6vh;
+  height: 45px;
   display: flex;
   justify-content: space-between;
 }
 
-.filter-dropdown > p {
+.dropdown-collection {
+  margin-right: 10px;
+}
+
+.totalprod-info-collection > p {
   font-weight: bold;
   margin-top: 5%;
   color: var(--textprimary);
 }
 
+.search-content-collection {
+  display: flex;
+}
+
 .searchbar-content-collection {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 20%;
+  width: 100%;
   height: 100%;
-  padding: 0 1%;
-  border: solid rgba(128, 128, 128, 0.726);
+  justify-content: space-between;
+  border: solid gainsboro;
   border-width: 1px;
-  border-radius: 3px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.searchbar-content-collection:focus-within {
+  border: solid 2px #d4eaf5;
 }
 
 .searchbar-collection {
+  background-color: transparent;
   border: none;
   outline: none;
-  background-color: transparent;
+  margin: 5px 10px;
+}
+
+.searchbar-collection:focus {
+  width: 250px;
+}
+
+.search-logo-collection {
+  display: flex;
+  justify-content: center;
+  background-color: whitesmoke;
+  width: 50px;
 }
 
 .card-content {
   width: 87.5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  margin-bottom: 30px;
+}
+
+.render-prod-collection {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  border-radius: 5px;
+  background-color: white;
+  overflow: hidden;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
 }
 
 .render-prod-card {
   height: 250px;
-  width: 250px;
-  margin: 0 10px;
+  width: 100%;
   overflow: hidden;
+  background-color: whitesmoke;
 }
 
 .render-prod-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0 10px;
 }
 
-.card-name-text {
-  color: var(--textprimary);
+.card-name-content {
+  height: 50px;
+  margin-top: 5px;
+}
+
+.card-name-content > p:first-child {
+  color: grey;
   letter-spacing: -1px;
   font-weight: bold;
   font-size: 1.2rem;
 }
 
-.card-category-text {
-  color: var(--textprimary);
+.card-name-content > p:last-child {
+  color: grey;
   margin-top: -20px;
 }
 
-.card-price-content {
-  margin-top: -10px;
-}
-
-.card-price-text {
-  font-size: 1.2rem;
-  color: var(--textprimary);
+.card-price-content > p {
+  font-size: 1.5rem;
+  color: #89adc3;
   width: fit-content;
   letter-spacing: -1px;
   font-weight: bold;
-  margin-bottom: 30px;
 }
 
 .pagination-content {

@@ -6,6 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 import { Select, MenuItem, InputBase } from "@material-ui/core";
 import { FiSearch } from "react-icons/fi";
 import ModalDP from "../../components/ModalDP";
+import Empty from "../../images/history-empty.svg";
+import LoaderComp from "../../components/Loader";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
 
@@ -21,10 +23,12 @@ class History extends Component {
     date: [],
     hour: [],
     statusTransaction: [],
+    searchInput: "",
     loading: false,
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     let tokenAccess = localStorage.getItem("TA");
     Axios.get(`${API_URL}/transaction/history`, {
       headers: {
@@ -32,7 +36,7 @@ class History extends Component {
       },
     })
       .then((res) => {
-        this.setState({ history: res.data });
+        this.setState({ history: res.data, loading: false });
         console.log(res.data);
       })
       .catch((err) => {
@@ -43,7 +47,8 @@ class History extends Component {
   componentDidUpdate(prevprops, prevstate) {
     if (
       (this.state.idProd !== prevstate.idProd && this.state.idProd != 0) ||
-      this.state.statusTransaction != prevstate.statusTransaction
+      this.state.statusTransaction !== prevstate.statusTransaction ||
+      this.state.searchInput !== prevstate.searchInput
     ) {
       this.setState({ loading: true });
       let tokenAccess = localStorage.getItem("TA");
@@ -58,6 +63,7 @@ class History extends Component {
                 this.state.statusTransaction === "All"
                   ? ""
                   : this.state.statusTransaction,
+              search: this.state.searchInput,
             },
           })
             .then((res1) => {
@@ -83,6 +89,10 @@ class History extends Component {
 
   handleChange = (e) => {
     this.setState({ statusTransaction: e.target.value });
+  };
+
+  searchChange = (e) => {
+    this.setState({ searchInput: e.target.value });
   };
 
   detailProduct = (index) => {
@@ -224,6 +234,8 @@ class History extends Component {
                   className="history-searchinput"
                   type="text"
                   placeholder="Search product..."
+                  value={this.state.searchInput}
+                  onChange={this.searchChange}
                 />
                 <FiSearch className="history-searchicon" />
               </div>
@@ -256,7 +268,39 @@ class History extends Component {
                 </Select>
               </div>
             </div>
-            <div>{this.renderHistory()}</div>
+            <div>
+              {this.state.loading ? (
+                <div>
+                  <LoaderComp
+                    type="ThreeDots"
+                    color="#052C43"
+                    height={70}
+                    width={70}
+                    timeout={3000}
+                  />
+                </div>
+              ) : !this.state.history.length ? (
+                <div className="history-empty">
+                  <img src={Empty} alt="no-history-illustration" />
+                  <div className="history-warning">
+                    <p>No Results Found</p>
+                    {this.state.searchInput ? (
+                      <p>
+                        We couldn't find a match for "{this.state.searchInput}".
+                        Please try another search.
+                      </p>
+                    ) : (
+                      <p>
+                        We couldn't find a match for this status. Please try
+                        another search.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                this.renderHistory()
+              )}
+            </div>
           </div>
         </div>
       </div>

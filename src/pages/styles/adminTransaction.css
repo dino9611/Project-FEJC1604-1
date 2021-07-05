@@ -1,9 +1,9 @@
-body {
+/* body {
   background-color: #f8f8f8 !important;
-}
+} */
 
 .transaction-container {
-  height: 100Vh;
+  height: 100vh;
   margin-left: 4.8%;
   margin-right: 4.8%;
   margin-bottom: 7%;
@@ -28,7 +28,7 @@ body {
   /* background-color: red; */
 }
 
-.transaction-text-1{
+.transaction-text-1 {
   display: flex;
   align-items: center;
   font-size: 30px;
