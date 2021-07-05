@@ -70,10 +70,14 @@
  font-size: 15px;
  margin-bottom: 4%;
  font-weight: bold;
- color: #b4b4b4; 
+ color: #535353; 
 }
 
 .wh-sb-admin-warehouse {
   font-size: 15px;
-  color: #b4b4b4; 
+  color: #535353; 
+}
+
+.container-bottom-wh-ds {
+  margin-top: 100% 
 }
