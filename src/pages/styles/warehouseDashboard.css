@@ -1,15 +1,19 @@
 .whdashboard-container {
   display: flex;
+  background-color: #f8f8f8 !important;
 }
 
 .whdashboard-sidebar {
-  flex: 1;
+  height: auto;
+  width: 20%;
+  position: fixed;
   background-color: #f1f1f1;
   box-shadow: -14px 0px 15px #555;
 }
 
 .whdashboard-content {
-  flex: 4.5;
+  width: 80%;
+  margin-left: 20%;
 }
 
 .wh-sidebar-content {

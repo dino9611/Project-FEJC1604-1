@@ -144,7 +144,7 @@ class Payment extends Component {
 
     render() {
         return (
-            <>
+            <React.Fragment>
                 {this.state.loading ? <LoaderComp /> : null}
                 {/* MODAL DETAILS */}
                 <Modal isOpen={this.state.modalDetails} toggle={this.toggle} centered>
@@ -209,7 +209,7 @@ class Payment extends Component {
                     </div>
                     {this.renderPayment()}
                 </Container>
-            </>
+            </React.Fragment>
         );
     }
 }

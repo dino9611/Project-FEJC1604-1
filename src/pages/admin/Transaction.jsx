@@ -79,7 +79,7 @@ class Transaction extends Component {
         this.setState({ loading: true });
         let tokenAccess = localStorage.getItem("TA");
         let getTransactionRow = await axios.get(
-          `${API_URL}/admin/transaction`,
+          `${API_URL}/admin-warehouse-transaction/transaction`,
           {
             headers: {
               Authorization: "Bearer " + tokenAccess,
@@ -108,7 +108,7 @@ class Transaction extends Component {
         });
 
         let getDetailTransactionRow = await axios.get(
-          `${API_URL}/admin/detail-transaction`,
+          `${API_URL}/admin-warehouse-transaction/detail-transaction`,
           {
             headers: {
               Authorization: "Bearer " + tokenAccess,
@@ -140,7 +140,7 @@ class Transaction extends Component {
         warehouse_id,
       } = this.state;
       let tokenAccess = localStorage.getItem("TA");
-      let getTransactionRow = await axios.get(`${API_URL}/admin/transaction`, {
+      let getTransactionRow = await axios.get(`${API_URL}/admin-warehouse-transaction/transaction`, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
@@ -184,7 +184,7 @@ class Transaction extends Component {
       id: confirmOrRejectedId,
     };
     axios
-      .put(`${API_URL}/admin/confirm-transaction`, data, {
+      .put(`${API_URL}/admin-warehouse-transaction/confirm-transaction`, data, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
@@ -208,7 +208,7 @@ class Transaction extends Component {
       id: confirmOrRejectedId,
     };
     axios
-      .put(`${API_URL}/admin/reject-transaction`, data, {
+      .put(`${API_URL}/admin-warehouse-transaction/reject-transaction`, data, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
@@ -386,7 +386,7 @@ class Transaction extends Component {
     let arrMap = this.state.roleAdmin == 2 ? columnsSuper : columns;
 
     return (
-      <>
+      <React.Fragment>
         {
           <div className={classes.root}>
             <Snackbar
@@ -643,7 +643,7 @@ class Transaction extends Component {
                 {transaction.map((row, index) => {
                   let idDrop = index;
                   return (
-                    <>
+                    <React.Fragment>
                       <TableRow
                         hover
                         role="checkbox"
@@ -828,7 +828,7 @@ class Transaction extends Component {
                                 <TableBody>
                                   {transactionDetail.map((rowdetail, index) => {
                                     return (
-                                      <>
+                                      <React.Fragment>
                                         <TableRow>
                                           {detail.map((column) => {
                                             let value = rowdetail[column.id];
@@ -851,7 +851,7 @@ class Transaction extends Component {
                                             );
                                           })}
                                         </TableRow>
-                                      </>
+                                      </React.Fragment>
                                     );
                                   })}
                                 </TableBody>
@@ -860,7 +860,7 @@ class Transaction extends Component {
                           </Collapse>
                         </TableCell>
                       </TableRow>
-                    </>
+                    </React.Fragment>
                   );
                 })}
               </TableBody>
@@ -883,7 +883,7 @@ class Transaction extends Component {
             />
           </p>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

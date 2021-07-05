@@ -7,6 +7,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SettingsIcon from '@material-ui/icons/Settings';
 import Transaction from "./Transaction";
 import Processing from "./Processing";
+import RequestStock from "./RequestStock";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
 
@@ -23,7 +24,7 @@ class WarehouseDashboard extends Component {
   async componentDidMount() {
     try {
       let tokenAccess = localStorage.getItem("TA");
-      let res = await axios.get(`${API_URL}/admin/data-admin`, {
+      let res = await axios.get(`${API_URL}/admin-warehouse-transaction/data-admin`, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
@@ -100,7 +101,7 @@ class WarehouseDashboard extends Component {
               </ButtonBase>
 
               {role == 2 ? null : (
-                <>
+                <React.Fragment>
                   <ButtonBase
                     disableRipple
                     style={{
@@ -137,7 +138,7 @@ class WarehouseDashboard extends Component {
                     />
                     Processing
                   </ButtonBase>
-                </>
+                </React.Fragment>
               )}
 
               <div className="wh-sb-admin-information">
@@ -159,7 +160,7 @@ class WarehouseDashboard extends Component {
         </div>
         <div className="whdashboard-content">
           {transactionComp ? <Transaction /> : null}
-          {requestComp ? <h1>request comp</h1> : null}
+          {requestComp ? <RequestStock /> : null}
           {processingComp ? <Processing /> : null}
         </div>
       </div>
