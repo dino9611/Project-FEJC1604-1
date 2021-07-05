@@ -9,6 +9,10 @@ import ModalDP from "../../components/ModalDP";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
 
+const upperCase = (string) => {
+  return string[0].toUpperCase() + string.slice(1); // buat ngubah nama status jadi otomatis uppercase
+};
+
 class History extends Component {
   state = {
     history: [],
@@ -97,7 +101,7 @@ class History extends Component {
       return (
         <div className="history-list" key={val.id}>
           <div className="history-upper">
-            <div className="history-status">{val.status}</div>
+            <div className="history-status">{upperCase(val.status)}</div>
             <div className="history-date" width="120px">
               {val.date}
             </div>
