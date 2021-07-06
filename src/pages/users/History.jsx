@@ -102,7 +102,7 @@ class History extends Component {
         <div
           className="history-button-detail"
         >
-          Are the item was delivered ?
+          are the item was delivered ?
         </div>
       );
   };
