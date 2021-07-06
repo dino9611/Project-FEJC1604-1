@@ -26,6 +26,7 @@ class History extends Component {
     hour: [],
     statusTransaction: [],
     loading: false,
+    acceptItem: false,
   };
 
   componentDidMount() {
@@ -96,47 +97,60 @@ class History extends Component {
     this.setState({ idProd: idProd, modalDetail: true });
   };
 
+  renderAcceptItem = () => {
+      return (
+        <div
+          className="history-button-detail"
+        >
+          Are the item was delivered ?
+        </div>
+      );
+  };
+
   renderHistory = () => {
     return this.state.history.map((val, index) => {
       return (
-        <div className="history-list" key={val.id}>
-          <div className="history-upper">
-            <div className="history-status">{upperCase(val.status)}</div>
-            <div className="history-date" width="120px">
-              {val.date}
-            </div>
-          </div>
-          <div className="history-bottom">
-            <div className="history-bottom-left">
-              <div className="history-img">
-                <img src={API_URL + val.image} alt={val.name} />
+        <React.Fragment>
+          <div className="history-list" key={val.id}>
+            <div className="history-upper">
+              <div className="history-status">{upperCase(val.status)}</div>
+              <div className="history-date" width="120px">
+                {val.date}
               </div>
-              <div className="history-nameprice">
-                <div className="history-name" width="200px">
-                  {val.name}
+            </div>
+            <div className="history-bottom">
+              <div className="history-bottom-left">
+                <div className="history-img">
+                  <img src={API_URL + val.image} alt={val.name} />
                 </div>
-                <div className="history-price" width="180px">
-                  {val.qty} items x {currencyFormatter(val.price)}
+                <div className="history-nameprice">
+                  <div className="history-name" width="200px">
+                    {val.name}
+                  </div>
+                  <div className="history-price" width="180px">
+                    {val.qty} items x {currencyFormatter(val.price)}
+                  </div>
+                </div>
+              </div>
+              <div className="history-bottom-right">
+                <div className="history-divider" width="100px"></div>
+                <div className="history-totalprice">
+                  <div>Total price</div>
+                  <div>{currencyFormatter(val.total_price)}</div>
                 </div>
               </div>
             </div>
-            <div className="history-bottom-right">
-              <div className="history-divider" width="100px"></div>
-              <div className="history-totalprice">
-                <div>Total price</div>
-                <div>{currencyFormatter(val.total_price)}</div>
+            <div className="history-button-content">
+              {val.status == "sending" ? this.renderAcceptItem() : null}  
+              <div
+                className="history-button-detail"
+                onClick={() => this.detailProduct(index)}
+              >
+                Transaction Detail
               </div>
             </div>
           </div>
-          <div className="history-button-content">
-            <div
-              className="history-button-detail"
-              onClick={() => this.detailProduct(index)}
-            >
-              Transaction Detail
-            </div>
-          </div>
-        </div>
+        </React.Fragment>
       );
     });
   };

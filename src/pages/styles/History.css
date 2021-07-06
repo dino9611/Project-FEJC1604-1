@@ -87,7 +87,7 @@
 .history-button-content {
   align-items: center;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   height: 25%;
 }
 
