@@ -4,11 +4,11 @@ import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import { BsFillBagFill } from "react-icons/bs";
 import Loader from "react-loader-spinner";
+import { connect } from "react-redux";
 import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { connect } from "react-redux";
 
 class ProductDetail extends Component {
   state = {
@@ -50,7 +50,7 @@ class ProductDetail extends Component {
         this.setState({ qty: this.state.qty + 1 });
       }
     } else {
-      var hasil = this.state.qty - 1;
+      hasil = this.state.qty - 1;
       if (hasil < 1) {
         alert("Less than 1");
       } else {

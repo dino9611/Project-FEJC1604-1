@@ -4,13 +4,11 @@ import "../styles/cart.css";
 import { CartAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import {
-  Table,
   Container,
   Modal,
   ModalBody,
   ModalHeader,
   ModalFooter,
-  Alert,
 } from "reactstrap";
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -301,37 +299,6 @@ class Cart extends Component {
   };
 
   renderCart = () => {
-    return this.props.dataUser.cart.map((val, index) => {
-      return (
-        <tr key={index}>
-          <td className="text-center">{index + 1}</td>
-          <td>{val.name}</td>
-          <td>
-            <img
-              src={API_URL + val.image}
-              alt={val.name}
-              width="200px"
-              height="150px"
-            />
-          </td>
-          <td className="text-center">{currencyFormatter(val.price)}</td>
-          <td className="text-center">{val.qty}</td>
-          <td className="text-center">
-            {currencyFormatter(val.price * val.qty)}
-          </td>
-          <td className="text-center">
-            <FiEdit onClick={() => this.toggleEdit(val)} className="edit-btn" />
-            <FiTrash2
-              onClick={() => this.deleteItemClick(index)}
-              className="delete-btn"
-            />
-          </td>
-        </tr>
-      );
-    });
-  };
-
-  renderCart2 = () => {
     return this.props.dataUser.cart.map((val, index) => {
       return (
         <div key={index} className="box-cart">
@@ -717,12 +684,6 @@ class Cart extends Component {
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
               <div className="table-margin">{this.renderCart()}</div>
-              {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                          <div style={{ flex: 1, background: 'yellow', paddingLeft: '500px' }}>
-                              TOTAL
-                          </div>
-                          <div style={{ flex: 1, background: 'tomato' }}>{currencyFormatter(this.renderTotal())}</div>
-                      </div> */}
               <button
                 className="checkout-btn"
                 style={{ marginTop: "20px" }}

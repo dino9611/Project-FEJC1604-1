@@ -15,8 +15,7 @@ import EmailVerification from "./pages/users/EmailVerification";
 import ProductDetail from "./pages/users/ProductDetail";
 import LoginAdmin from "./pages/admin/Login";
 import HomeAdmin from "./pages/admin/Home";
-import AdminDashboard from "./pages/admin/WarehouseDashboard";
-import AdminTransaction from "./pages/admin/Transaction";
+import WareHouseDashboard from "./pages/admin/WarehouseDashboard";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
@@ -73,11 +72,12 @@ class App extends Component {
             <Route path="/history" exact component={History} />
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
-            {/* <Route path="/login" exact component={Login} /> */}
+            <Route path="/login" exact component={Login} />
             <Route
               path="/verified-email/:token"
               component={EmailVerification}
             />
+
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -97,11 +97,14 @@ class App extends Component {
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin" exact component={ManageProduct} />
-            <Route path="/admin/login" component={LoginAdmin} />
+            <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
-            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
-            <Route path="/admin/dashboard" exact component={AdminDashboard} />
+            <Route
+              path="/admin/dashboard/"
+              component={WareHouseDashboard}
+            />
             <Route path="/admin/report" exact component={Report} />
+            <Route path="/modalDP" component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -115,12 +118,13 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
-            <Route path="/admin" exact component={ManageProduct} />
-            <Route path="/admin/login" component={LoginAdmin} />
+            <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
-            {/* <Route path="/admin/transaction" component={AdminTransaction} /> */}
-            <Route path="/admin/dashboard" component={AdminDashboard} />
-            <Route path="/modalDP" component={ModalDP} />
+            <Route
+              path="/admin/dashboard/"
+              component={WareHouseDashboard}
+            />
+            <Route path="/modalDP" exact component={ModalDP} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />

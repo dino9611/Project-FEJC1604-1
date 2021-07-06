@@ -11,13 +11,14 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
 import BallotIcon from '@material-ui/icons/Ballot';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
 import ManageProduct from "./ManageProduct"
+import Report from "./Home"
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
-
 class WarehouseDashboard extends Component {
   state = {
     role: "",
@@ -26,6 +27,7 @@ class WarehouseDashboard extends Component {
   };
 
   async componentDidMount() {
+    console.log(this.props.match.params.status);
     try {
       let tokenAccess = localStorage.getItem("TA");
       let res = await axios.get(
@@ -200,6 +202,40 @@ class WarehouseDashboard extends Component {
                       Manage Product
                     </ButtonBase>
                   </Link>
+
+                  <Link
+                    to="/admin/dashboard/report"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          window.location.href ===
+                          "http://localhost:3000/admin/dashboard/report"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <AssessmentIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            window.location.href ===
+                            "http://localhost:3000/admin/dashboard/report"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Report
+                    </ButtonBase>
+                  </Link>
                 </React.Fragment>
               )}
 
@@ -268,6 +304,11 @@ class WarehouseDashboard extends Component {
               path="/admin/dashboard/manage-product"
               exact
               component={ManageProduct}
+            />
+            <Route
+              path="/admin/dashboard/report"
+              exact
+              component={Report}
             />
           </Switch>
         </div>

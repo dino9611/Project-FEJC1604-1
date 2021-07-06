@@ -613,8 +613,9 @@ class Processing extends Component {
                                 }}
                               >
                                 {column.id === "amountTotal" ? (
-                                  (value =
-                                    currencyFormatter(value).split(",")[0])
+                                  (value = currencyFormatter(value).split(
+                                    ","
+                                  )[0])
                                 ) : column.id === "drop" ? (
                                   <IconButton
                                     aria-label="expand row"

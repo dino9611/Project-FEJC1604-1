@@ -1,5 +1,6 @@
 .header-bg {
   display: flex;
+  z-index: 2;
   justify-content: space-between;
   position: fixed;
   width: 100%;

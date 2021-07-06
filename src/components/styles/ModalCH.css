@@ -14,7 +14,7 @@
   padding: 0 33%;
 }
 
-.modal-content {
+/* .modal-content {
   background: rgb(137, 173, 195);
   background: linear-gradient(
     0deg,
@@ -26,7 +26,7 @@
   align-items: center;
   z-index: 1000;
   padding: 20px 50px;
-}
+} */
 
 .modal-image {
   margin-top: 6%;
