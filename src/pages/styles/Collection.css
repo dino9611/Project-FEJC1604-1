@@ -73,6 +73,7 @@
 }
 
 .searchbar-collection {
+  background-color: transparent;
   border: none;
   outline: none;
   margin: 5px 10px;
