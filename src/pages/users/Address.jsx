@@ -191,6 +191,8 @@ class AddressList extends Component {
     return (
       <div>
         {this.state.loading ? <LoaderComp /> : null}
+
+        {/* MODAL ADD ADDRESS */}
         <Modal
           isOpen={this.state.modalVisible}
           toggle={this.toggle}

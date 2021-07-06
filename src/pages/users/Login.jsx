@@ -156,7 +156,7 @@ class Login extends Component {
                       color: "#535353",
                     }}
                   >
-                    Forgot Password
+                    Forgot Password?
                   </Link>
                 </p>
                 <ButtonBase

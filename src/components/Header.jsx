@@ -48,12 +48,7 @@ class Header extends Component {
               <a>History</a>
             </Link>
           ) : (
-            <a
-              style={{ cursor: "pointer" }}
-              onClick={() => this.setState({ isOpenModalCH: true })}
-            >
-              History
-            </a>
+            null
           )}
           <div>
             {this.props.dataUser.islogin ? (
