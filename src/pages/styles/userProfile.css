@@ -1,98 +1,97 @@
-.icon{
-    font-size: 70px;
+.icon {
+  font-size: 70px;
 }
 
-.back-ground{
-    background-color: #89ADC3;
-    height: 99vh;
+.back-ground {
+  background-color: #89adc3;
+  min-height: 100vh;
 }
 
-.font1{
-    color: white;
-    font-size: 25px;
+.font1 {
+  color: white;
+  font-size: 25px;
 }
-.font2{
-    color: #052C43;
-    font-size: 25px;
-}
-
-.icon-position{
-    text-align: center;
+.font2 {
+  color: #052c43;
+  font-size: 25px;
 }
 
-.my-profile{
-    font-weight: 650; 
+.icon-position {
+  text-align: center;
 }
 
-
-.input-width{
-    width: 43%;
+.my-profile {
+  font-weight: 650;
 }
 
-.input-border{
-    border: 2px #D4EAF5 solid !important;
+.input-width {
+  width: 43%;
 }
 
-.photo{
-    border: 2px #89ADC3 solid;
-    border-radius: 50% ;
-    background-color:#D4EAF5 ;
-    height: 200px;
-    width:200px;
-    overflow: auto;
+.input-border {
+  border: 2px #d4eaf5 solid !important;
 }
 
-.container-width{
-   width: 50%;
+.photo {
+  border: 2px #89adc3 solid;
+  border-radius: 50%;
+  background-color: #d4eaf5;
+  height: 200px;
+  width: 200px;
+  overflow: auto;
 }
 
-.button-utama{
-    background-color:#89ADC3 ;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
-}
-.button-utama:disabled{
-    background-color:#b2c9d8;
+.container-width {
+  width: 50%;
 }
 
-.button-second{
-    background-color:#D4EAF5  ;
-    border: none;
-    color: black;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.button-utama {
+  background-color: #89adc3;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 15px 32px;
+}
+.button-utama:disabled {
+  background-color: #b2c9d8;
 }
 
-.button-cancel{
-    background-color:gray ;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.button-second {
+  background-color: #d4eaf5;
+  border: none;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 15px 32px;
 }
 
-.link:hover{
-    text-decoration: none;
+.button-cancel {
+  background-color: gray;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 15px 32px;
 }
 
-.button-delete{
-    background-color:#052C43;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.link:hover {
+  text-decoration: none;
+}
+
+.button-delete {
+  background-color: #052c43;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 15px 32px;
 }

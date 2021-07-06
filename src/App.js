@@ -25,7 +25,6 @@ import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
 import History from "./pages/users/History";
-import "./App.css";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
 import ForgotPassword from "./pages/users/ForgotPassword";
@@ -119,10 +118,7 @@ class App extends Component {
               exact
               component={ProductsFlow}
             />
-            <Route
-              path="/admin/dashboard/:status"
-              component={WareHouseDashboard}
-            />
+            <Route path="/admin/dashboard/" component={WareHouseDashboard} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
@@ -137,6 +133,7 @@ class App extends Component {
           <Route path="/registration" exact component={Registration} />
           <Route path="/login" exact component={Login} />
           <Route path="/admin/login" exact component={LoginAdmin} />
+          <Route path="/admin/home" exact component={HomeAdmin} />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
           <Route path="*" component={NotFound} />
