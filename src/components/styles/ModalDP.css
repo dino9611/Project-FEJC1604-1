@@ -11,13 +11,13 @@
   z-index: 900;
   height: 100vh;
   width: 100%;
-  padding: 0 30%;
+  padding: 0 20%;
 }
 
 .modal-dp-content {
   background: white;
-  height: 500px;
-  width: 800px;
+  height: 535px;
+  width: 600px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +45,7 @@
   justify-content: center;
   width: 100%;
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   font-weight: bold;
   font-size: 1.5rem;
 }

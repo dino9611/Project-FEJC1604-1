@@ -175,6 +175,10 @@
   align-items: center;
   justify-content: center;
 }
+.profo-prod-name > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+}
 .profo-prod-name > div:last-child {
   font-size: 0.8rem;
   color: grey;
