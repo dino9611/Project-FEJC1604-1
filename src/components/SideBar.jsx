@@ -13,7 +13,7 @@ class Sidebar extends Component {
     render() {
         return (
             <div>
-                <div className="row p-0">
+                <div className="row p-0 m-0" >
                     <div className="col-md-2 input-border pt-5 pl-5 back-ground font1">
                         <BiCog className="icon" />
                         <div className="mt-5 d-flex">
@@ -29,7 +29,7 @@ class Sidebar extends Component {
                             <div className="pl-2 pt-1">Wishlist</div>
                         </div>
                     </div>
-                    <div className="col-md-10">
+                    <div className="col-md-10 m-0">
                         <div className="px-5">
                             <h1 className="my-profile mt-5">My Profile</h1>
                         </div>
@@ -54,7 +54,7 @@ class Sidebar extends Component {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="col-md-7 px-5 pt-4">
+                            <div className="col-md-7 pl-5 pt-4">
                                 {this.props.children}
                             </div>
                         </div>

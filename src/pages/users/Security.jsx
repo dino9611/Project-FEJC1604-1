@@ -5,40 +5,61 @@ import { Container } from 'reactstrap';
 import axios from 'axios';
 import { API_URL } from '../../helper';
 import { connect } from 'react-redux';
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 
 class Security extends Component {
   state = {
     oldPassword: '',
     newPassword: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    isVisibleOld: false,
+    isVisibleNew: false,
+    isVisibleConf: false,
   };
 
   componentDidMount() {
-    console.log('ini adalah uid', this.props.dataUser.uid);
+    console.log('ini adalah id', this.props.dataUser.id);
   }
 
   onInputChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
-    // console.log(event.target.name);
-    // console.log(event.target.value);
+  };
+
+  toggleOld = () => {
+    this.setState({ isVisibleOld: !this.state.isVisibleOld });
+  };
+
+  toggleNew = () => {
+    this.setState({ isVisibleNew: !this.state.isVisibleNew });
+  };
+
+  toggleConf = () => {
+    this.setState({ isVisibleConf: !this.state.isVisibleConf });
   };
 
   saveClick = () => {
-    const { newPassword, confirmPassword } = this.state;
-    if (newPassword !== confirmPassword) {
-      alert('new pass & confirm pass tidak sama');
+    const { newPassword, confirmPassword, oldPassword } = this.state;
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      alert('input tidak boleh kosong');
     } else {
-      let newPass = {
-        password: newPassword
-      };
-      axios.patch(`${API_URL}/password/change/${this.props.dataUser.id}`, newPass)
-        .then((res) => {
-          console.log(res.data);
-          // this.setState({});
-        }).catch((error) => {
-          console.error(error);
-          alert('gagal');
-        });
+      if (newPassword !== confirmPassword) {
+        alert('new pass & confirm pass tidak sama');
+      } else {
+        let data = {
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword
+        };
+        axios.patch(`${API_URL}/password/change/${this.props.dataUser.id}`, data)
+          .then((res) => {
+            console.log(res.data);
+            this.setState({ newPassword: '', confirmPassword: '', oldPassword: '', isVisibleOld: false, isVisibleNew: false, isVisibleConf: false });
+            alert('berhasil');
+          }).catch((error) => {
+            console.error(error);
+            alert('gagal');
+          });
+      }
     }
   };
 
@@ -54,35 +75,57 @@ class Security extends Component {
                 <label className='form-judul'>Old Password</label>
                 <div className='kotak-pass'>
                   <input
-                    type='password'
+                    type={this.state.isVisibleOld ? 'text' : 'password'}
                     name='oldPassword'
                     className='pass-input'
                     onChange={this.onInputChange}
-
+                    value={this.state.oldPassword}
                   />
+                  <div style={{ fontSize: '25px' }}>
+                    {this.state.isVisibleOld ?
+                      <AiFillEye onClick={this.toggleOld} style={{ color: '#89ADC3' }} />
+                      :
+                      <AiFillEyeInvisible onClick={this.toggleOld} style={{ color: 'gray' }} />
+                    }
+                  </div>
                 </div>
               </div>
               <div>
                 <label className='form-judul'>New Password</label>
                 <div className='kotak-pass'>
                   <input
-                    type='password'
+                    type={this.state.isVisibleNew ? 'text' : 'password'}
                     name='newPassword'
                     className='pass-input'
                     onChange={this.onInputChange}
+                    value={this.state.newPassword}
                   />
+                  <div style={{ fontSize: '25px' }}>
+                    {this.state.isVisibleNew ?
+                      <AiFillEye onClick={this.toggleNew} style={{ color: '#89ADC3' }} />
+                      :
+                      <AiFillEyeInvisible onClick={this.toggleNew} style={{ color: 'gray' }} />
+                    }
+                  </div>
                 </div>
               </div>
               <div>
                 <label className='form-judul'>Confirm New Password</label>
                 <div className='kotak-pass'>
                   <input
-                    type='password'
+                    type={this.state.isVisibleConf ? 'text' : 'password'}
                     name='confirmPassword'
                     className='pass-input'
                     onChange={this.onInputChange}
-
+                    value={this.state.confirmPassword}
                   />
+                  <div style={{ fontSize: '25px' }}>
+                    {this.state.isVisibleConf ?
+                      <AiFillEye onClick={this.toggleConf} style={{ color: '#89ADC3' }} />
+                      :
+                      <AiFillEyeInvisible onClick={this.toggleConf} style={{ color: 'gray' }} />
+                    }
+                  </div>
                 </div>
               </div>
             </div>
