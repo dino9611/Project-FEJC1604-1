@@ -28,7 +28,9 @@ class ModalDP extends Component {
             </div>
             <div className="modal-dp-info">
               <p>Status</p>
-              <p>{this.props.statusDP}</p>
+              <p style={{ textTransform: "capitalize" }}>
+                {this.props.statusDP}
+              </p>
             </div>
             <div className="modal-dp-info">
               <p>Transaction Date</p>

@@ -65,7 +65,6 @@
 
 .history-empty > img {
   height: 300px;
-  /* height: 50vh; */
 }
 
 .history-warning {
@@ -145,12 +144,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 120px;
+  width: 120px;
+  overflow: hidden;
 }
 
 .history-img > img {
-  width: 100px;
-  height: 110px;
-  background-color: whitesmoke;
+  width: 100%;
+  background-color: rgba(220, 220, 220, 0.514);
   border-radius: 3px;
 }
 
@@ -182,10 +183,12 @@
   font-size: 0.8rem;
   font-weight: bold;
   border-radius: 3px;
+  text-transform: capitalize;
 }
 
 .history-date {
   font-size: 0.8rem;
+  color: grey;
   margin-left: 1.5%;
 }
 

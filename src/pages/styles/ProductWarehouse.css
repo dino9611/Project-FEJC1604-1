@@ -1,15 +1,15 @@
-.jumbotron-1-profo {
+.jumbotron-1-prowa {
   display: flex;
   min-height: 100vh;
 }
 
-.sidebar-profo {
+.sidebar-prowa {
   flex: 1;
   background-color: brown;
 }
 
 /* result not found image */
-.profo-empty-result {
+.prowa-empty-result {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,43 +20,60 @@
   -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
   -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
 }
-.profo-empty-result > img {
+.prowa-empty-result > img {
   margin-top: 15px;
   height: 300px;
 }
-.profo-warning {
+.prowa-warning {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
 }
-.profo-warning > p:first-child {
+.prowa-warning > p:first-child {
   font-weight: bold;
   margin-bottom: 0;
 }
 /* result not found image*/
 
-.profo-render-in {
+/* total data info atas table */
+.prowa-totaldata-info {
+  margin-top: 20px;
+}
+.prowa-totaldata-info > div {
+  margin: 0 20px 10px;
+}
+.prowa-totaldata-info > div > span {
+  background: rgba(128, 128, 128, 0.493);
+  color: white;
+  font-size: 0.9rem;
+  margin-left: 2px;
+  padding: 0 5px;
+  border-radius: 2px;
+}
+/* total data info atas table */
+
+.prowa-render-in {
   display: flex;
   padding: 5px;
   align-items: center;
   justify-content: center;
 }
 
-.profo-content {
+.prowa-content {
   display: flex;
   flex-direction: column;
   flex: 4.5;
   background-color: whitesmoke;
 }
 
-.profo-content-in {
+.prowa-content-in {
   display: flex;
   flex-direction: column;
-  margin: 10px 20px 20px;
+  margin: 0 20px 0px;
 }
 
-.profo-title-content {
+.prowa-title-content {
   background-color: transparent;
   border-bottom: solid 1px gainsboro;
   display: flex;
@@ -64,42 +81,15 @@
   height: 60px;
 }
 
-.profo-title-content > p {
+.prowa-title-content > p {
   font-size: 1.5rem;
   margin-left: 20px;
   margin-top: 15px;
   font-weight: bold;
 }
 
-/* content info atas + select status */
-.profo-search-content {
-  padding: 0 20px;
-}
-.profo-search-in {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-}
-.profo-search-right {
-  display: flex;
-  align-items: center;
-}
-.profo-search-right > div:first-child {
-  margin-right: 10px;
-}
-.profo-select-status {
-  background-color: white;
-  padding: 5px 10px;
-  border: solid 1px gainsboro;
-  height: 45px;
-  border-radius: 5px;
-  color: gainsboro;
-}
-/* content info atas + select status */
-
 /* table head */
-.profo-th {
+.prowa-th {
   background-color: white;
   position: sticky;
   display: flex;
@@ -113,42 +103,42 @@
   -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
   -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
 }
-.profo-t1 {
+.prowa-t1 {
   flex: 0.5;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
 }
-.profo-t2 {
+.prowa-t2 {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
 }
-.profo-t3 {
+.prowa-t3 {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 5px;
 }
-.profo-t4 {
+.prowa-t4 {
   flex: 0.5;
   display: flex;
   padding: 5px;
   justify-content: center;
   align-items: center;
 }
-.profo-t5 {
+.prowa-t5 {
   flex: 1;
   display: flex;
   padding: 5px;
   justify-content: center;
   align-items: center;
 }
-.profo-t6 {
+.prowa-t6 {
   flex: 1;
   padding: 5px;
   display: flex;
@@ -158,7 +148,7 @@
 /* table head */
 
 /* isi data di tabel */
-.profo-render-data {
+.prowa-render-data {
   background-color: white;
   display: flex;
   align-items: center;
@@ -169,27 +159,27 @@
   -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
   -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
 }
-.profo-prod-name {
+.prowa-prod-name {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.profo-prod-name > div:first-child {
+.prowa-prod-name > div:first-child {
   display: flex;
   flex-wrap: wrap;
 }
-.profo-prod-name > div:last-child {
+.prowa-prod-name > div:last-child {
   font-size: 0.8rem;
   color: grey;
   margin-top: 5px;
 }
-.profo-prod-price {
+.prowa-prod-price {
   align-items: center;
   display: flex;
   font-weight: bold;
 }
-.profo-prod-img {
+.prowa-prod-img {
   background-color: transparent;
   align-items: center;
   height: 100px;
@@ -199,22 +189,38 @@
   border-radius: 5px;
   overflow: hidden;
 }
-.profo-prod-qty {
+.prowa-prod-qty {
   align-items: center;
   display: flex;
   font-weight: bold;
 }
-.profo-prod-status {
-  font-weight: bold;
+.prowa-prod-date {
   align-items: center;
   display: flex;
-  justify-content: center;
-  border-radius: 3px;
-  width: 50px;
-  border: solid 1px;
 }
-.profo-prod-date {
-  align-items: center;
-  display: flex;
+.prowa-prod-action {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 4px;
+  /* color: white;
+  background-color: #89adc3; */
+  color: #89adc3;
+  font-weight: bold;
+  background-color: #d4eaf5;
 }
 /* isi data di tabel */
+
+.prowa-pagination {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 5px 20px 20px;
+}
+.prowa-pagination > div {
+  display: flex;
+  background-color: white;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  margin: 0 20px;
+  border-radius: 5px;
+}
