@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { LogoutAction } from "../redux/actions";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ModalCH from "./ModalCH";
 import "./styles/Header.css";
 
@@ -33,14 +34,14 @@ class Header extends Component {
           </Link>
           {this.props.dataUser.islogin ? (
             <Link to="/cart" className="normal-link-header">
-              <a>Cart</a>
+              <ShoppingCartIcon />
             </Link>
           ) : (
             <a
               style={{ cursor: "pointer" }}
               onClick={() => this.setState({ isOpenModalCH: true })}
             >
-              Cart
+              <ShoppingCartIcon />
             </a>
           )}
           {this.props.dataUser.islogin ? (
