@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import { API_URL, currencyFormatter, upperCase } from "../../helper";
+import { API_URL, currencyFormatter } from "../../helper";
 import { withStyles } from "@material-ui/core/styles";
 import { Select, MenuItem, InputBase } from "@material-ui/core";
 import Empty from "./../../images/pf-empty.svg";
-import { FiSearch } from "react-icons/fi";
 import "./../styles/ProductsFlow.css";
 
 class ProductsFlow extends Component {

@@ -22,6 +22,7 @@ import ManageProduct from "./pages/admin/ManageProduct";
 import Report from "./pages/admin/Report";
 import ProductsFlow from "./pages/admin/ProductsFlow";
 import ProductWarehouse from "./pages/admin/ProductWarehouse";
+import CreateAdmin from "./pages/admin/CreateAdmin";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -29,7 +30,6 @@ import History from "./pages/users/History";
 import "./App.css";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
-import ModalPW from "./components/ModalPW";
 
 class App extends Component {
   state = {
@@ -106,6 +106,7 @@ class App extends Component {
               component={WareHouseDashboard}
             />
             <Route path="/admin/report" exact component={Report} />
+            <Route path="/admin/addAdmin" exact component={CreateAdmin} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -131,7 +132,6 @@ class App extends Component {
               path="/admin/dashboard/:status"
               component={WareHouseDashboard}
             />
-            <Route path="/admin/modalpw" exact component={ModalPW} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
