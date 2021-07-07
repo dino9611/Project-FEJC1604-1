@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { LoginActionThunk, ResetActionthunk } from "../../redux/actions";
 import LoaderComp from "../../components/Loader";
+import bgLogin from "../../images/login.jpg";
 import googleIcon from "../../search.svg";
 import "../styles/userLogin.css";
 
@@ -141,24 +142,45 @@ class Login extends Component {
                     }
                   />
                 </FormControl>
-                <p
-                  style={{
-                    textAlign: "end",
-                    marginTop: "10px",
-                    marginBottom: "24px",
-                    fontSize: "15px",
-                  }}
-                >
-                  <Link
-                    to="/forgotPassword"
+
+                <div className="link-to-register-forgot">
+                  <p
                     style={{
-                      textDecoration: "none",
-                      color: "#535353",
+                      marginTop: "15px",
+                      marginBottom: "20px",
+                      fontSize: "15px",
                     }}
                   >
-                    Forgot Password?
-                  </Link>
-                </p>
+                    <Link
+                      to="/registration"
+                      style={{
+                        textDecoration: "none",
+                        color: "#89adc3",
+                      }}
+                    >
+                      Register?
+                    </Link>
+                  </p>
+                  <p
+                    style={{
+                      marginTop: "15px",
+                      marginBottom: "20px",
+                      fontSize: "15px",
+                    }}
+                  >
+                    <Link
+                      to="/forgotPassword"
+                      style={{
+                        textDecoration: "none",
+                        color: "#535353",
+                      }}
+                    >
+                      Forgot Password?
+                    </Link>
+                  </p>
+                </div>
+
+
                 <ButtonBase
                   type="submit"
                   onClick={this.props.ResetActionthunk}
@@ -230,7 +252,7 @@ class Login extends Component {
             </div>
           </div>
           <div className="right-content-login">
-            <img alt="bg-login" />
+            <img alt="bg-login" src={bgLogin} width="100%" height="100%" />
           </div>
         </div>
       </div>

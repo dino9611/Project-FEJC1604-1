@@ -11,7 +11,7 @@
 }
 
 .right-content-login {
-  background-color: #89adc3;
+  height: 100vh;
   flex: 1;
 }
 
@@ -78,4 +78,9 @@
 
 .divider.center > :last-child {
   margin-left: 10px;
+}
+
+.link-to-register-forgot {
+  display: flex;
+  justify-content: space-between;
 }
