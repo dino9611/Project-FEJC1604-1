@@ -1,0 +1,226 @@
+.jumbotron-1-prowa {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar-prowa {
+  flex: 1;
+  background-color: brown;
+}
+
+/* result not found image */
+.prowa-empty-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+}
+.prowa-empty-result > img {
+  margin-top: 15px;
+  height: 300px;
+}
+.prowa-warning {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.prowa-warning > p:first-child {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+/* result not found image*/
+
+/* total data info atas table */
+.prowa-totaldata-info {
+  margin-top: 20px;
+}
+.prowa-totaldata-info > div {
+  margin: 0 20px 10px;
+}
+.prowa-totaldata-info > div > span {
+  background: rgba(128, 128, 128, 0.493);
+  color: white;
+  font-size: 0.9rem;
+  margin-left: 2px;
+  padding: 0 5px;
+  border-radius: 2px;
+}
+/* total data info atas table */
+
+.prowa-render-in {
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.prowa-content {
+  display: flex;
+  flex-direction: column;
+  flex: 4.5;
+  background-color: whitesmoke;
+}
+
+.prowa-content-in {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px 0px;
+}
+
+.prowa-title-content {
+  background-color: transparent;
+  border-bottom: solid 1px gainsboro;
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.prowa-title-content > p {
+  font-size: 1.5rem;
+  margin-left: 20px;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+/* table head */
+.prowa-th {
+  background-color: white;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  padding: 0 10px;
+  margin: 10px 20px 0;
+  font-weight: bold;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+}
+.prowa-t1 {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.prowa-t2 {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.prowa-t3 {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.prowa-t4 {
+  flex: 0.5;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.prowa-t5 {
+  flex: 1;
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+}
+.prowa-t6 {
+  flex: 1;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* table head */
+
+/* isi data di tabel */
+.prowa-render-data {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  margin: 10px 20px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+}
+.prowa-prod-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.prowa-prod-name > div:first-child {
+  display: flex;
+  flex-wrap: wrap;
+}
+.prowa-prod-name > div:last-child {
+  font-size: 0.8rem;
+  color: grey;
+  margin-top: 5px;
+}
+.prowa-prod-price {
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+}
+.prowa-prod-img {
+  background-color: transparent;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  border: solid 1px gainsboro;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.prowa-prod-qty {
+  align-items: center;
+  display: flex;
+  font-weight: bold;
+}
+.prowa-prod-date {
+  align-items: center;
+  display: flex;
+}
+.prowa-prod-action {
+  border: none;
+  padding: 8px 10px;
+  border-radius: 4px;
+  /* color: white;
+  background-color: #89adc3; */
+  color: #89adc3;
+  font-weight: bold;
+  background-color: #d4eaf5;
+}
+/* isi data di tabel */
+
+.prowa-pagination {
+  display: flex;
+  flex-direction: row-reverse;
+  margin: 5px 20px 20px;
+}
+.prowa-pagination > div {
+  display: flex;
+  background-color: white;
+  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  margin: 0 20px;
+  border-radius: 5px;
+}

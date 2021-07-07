@@ -1,0 +1,177 @@
+.overlay-modal-pw {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(0, 0, 0, 0.7);
+  z-index: 900;
+  height: 100vh;
+  width: 100%;
+  padding: 0 20%;
+}
+
+.modal-pw-content {
+  background: white;
+  height: 370px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  z-index: 1000;
+  border-radius: 5px;
+}
+
+.modal-pw-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30px;
+  margin: 18px 0 23px;
+  align-items: center;
+  flex-direction: row-reverse;
+  width: 100%;
+  /* background-color: tomato; */
+}
+
+.modal-pw-title {
+  display: flex;
+  justify-content: center;
+  height: auto;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* .modal-pw-title {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: -10px 0 25px 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+} */
+
+.modal-pw-inside {
+  width: 100%;
+  display: flex;
+  padding: 0 30px;
+}
+
+.modal-pw-upper {
+  display: flex;
+}
+
+.modal-pw-img {
+  height: 100px;
+  width: 100px;
+  overflow: hidden;
+  background-color: gainsboro;
+  border-radius: 4px;
+}
+.modal-pw-img > img {
+  width: 100%;
+}
+
+.modal-pw-name {
+  height: fit-content;
+  margin-left: 15px;
+}
+.modal-pw-name > div:first-child {
+  color: #89adc3;
+  font-weight: bold;
+}
+.modal-pw-cat {
+  color: grey;
+  font-size: 0.8rem;
+}
+
+.modal-pw-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 25px;
+  color: grey;
+}
+
+.modal-pw-bottom {
+  background-color: whitesmoke;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-top: solid 2px gainsboro;
+  margin-top: 20px;
+  height: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 0 30px;
+}
+
+.modal-pw-input {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 22px;
+}
+.modal-pw-input > div:first-child > div {
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  color: grey;
+  margin-bottom: 5px;
+}
+.modal-pw-input > div:last-child > div {
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  color: grey;
+  margin-bottom: 5px;
+}
+.modal-pw-input > div:first-child > input {
+  border: solid 1px gainsboro;
+  text-align: center;
+  background-color: white;
+  height: 30px;
+  border-radius: 3px;
+  width: 200px;
+}
+.modal-pw-input > div:last-child > input {
+  height: 30px;
+  border-radius: 3px;
+  width: 200px;
+  text-align: center;
+  border: solid 1px gainsboro;
+}
+.modal-pw-input > div:last-child > input:focus {
+  outline: none;
+}
+.modal-pw-icon {
+  margin-top: 6%;
+  display: flex;
+  justify-content: center;
+}
+
+/* button modal pw */
+.modal-pw-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 17px;
+}
+.modal-pw-button > button:first-child {
+  border: none;
+  background: none;
+  color: grey;
+  padding: 8px 20px;
+  font-weight: bold;
+}
+.modal-pw-button > button:last-child {
+  border: none;
+  background-color: #89adc3;
+  color: white;
+  border-radius: 3px;
+  padding: 8px 20px;
+}
+/* button modal pw  */

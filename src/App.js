@@ -21,6 +21,7 @@ import LoaderComp from "./components/Loader";
 import ManageProduct from "./pages/admin/ManageProduct";
 import Report from "./pages/admin/Report";
 import ProductsFlow from "./pages/admin/ProductsFlow";
+import ProductWarehouse from "./pages/admin/ProductWarehouse";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -28,6 +29,7 @@ import History from "./pages/users/History";
 import "./App.css";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
+import ModalPW from "./components/ModalPW";
 
 class App extends Component {
   state = {
@@ -43,9 +45,9 @@ class App extends Component {
         },
       })
       .then((res) => {
-        console.log("ini res.data", res.data);
+        // console.log("ini res.data", res.data);
         this.props.LoginAction(res.data);
-        console.log("ini dataUser", this.props.dataUser);
+        // console.log("ini dataUser", this.props.dataUser);
       })
       .catch((err) => {
         console.log(err);
@@ -119,15 +121,17 @@ class App extends Component {
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
+            <Route path="/admin/productsInOut" exact component={ProductsFlow} />
             <Route
               path="/admin/productsWarehouse"
               exact
-              component={ProductsFlow}
+              component={ProductWarehouse}
             />
             <Route
               path="/admin/dashboard/:status"
               component={WareHouseDashboard}
             />
+            <Route path="/admin/modalpw" exact component={ModalPW} />
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
