@@ -78,7 +78,6 @@ class App extends Component {
               path="/verified-email/:token"
               component={EmailVerification}
             />
-
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -98,7 +97,7 @@ class App extends Component {
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
-            <Route path="/admin/dashboard/" component={WareHouseDashboard} />
+            <Route path="/admin/dashboard" exact component={WareHouseDashboard} />
             <Route path="/admin/report" exact component={Report} />
             <Route path="*" component={NotFound} />
           </Switch>
@@ -120,7 +119,7 @@ class App extends Component {
               component={ProductsFlow}
             />
             <Route
-              path="/admin/dashboard/:status"
+              path="/admin/dashboard"
               component={WareHouseDashboard}
             />
             <Route path="*" component={NotFound} />
@@ -139,6 +138,10 @@ class App extends Component {
           <Route path="/admin/login" exact component={LoginAdmin} />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
+          <Route
+            path="/admin/dashboard"
+            component={WareHouseDashboard}
+          />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

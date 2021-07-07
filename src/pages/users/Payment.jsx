@@ -8,7 +8,8 @@ import axios from "axios";
 import { API_URL, currencyFormatter } from "../../helper";
 import BCA from "../../images/BCALogo.png";
 import LoaderComp from "../../components/Loader";
-
+import Header from '../../components/Header';
+import payment from "../../images/payment.svg";
 class Payment extends Component {
   state = {
     modalDetails: false,
@@ -255,11 +256,36 @@ class Payment extends Component {
             </button>
           </ModalFooter>
         </Modal>
-        <Container className="container-1">
-          <div className="box-1">
-            <div>Finish your payment</div>
-          </div>
-          {this.renderPayment()}
+        <div className='pay-background'>
+          <Header />
+        </div>
+        <Container>
+          {this.state.orders.length ?
+            <div>
+              {/* <div className="container-1">
+              </div> */}
+              <div className="box-1">
+                <div>Finish your payment</div>
+              </div>
+              {this.renderPayment()}=
+            </div>
+            :
+            <div className="container-payment">
+              <div style={{ flex: 1 }}>
+                <img
+                  src={payment}
+                  alt="empty-cart-icon"
+                  className="center-payment"
+                />
+              </div>
+              <div style={{ flex: 1, marginTop: "15px" }}>
+                <h2>You have no transaction</h2>
+                <Link to="/collection">
+                  <buton className="tombol-home-pay">Shop Again</buton>
+                </Link>
+              </div>
+            </div>
+          }
         </Container>
       </React.Fragment>
     );

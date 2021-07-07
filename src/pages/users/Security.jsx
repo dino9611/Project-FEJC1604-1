@@ -19,6 +19,7 @@ class Security extends Component {
 
   componentDidMount() {
     console.log('ini adalah id', this.props.dataUser.id);
+    // axios.get(`/changepassword`)
   }
 
   onInputChange = (event) => {
@@ -73,15 +74,15 @@ class Security extends Component {
             <div>
               <div style={{ marginTop: '20px' }}>
                 <label className='form-judul'>Old Password</label>
-                <div className='kotak-pass'>
+                <div className='kotak-pass-sec'>
                   <input
                     type={this.state.isVisibleOld ? 'text' : 'password'}
                     name='oldPassword'
-                    className='pass-input'
+                    className='pass-input-sec'
                     onChange={this.onInputChange}
                     value={this.state.oldPassword}
                   />
-                  <div style={{ fontSize: '25px' }}>
+                  <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleOld ?
                       <AiFillEye onClick={this.toggleOld} style={{ color: '#89ADC3' }} />
                       :
@@ -92,15 +93,15 @@ class Security extends Component {
               </div>
               <div>
                 <label className='form-judul'>New Password</label>
-                <div className='kotak-pass'>
+                <div className='kotak-pass-sec'>
                   <input
                     type={this.state.isVisibleNew ? 'text' : 'password'}
                     name='newPassword'
-                    className='pass-input'
+                    className='pass-input-sec'
                     onChange={this.onInputChange}
                     value={this.state.newPassword}
                   />
-                  <div style={{ fontSize: '25px' }}>
+                  <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleNew ?
                       <AiFillEye onClick={this.toggleNew} style={{ color: '#89ADC3' }} />
                       :
@@ -111,15 +112,15 @@ class Security extends Component {
               </div>
               <div>
                 <label className='form-judul'>Confirm New Password</label>
-                <div className='kotak-pass'>
+                <div className='kotak-pass-sec'>
                   <input
                     type={this.state.isVisibleConf ? 'text' : 'password'}
                     name='confirmPassword'
-                    className='pass-input'
+                    className='pass-input-sec'
                     onChange={this.onInputChange}
                     value={this.state.confirmPassword}
                   />
-                  <div style={{ fontSize: '25px' }}>
+                  <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleConf ?
                       <AiFillEye onClick={this.toggleConf} style={{ color: '#89ADC3' }} />
                       :

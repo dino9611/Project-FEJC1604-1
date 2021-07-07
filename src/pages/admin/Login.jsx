@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { LoginAdminActionThunk, ResetActionthunk } from "../../redux/actions";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoaderComp from '../../components/Loader';
@@ -51,13 +51,15 @@ class LoginAdmin extends Component {
 
     render() {
         if (this.props.dataAdmin.islogin) {
-            return <Redirect to='/admin/home' />;
+            return <Redirect to='/admin/dashboard' />;
         }
         return (
             <div className='div-luar'>
                 {this.state.loading ? <LoaderComp /> : null}
                 <div className='login-header'>
-                    Fournir
+                    <Link to='/' className='fournir-text'>
+                        Fournir
+                    </Link>
                 </div>
                 <Container>
                     <div className='form-login'>

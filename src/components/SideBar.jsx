@@ -20,14 +20,14 @@ class Sidebar extends Component {
                             <div><FaUserAlt /></div>
                             <div className="pl-2 pt-1">Profile</div>
                         </div>
-                        <div className="mt-3 d-flex">
+                        {/* <div className="mt-3 d-flex">
                             <div><CgNotes /></div>
                             <div className="pl-2 pt-1">History</div>
                         </div>
                         <div className="mt-3 d-flex">
                             <div><AiFillHeart /></div>
                             <div className="pl-2 pt-1">Wishlist</div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="col-md-10 m-0">
                         <div className="px-5">
