@@ -2,9 +2,9 @@
   font-size: 70px;
 }
 
-.back-ground {
-  background-color: #89adc3;
-  min-height: 100vh;
+.back-ground{
+    background-color: #89ADC3;
+    min-height: 100vh;
 }
 
 .font1 {
@@ -32,31 +32,32 @@
   border: 2px #d4eaf5 solid !important;
 }
 
-.photo {
-  border: 2px #89adc3 solid;
-  border-radius: 50%;
-  background-color: #d4eaf5;
-  height: 200px;
-  width: 200px;
-  overflow: auto;
+.photo{
+    border: 2px #89ADC3 solid;
+    border-radius: 50% ;
+    /* background-color:#D4EAF5 ; */
+    height: 200px;
+    width:200px;
+    overflow: auto;
 }
 
 .container-width {
   width: 50%;
 }
 
-.button-utama {
-  background-color: #89adc3;
-  border: none;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 15px 32px;
+.button-utama{
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 5px;
 }
-.button-utama:disabled {
-  background-color: #b2c9d8;
+.button-utama:disabled{
+    background-color:#b2c9d8;
 }
 
 .button-second {
@@ -70,28 +71,72 @@
   padding: 15px 32px;
 }
 
-.button-cancel {
-  background-color: gray;
-  border: none;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 15px 32px;
+.button-cancel{
+    background-color:gray ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
+    border-radius: 5px;
 }
 
 .link:hover {
   text-decoration: none;
 }
 
-.button-delete {
-  background-color: #052c43;
-  border: none;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 15px 32px;
+.button-delete{
+    background-color:#052C43;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
 }
+
+.edit-photo{
+    font-size: 20px;
+    margin-top: 17vh;
+    /* margin-right: 10px; */
+}
+
+.change-photo{
+    /* background-color: tomato; */
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    color:#89ADC3 ;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 500ms;
+}
+
+.change-photo:hover{
+    color:#052C43 ;
+    transition: 500ms;
+}
+
+.btn-upload-profile {
+    background-color: #89adc3;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.btn-cancel-profile {
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }

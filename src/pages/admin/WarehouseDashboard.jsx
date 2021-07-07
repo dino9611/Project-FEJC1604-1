@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { ButtonBase } from "@material-ui/core";
 import { API_URL } from "../../helper";
-import { Switch, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import { LogoutAction } from "../../redux/actions";
 import { connect } from "react-redux";
 import AssignmentIcon from "@material-ui/icons/Assignment";
@@ -15,8 +14,8 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
-import ManageProduct from "./ManageProduct"
-import Report from "./Home"
+import ManageProduct from "./ManageProduct";
+import Report from "./Home";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
 class WarehouseDashboard extends Component {
@@ -56,6 +55,9 @@ class WarehouseDashboard extends Component {
   };
 
   render() {
+    if (!this.props.dataUser.islogin) {
+      return <Redirect to='/unauthorize' />;
+    }
     const { role, name, warehouse } = this.state;
     return (
       <div className="whdashboard-container">
@@ -79,7 +81,7 @@ class WarehouseDashboard extends Component {
                     fontSize: "14px",
                     color:
                       window.location.href ===
-                      "http://localhost:3000/admin/dashboard"
+                        "http://localhost:3000/admin/dashboard"
                         ? "#535353"
                         : "#b4b4b4",
                     fontWeight: "bold",
@@ -90,7 +92,7 @@ class WarehouseDashboard extends Component {
                       marginRight: "20px",
                       color:
                         window.location.href ===
-                        "http://localhost:3000/admin/dashboard"
+                          "http://localhost:3000/admin/dashboard"
                           ? "#535353"
                           : "#b4b4b4",
                     }}
@@ -115,7 +117,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                          "http://localhost:3000/admin/dashboard/requeststock"
+                            "http://localhost:3000/admin/dashboard/requeststock"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -126,7 +128,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                            "http://localhost:3000/admin/dashboard/requeststock"
+                              "http://localhost:3000/admin/dashboard/requeststock"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -149,7 +151,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                          "http://localhost:3000/admin/dashboard/processing"
+                            "http://localhost:3000/admin/dashboard/processing"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -160,7 +162,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                            "http://localhost:3000/admin/dashboard/processing"
+                              "http://localhost:3000/admin/dashboard/processing"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -183,7 +185,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                          "http://localhost:3000/admin/dashboard/manage-product"
+                            "http://localhost:3000/admin/dashboard/manage-product"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -194,7 +196,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                            "http://localhost:3000/admin/dashboard/manage-product"
+                              "http://localhost:3000/admin/dashboard/manage-product"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -217,7 +219,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                          "http://localhost:3000/admin/dashboard/report"
+                            "http://localhost:3000/admin/dashboard/report"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -228,7 +230,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                            "http://localhost:3000/admin/dashboard/report"
+                              "http://localhost:3000/admin/dashboard/report"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -286,9 +288,9 @@ class WarehouseDashboard extends Component {
         </div>
         <div className="whdashboard-content">
           <Switch>
-            <Route 
+            <Route
               path="/admin/dashboard"
-              exact 
+              exact
               component={Transaction} />
             <Route
               path="/admin/dashboard/requeststock"

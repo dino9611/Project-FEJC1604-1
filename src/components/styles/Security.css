@@ -3,10 +3,11 @@
     font-weight: 600;
     margin-top: 25px ;
     color: #052C43;
+    /* background-color: aqua; */
 }
 
-.pass-input{
-    width: 80%;
+.pass-input-sec{
+    width: 100%;
     padding:10px 15px;
     margin:0px 0;
     box-sizing: border-box;
@@ -15,11 +16,13 @@
     -webkit-transition: 0.5s ;
     transition: 0.5s;
     outline: none;
+    border: 0;
 }
 
-.pass-input:focus{
-    border: 2px solid #D4EAF5;
-    border-radius: 7px;
+.pass-input-sec:focus{
+    /* border: 2px solid #D4EAF5;
+    border-radius: 7px; */
+    /* border: 0; */
 }
 
 .btn-save{
@@ -42,4 +45,11 @@
 .btn-save1:hover{
     background-color:#79b0cf ;
     transition: 700ms;
+}
+
+.kotak-pass-sec{
+    width: 80%;
+    display: flex;
+    border: 2px solid #052C43;
+    border-radius: 5px;
 }

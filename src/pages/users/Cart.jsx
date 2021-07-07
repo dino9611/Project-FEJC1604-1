@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Header from "../../components/Header";
 import "../styles/cart.css";
 import { CartAction } from "../../redux/actions";
@@ -13,7 +13,7 @@ import {
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Swal from "sweetalert2";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import emptyCart from "../../images/empty-cart.svg";
@@ -40,6 +40,7 @@ class Cart extends Component {
     pilihanId: 0,
     warehouses: [],
     selected_warehouse: 0,
+    isCheckout: false
   };
 
   componentDidMount() {
@@ -48,14 +49,14 @@ class Cart extends Component {
       .get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
       .then((res) => {
         console.log("ini addresses", res.data);
-        if (res.data.length) {
-          this.setState({ addresses: res.data, selected_address: res.data[0] });
-        } else {
-          this.setState({
-            addresses: [{ address: "no data", zip: 0, city: "no data" }],
-            selected_address: { address: "no data", zip: 0, city: "no data" },
-          });
-        }
+        // if (res.data.length) {
+        this.setState({ addresses: res.data, selected_address: res.data[0] });
+        // } else {
+        //   this.setState({
+        //     addresses: [{ address: "no data", zip: 0, city: "no data" }],
+        //     selected_address: { address: "no data", zip: 0, city: "no data" },
+        //   });
+        // }
         console.log("ini selected_address", this.state.selected_address);
       })
       .catch((error) => {
@@ -106,7 +107,7 @@ class Cart extends Component {
   };
 
   togglePayment = () => {
-    this.setState({ modalPayment: !this.state.modalPayment });
+    this.setState({ modalPayment: !this.state.modalPayment, pilihanId: 0 });
   };
 
   updateQtyClick = () => {
@@ -138,128 +139,6 @@ class Cart extends Component {
           console.error(error);
         });
     }
-  };
-  renderCart = () => {
-    return this.props.dataUser.cart.map((val, index) => {
-      return (
-        <div key={index} className="box-cart">
-          <div
-            style={{
-              // border: '1px solid black',
-              padding: "10px 10px 10px 10px",
-            }}
-          >
-            <div style={{ fontWeight: "600" }}>{`Pesanan ${index + 1}`}</div>
-            <div
-              style={{
-                display: "flex",
-                paddingTop: "10px",
-                paddingBottom: "10px",
-              }}
-            >
-              <div
-                style={{
-                  // background: 'yellow',
-                  flex: 2,
-                }}
-              >
-                <div style={{ display: "flex" }}>
-                  <div
-                    style={{
-                      border: "1px solid black",
-                      borderRadius: "7px",
-                      // background: 'gray'
-                    }}
-                  >
-                    <img
-                      src={API_URL + val.image}
-                      alt={val.name}
-                      width="150px"
-                      height="150px"
-                    />
-                  </div>
-                  <div
-                    style={{
-                      // background: 'green',
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      marginLeft: "20px",
-                    }}
-                  >
-                    <div style={{ fontWeight: "700" }}>{val.name}</div>
-                    <div
-                      style={
-                        {
-                          // color: 'gray'
-                        }
-                      }
-                    >
-                      {val.qty} {val.qty > 1 ? "items" : "item"} x{" "}
-                      {currencyFormatter(val.price)}
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        // background: 'purple',
-                        marginTop: "10px",
-                      }}
-                    >
-                      <div>
-                        {" "}
-                        <FiEdit
-                          onClick={() => this.toggleEdit(val)}
-                          className="edit-btn"
-                        />{" "}
-                      </div>
-                      <div>
-                        {" "}
-                        <FiTrash2
-                          onClick={() => this.deleteItemClick(index)}
-                          className="delete-btn"
-                        />{" "}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                style={{
-                  // background: 'teal',
-                  flex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  paddingLeft: "50px",
-                  borderLeft: "2px solid #DBDEE2",
-                }}
-              >
-                <div
-                  style={{
-                    // background: 'tomato',
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    style={
-                      {
-                        // color: 'gray'
-                      }
-                    }
-                  >
-                    Subtotal
-                  </div>
-                  <div style={{ fontWeight: "bold", fontSize: "20px" }}>
-                    {currencyFormatter(val.price * val.qty)}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
   };
 
   deleteItemClick = (index) => {
@@ -447,7 +326,7 @@ class Cart extends Component {
           </div>
           <div>
             {this.state.selected_address.id ===
-            this.state.addresses[index].id ? (
+              this.state.addresses[index].id ? (
               <div
                 style={{
                   color: "#052C43",
@@ -515,14 +394,13 @@ class Cart extends Component {
   };
 
   checkOutClick = () => {
+    const bank_id = this.state.pilihanId;
     const users_id = this.props.dataUser.id;
     const address_id = this.state.selected_address.id;
-    const bank_id = this.state.pilihanId;
     const users_latitude = this.state.selected_address.latitude;
     const users_longitude = this.state.selected_address.longitude;
     const orders_id = this.props.dataUser.cart[0].orders_id;
     let cart = this.props.dataUser.cart;
-
     if (!bank_id) {
       alert("harus di isi");
     } else {
@@ -544,15 +422,16 @@ class Cart extends Component {
       axios
         .post(`${API_URL}/transaction/checkout`, body, options)
         .then((res) => {
-          this.setState({ modalPayment: !this.state.modalPayment });
+          this.setState({ modalPayment: !this.state.modalPayment, isCheckout: true });
           this.props.CartAction(res.data);
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Your work has been saved",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          // console.log(this.props.CartAction(res.data));
+          // Swal.fire({
+          //   position: "top-end",
+          //   icon: "success",
+          //   title: "Your work has been saved",
+          //   showConfirmButton: false,
+          //   timer: 1500,
+          // });
         })
         .catch((error) => {
           console.error(error);
@@ -561,6 +440,9 @@ class Cart extends Component {
   };
 
   render() {
+    if (this.state.isCheckout) {
+      return <Redirect to='/payment' />;
+    }
     return (
       <div>
         {this.state.loading ? <LoaderComp /> : null}
@@ -632,11 +514,8 @@ class Cart extends Component {
 
         <div className="cart-background">
           <Header />
-          <div className="section-content">
-            <h1 className="title-top">Cart</h1>
-          </div>
         </div>
-        <Container>
+        <Container style={{ minHeight: '100vh' }}>
           {!this.props.dataUser.cart.length ? (
             <div className="container-cart">
               <div style={{ flex: 1 }}>
@@ -648,38 +527,59 @@ class Cart extends Component {
               </div>
               <div style={{ flex: 1, marginTop: "15px" }}>
                 <h2>Your Cart is Empty</h2>
-                <Link to="/">
+                <Link to="/collection">
                   <buton className="tombol-home">Shop Now</buton>
                 </Link>
               </div>
             </div>
           ) : (
-            <React.Fragment>
-              <h5 style={{ marginTop: "35px" }}>Shipping Address:</h5>
-              <div className="alamat-box">
-                <div style={{ fontWeight: "700" }}>
-                  {this.props.dataUser.first_name +
-                    " " +
-                    this.props.dataUser.last_name}
+            <Fragment>
+              {!this.state.addresses || !this.state.selected_address ?
+                (
+                  <div>
+                    <h5 style={{ marginTop: "35px", color: '#052C43', fontWeight: '600' }}>Please add your address:</h5>
+                    <Link to='/address'>
+                      <button className='add-address-cart'>Add Address</button>
+                    </Link>
+                  </div>
+                )
+                :
+                (<div>
+                  <h5 style={{ marginTop: "35px" }}>Shipping Address:</h5>
+                  <div className="alamat-box">
+                    <div style={{ fontWeight: "700" }}>
+                      {this.props.dataUser.first_name +
+                        " " +
+                        this.props.dataUser.last_name}
+                    </div>
+                    {this.props.dataUser.phone_number}
+                    <br />
+                    <div style={{ color: "gray" }}>
+                      {this.state.selected_address.address}
+                      <br />
+                      {this.state.selected_address.city +
+                        ", " +
+                        this.state.selected_address.zip}
+                    </div>
+                    <div style={{ color: "#89ADC3" }}>
+                      {this.state.selected_address.is_default ?
+                        "Default address"
+                        :
+                        null
+                      }
+                    </div>
+                    <button className="other-address" onClick={this.toggleAddress}>
+                      Choose Other Address
+                    </button>
+                    <Link to='/address'>
+                      <button className='add-address-cart' style={{ marginLeft: '30px' }}>
+                        Add New Address
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-                {this.props.dataUser.phone_number}
-                <br />
-                <div style={{ color: "gray" }}>
-                  {this.state.selected_address.address}
-                  <br />
-                  {this.state.selected_address.city +
-                    ", " +
-                    this.state.selected_address.zip}
-                </div>
-                <div style={{ color: "#89ADC3" }}>
-                  {this.state.selected_address.is_default
-                    ? "Default address"
-                    : null}
-                </div>
-              </div>
-              <button className="other-address" onClick={this.toggleAddress}>
-                Choose Other Address
-              </button>
+                )
+              }
               <div
                 style={{ border: "4px solid #F3F4F5", marginTop: "20px" }}
               ></div>
@@ -688,10 +588,11 @@ class Cart extends Component {
                 className="checkout-btn"
                 style={{ marginTop: "20px" }}
                 onClick={this.togglePayment}
+                disabled={!this.state.selected_address}
               >
                 Choose Payment
               </button>
-            </React.Fragment>
+            </Fragment>
           )}
         </Container>
       </div>
