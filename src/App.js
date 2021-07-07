@@ -125,7 +125,7 @@ class App extends Component {
               component={ProductsFlow}
             />
             <Route
-              path="/admin/dashboard/:status"
+              path="/admin/dashboard/"
               component={WareHouseDashboard}
             />
             <Route path="*" component={NotFound} />

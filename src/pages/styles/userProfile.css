@@ -1,3 +1,62 @@
+.sidebar-user-profile {
+  height: auto;
+  width: 20%;
+  position: fixed;
+  box-shadow: -10px 0px 15px #555;
+  background-color: white;
+}
+
+.container-userprofile {
+  display: flex;
+  justify-content: center;
+  margin-right: 10%;
+  padding-top: 3%;
+}
+
+.container-userprofile-2 {
+  display: flex;
+  justify-content: center;
+  margin-right: 10%;
+  padding-top: 3%;
+}
+
+.home-sidebar {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-weight: bold;
+  color: #052c43;
+  font-size: 30px;
+}
+
+.sidebar-content-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20%;
+  margin-left: 20%;
+  height: 25vh;
+}
+
+.sidebar-content-2 {
+  height: 100vh;
+  background-color: #d4eaf5;
+}
+
+.text-1-userprofile {
+  font-size: 14px;
+  margin-left: 5px;
+  color: #555;
+}
+
+.address-container {
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: 20%;
+  width: 80%;
+}
+
 .icon{
     font-size: 70px;
 }
@@ -37,8 +96,8 @@
     border: 2px #89ADC3 solid;
     border-radius: 50% ;
     background-color:#D4EAF5 ;
-    height: 200px;
-    width:200px;
+    height: 150px;
+    width: 150px;
     overflow: auto;
 }
 
@@ -49,12 +108,14 @@
 .button-utama{
     background-color:#89ADC3 ;
     border: none;
+    border-radius: 3px;
     color: white;
     text-align: center;
     display: inline-block;
     font-size: 17px;
     text-decoration: none;
-    padding: 15px 32px;
+    padding: 5px 50px;
+    height: 45px;
 }
 .button-utama:disabled{
     background-color:#b2c9d8;
@@ -66,9 +127,10 @@
     color: black;
     text-align: center;
     display: inline-block;
-    font-size: 17px;
+    font-size: 15px;
     text-decoration: none;
-    padding: 15px 32px;
+    padding: 5px 30px;
+    height: 40px;
 }
 
 .button-cancel{
@@ -77,9 +139,11 @@
     color: white;
     text-align: center;
     display: inline-block;
+    border-radius: 3px;
     font-size: 17px;
     text-decoration: none;
-    padding: 15px 32px;
+    padding: 5px 40px;
+    height: 45px;
 }
 
 .link:hover{

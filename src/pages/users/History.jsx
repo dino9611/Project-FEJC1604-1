@@ -1,13 +1,34 @@
 import React, { Component } from "react";
 import Axios from "axios";
 import { API_URL, currencyFormatter } from "../../helper";
+import {
+  Select,
+  MenuItem,
+  Button,
+  DialogActions,
+  InputBase,
+  Dialog,
+  DialogContent,
+  Snackbar,
+} from "@material-ui/core";
 import Header from "../../components/Header";
 import { withStyles } from "@material-ui/core/styles";
-import { Select, MenuItem, InputBase } from "@material-ui/core";
 import { FiSearch } from "react-icons/fi";
+import MuiAlert from "@material-ui/lab/Alert";
 import ModalDP from "../../components/ModalDP";
+import SyncIcon from "@material-ui/icons/Sync";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
+
+const useStyles = (theme) => ({
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+});
 
 const upperCase = (string) => {
   return string[0].toUpperCase() + string.slice(1); // buat ngubah nama status jadi otomatis uppercase
@@ -16,6 +37,7 @@ const upperCase = (string) => {
 class History extends Component {
   state = {
     history: [],
+    row: [],
     dropdown: false,
     idProd: 0,
     modalDetail: false,
@@ -26,7 +48,8 @@ class History extends Component {
     hour: [],
     statusTransaction: [],
     loading: false,
-    acceptItem: false,
+    openDialogAcceptedOrder: false,
+    openSnack: false,
   };
 
   componentDidMount() {
@@ -48,7 +71,8 @@ class History extends Component {
   componentDidUpdate(prevprops, prevstate) {
     if (
       (this.state.idProd !== prevstate.idProd && this.state.idProd != 0) ||
-      this.state.statusTransaction != prevstate.statusTransaction
+      this.state.statusTransaction != prevstate.statusTransaction ||
+      this.state.openDialogAcceptedOrder != prevstate.openDialogAcceptedOrder
     ) {
       this.setState({ loading: true });
       let tokenAccess = localStorage.getItem("TA");
@@ -97,14 +121,41 @@ class History extends Component {
     this.setState({ idProd: idProd, modalDetail: true });
   };
 
-  renderAcceptItem = () => {
-      return (
-        <div
-          className="history-button-detail"
-        >
-          are the item was delivered ?
+  dialogAccepted = (val) => {
+    this.setState({ openDialogAcceptedOrder: true, row: val });
+  };
+
+  onAcceptClick = () => {
+    let tokenAccess = localStorage.getItem("TA");
+    Axios.put(
+      `${API_URL}/transaction/accepted-order`,
+      {
+        status: "delivered",
+        row: this.state.row,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      }
+    )
+      .then((res) => {
+        this.setState({ openSnack: true, openDialogAcceptedOrder: false });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  renderAcceptItem = (val) => {
+    return (
+        <div className="delivered-order" onClick={() => this.dialogAccepted(val)}>
+          <div className="accepted-order">
+            Have you received the product? and are there no complaints about it?
+            click to confirmation
+          </div>
         </div>
-      );
+    );
   };
 
   renderHistory = () => {
@@ -113,7 +164,19 @@ class History extends Component {
         <React.Fragment>
           <div className="history-list" key={val.id}>
             <div className="history-upper">
-              <div className="history-status">{upperCase(val.status)}</div>
+              <div className="history-status">
+                {val.status == "processed" ? (
+                  <span>
+                    <SyncIcon /> {val.status}
+                  </span>
+                ) : val.status == "sending" ? (
+                  <span>
+                    <LocalShippingIcon /> {val.status}
+                  </span>
+                ) : (
+                  upperCase(val.status)
+                )}
+              </div>
               <div className="history-date" width="120px">
                 {val.date}
               </div>
@@ -136,18 +199,20 @@ class History extends Component {
                 <div className="history-divider" width="100px"></div>
                 <div className="history-totalprice">
                   <div>Total price</div>
-                  <div>{currencyFormatter(val.total_price)}</div>
+                  <div className="totalprice">
+                    {currencyFormatter(val.total_price)}
+                  </div>
+                  <div
+                    className="history-button-detail"
+                    onClick={() => this.detailProduct(index)}
+                  >
+                    Transaction Detail
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="history-button-content">
-              {val.status == "sending" ? this.renderAcceptItem() : null}  
-              <div
-                className="history-button-detail"
-                onClick={() => this.detailProduct(index)}
-              >
-                Transaction Detail
-              </div>
+            <div>
+              {val.status == "sending" ? this.renderAcceptItem(val) : null}
             </div>
           </div>
         </React.Fragment>
@@ -209,6 +274,14 @@ class History extends Component {
     this.setState({ modalDetail: false });
   };
 
+  handleDialogAccepted = () => {
+    this.setState({ openDialogAcceptedOrder: false });
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false });
+  };
+
   render() {
     const BootstrapInput = withStyles(() => ({
       input: {
@@ -222,8 +295,50 @@ class History extends Component {
       },
     }))(InputBase);
 
+    const { classes } = this.props;
+
+    const Alert = (props) => {
+      return <MuiAlert elevation={6} variant="filled" {...props} />;
+    };
+
+    const { openDialogAcceptedOrder, openSnack } = this.state;
+
     return (
       <div>
+        {
+          <div>
+            <Dialog
+              open={openDialogAcceptedOrder}
+              onClose={this.handleDialogAccepted}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogContent>Do you want to accept this orders?</DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={this.onAcceptClick}
+                  style={{ color: "#4aa96c" }}
+                >
+                  Accept
+                </Button>
+                <Button onClick={this.handleDialogAccepted}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        }
+        {
+          <div className={classes.root}>
+            <Snackbar
+              open={openSnack}
+              autoHideDuration={10000}
+              onClose={this.handleSnack}
+            >
+              <Alert onClose={this.handleSnack} severity="success">
+                Your order is done!
+              </Alert>
+            </Snackbar>
+          </div>
+        }
+
         <Header />
         <div className="jumbotron-1-history">
           <ModalDP
@@ -282,4 +397,4 @@ class History extends Component {
   }
 }
 
-export default History;
+export default withStyles(useStyles)(History);
