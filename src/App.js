@@ -30,6 +30,7 @@ import History from "./pages/users/History";
 import "./App.css";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
+import Carousel from "./components/Carousel";
 
 class App extends Component {
   state = {
@@ -79,12 +80,10 @@ class App extends Component {
               path="/verified-email/:token"
               component={EmailVerification}
             />
-
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
-
             <Route path="*" component={NotFound} />
           </Switch>
           <ToastContainer />
@@ -148,6 +147,7 @@ class App extends Component {
           <Route path="/login" exact component={Login} />
           <Route path="/verified-email/:token" component={EmailVerification} />
           <Route path="/admin/login" exact component={LoginAdmin} />
+          <Route path="/carousel" exact component={Carousel} />
           <Route path="*" component={NotFound} />
         </Switch>
         <ToastContainer />

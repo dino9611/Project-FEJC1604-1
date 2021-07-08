@@ -69,7 +69,10 @@ class Header extends Component {
             )}
           </div>
 
-          <ModalCH open={this.state.isOpenModalCH} close={this.onCloseClick} />
+          <ModalCH
+            openCH={this.state.isOpenModalCH}
+            closeCH={this.onCloseClick}
+          />
         </div>
       </div>
     );
