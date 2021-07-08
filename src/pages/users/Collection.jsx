@@ -279,7 +279,7 @@ class Collection extends Component {
                   <button
                     disabled={
                       this.state.page ==
-                      Math.ceil(this.state.totaldata / this.state.limit)
+                        Math.ceil(this.state.totaldata / this.state.limit)
                         ? true
                         : false
                     }

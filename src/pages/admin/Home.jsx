@@ -62,59 +62,54 @@ class HomeAdmin extends Component {
   };
 
   render() {
-    if (this.props.dataAdmin.islogin) {
-      return (
-        <div style={{ minHeight: "100vh" }}>
-          <HeaderAdmin />
-          <Container>
-            <div className="kotak-1">
-              <div style={{ fontSize: "20px", fontWeight: "600" }}>REPORT:</div>
-              <div className="kotak-date">
-                <div style={{ marginRight: "50px" }}>
-                  <div>Start date:</div>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={this.state.startDate}
-                    onChange={this.onDateChange}
-                  />
-                </div>
-                <div style={{ marginRight: "50px" }}>
-                  <div>End date:</div>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={this.state.endDate}
-                    onChange={this.onDateChange}
-                  />
-                </div>
-                <div style={{ alignSelf: "flex-end" }}>
-                  <button className="filter-btn" onClick={this.onFilterClick}>
-                    Filter
-                  </button>
-                </div>
+    return (
+      <div style={{ minHeight: "100vh" }}>
+        <Container>
+          <div className="kotak-1-pendapatan">
+            <div style={{ fontSize: "20px", fontWeight: "600" }}></div>
+            <div className="kotak-date">
+              <div style={{ marginRight: "50px" }}>
+                <div>Start date:</div>
+                <input
+                  type="date"
+                  name="startDate"
+                  value={this.state.startDate}
+                  onChange={this.onDateChange}
+                />
+              </div>
+              <div style={{ marginRight: "50px" }}>
+                <div>End date:</div>
+                <input
+                  type="date"
+                  name="endDate"
+                  value={this.state.endDate}
+                  onChange={this.onDateChange}
+                />
+              </div>
+              <div style={{ alignSelf: "flex-end" }}>
+                <button className="filter-btn" onClick={this.onFilterClick}>
+                  Filter
+                </button>
               </div>
             </div>
-            <div className="kotak-2">
-              <div className="kotak-revenue">
-                <div className="kotak-revenue-1">Revenue</div>
-                <div className="kotak-revenue-2">
-                  {currencyFormatter(this.state.revenue)}
-                </div>
-              </div>
-              <div className="kotak-revenue">
-                <div className="kotak-revenue-1">Potential Revenue</div>
-                <div className="kotak-revenue-2">
-                  {currencyFormatter(this.state.potential)}
-                </div>
+          </div>
+          <div className="kotak-2-pendapatan">
+            <div className="kotak-revenue">
+              <div className="kotak-revenue-1">Revenue</div>
+              <div className="kotak-revenue-2">
+                {currencyFormatter(this.state.revenue)}
               </div>
             </div>
-          </Container>
-        </div>
-      );
-    } else {
-      return <Redirect to="/admin/login" />;
-    }
+            <div className="kotak-revenue">
+              <div className="kotak-revenue-1">Potential Revenue</div>
+              <div className="kotak-revenue-2">
+                {currencyFormatter(this.state.potential)}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
   }
 }
 
