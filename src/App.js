@@ -22,6 +22,7 @@ import ManageProduct from "./pages/admin/ManageProduct";
 import Report from "./pages/admin/Report";
 import ProductsFlow from "./pages/admin/ProductsFlow";
 import ProductWarehouse from "./pages/admin/ProductWarehouse";
+import CreateAdmin from "./pages/admin/CreateAdmin";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -79,6 +80,7 @@ class App extends Component {
               path="/verified-email/:token"
               component={EmailVerification}
             />
+
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -98,8 +100,9 @@ class App extends Component {
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
-            <Route path="/admin/dashboard" exact component={WareHouseDashboard} />
+            <Route path="/admin/dashboard/" component={WareHouseDashboard} />
             <Route path="/admin/report" exact component={Report} />
+            <Route path="/admin/addAdmin" exact component={CreateAdmin} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
@@ -118,11 +121,7 @@ class App extends Component {
             <Route
               path="/admin/productsWarehouse"
               exact
-              component={ProductsFlow}
-            />
-            <Route
-              path="/admin/dashboard/"
-              component={WareHouseDashboard}
+              component={ProductWarehouse}
             />
             <Route path="/admin/dashboard/" component={WareHouseDashboard} />
             <Route path="/admin/modalpw" exact component={ModalPW} />
@@ -143,10 +142,6 @@ class App extends Component {
           <Route path="/admin/home" exact component={HomeAdmin} />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
-          <Route
-            path="/admin/dashboard"
-            component={WareHouseDashboard}
-          />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

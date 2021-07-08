@@ -252,9 +252,7 @@ class AddressList extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
-              {this.renderAddress()}
-            </tbody>
+            <tbody>{this.renderAddress()}</tbody>
           </Table>
           <button className="button-utama" onClick={this.toggle}>
             Add Address
