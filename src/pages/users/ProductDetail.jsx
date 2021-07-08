@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Header from "../../components/Header";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
-import { BsFillBagFill } from "react-icons/bs";
 import Loader from "react-loader-spinner";
+import AddIcon from '@material-ui/icons/Add';
 import { connect } from "react-redux";
 import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
@@ -124,17 +124,6 @@ class ProductDetail extends Component {
   render() {
     return (
       <div>
-        {/* {this.props.dataUser.loading ? (
-          <div className="login-loading">
-            <Loader
-              type="ThreeDots"
-              color="#052C43"
-              height={70}
-              width={70}
-              timeout={3000}
-            />
-          </div>
-        ) : null} */}
         <Header />
         <div className="detail-content">
           <div className="detail-content-1">
@@ -145,13 +134,14 @@ class ProductDetail extends Component {
                 alt="Product"
               />
             </div>
+
             <div className="detail-info">
               <div className="detail-name">{this.state.product.name}</div>
               <div className="detail-description">
                 {this.state.product.description}
               </div>
               <div className="detail-price">
-                {currencyFormatter(this.state.product.price)}
+                {currencyFormatter(this.state.product.price).split(",")[0]}
               </div>
               <div className="detail-penjualan">
                 <p>125 people buy this product</p>
@@ -161,8 +151,17 @@ class ProductDetail extends Component {
                 <p>Shipping fees start from Rp16.000</p>
               </div>
               <hr />
+
+              <div className="stockinfo-detailp">
+                Stock available &nbsp;
+                {this.state.product.quantity > 0
+                  ? this.state.product.quantity
+                  : 0}
+              </div>
+            </div>
+            <div className="cart-info">
+              <h1 className="set-amount">Set amount</h1>
               <div className="detail-quantity">
-                <p>Amount:</p>
                 <button
                   className="button-minus"
                   onClick={() => this.quantityClick("minus")}
@@ -186,18 +185,32 @@ class ProductDetail extends Component {
                   <div>+</div>
                 </button>
               </div>
-              <div className="stockinfo-detailp">
-                Stock available &nbsp;
-                {this.state.product.quantity > 0
-                  ? this.state.product.quantity
-                  : 0}
+              <div className="detail-price-cart">
+                <p
+                  style={{
+                    fontSize: "14px",
+                    marginTop: "10px",
+                    display: "flex",
+                    fontWeight: 600,
+                  }}
+                >
+                  Stock{" "}
+                  {this.state.product.quantity > 0
+                    ? this.state.product.quantity
+                    : 0}
+                </p>
+                {
+                  currencyFormatter(
+                    this.state.product.price * this.state.qty
+                  ).split(",")[0]
+                }
               </div>
               <div className="detail-button-cart">
                 <button onClick={this.addToCart}>
                   <div>
-                    <BsFillBagFill style={{ color: "white" }} />
+                    <AddIcon style={{ color: "white" }} />
                   </div>
-                  <div>Add to your cart</div>
+                  <div className="add-tocart">Add to cart</div>
                 </button>
               </div>
             </div>

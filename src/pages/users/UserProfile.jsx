@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import "../styles/userProfile.css";
 import Sidebar from "../../components/SideBar";
 import { toast, ToastContainer } from "react-toastify";
-import { FaEdit } from 'react-icons/fa';
-import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import EditIcon from "@material-ui/icons/Edit";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class UserProfile extends Component {
   state = {
@@ -25,15 +25,19 @@ class UserProfile extends Component {
     save: true,
     modalVisible: false,
     photo: null,
-    photoDefault: null
+    photoDefault: null,
   };
 
   componentDidMount() {
     axios
       .get(`${API_URL}/auth/${this.props.Auth.id}`)
       .then((res) => {
-        console.log('ini res.data ke 0', res.data[0]);
-        this.setState({ dataUser: res.data[0], dataInit: res.data[0], photoDefault: res.data[0].photo });
+        console.log("ini res.data ke 0", res.data[0]);
+        this.setState({
+          dataUser: res.data[0],
+          dataInit: res.data[0],
+          photoDefault: res.data[0].photo,
+        });
       })
       .catch((err) => {
         console.error(err);
@@ -92,13 +96,19 @@ class UserProfile extends Component {
       .post(`${API_URL}/auth/uploadphoto/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + tokenAccess
-        }
-      }).then((res) => {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res) => {
         console.log(res);
-        this.setState({ photo: null, modalVisible: false, photoDefault: res.data[0].photo });
-        alert('berhasil');
-      }).catch((error) => {
+        this.setState({
+          photo: null,
+          modalVisible: false,
+          photoDefault: res.data[0].photo,
+        });
+        alert("berhasil");
+      })
+      .catch((error) => {
         console.error(error.message);
       });
   };
@@ -140,12 +150,16 @@ class UserProfile extends Component {
               type="file"
               className="form-control mt-3"
               onChange={this.addFileChange}
-              name='photo'
+              name="photo"
             />
           </ModalBody>
           <ModalFooter>
-            <button className='btn-upload-profile' onClick={this.onUploadClick}>Upload</button>
-            <button className='btn-cancel-profile' onClick={this.toggle}>Cancel</button>
+            <button className="btn-upload-profile" onClick={this.onUploadClick}>
+              Upload
+            </button>
+            <button className="btn-cancel-profile" onClick={this.toggle}>
+              Cancel
+            </button>
           </ModalFooter>
         </Modal>
 
@@ -154,11 +168,28 @@ class UserProfile extends Component {
           <div className="container-userprofile">
             <div className="photo">
               <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                ssrc={API_URL + this.state.photoDefault}
                 alt="photo"
                 height="100%"
                 width="100%"
               />
+            </div>
+            <div
+              style={{
+                width: "35px",
+                height: "35px",
+                backgroundColor: "white",
+                zIndex: 2,
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "100px",
+                marginLeft: "-30px"
+              }}
+            >
+              <p onClick={this.toggle} className="change-photo">
+                <EditIcon style={{fontSize: "20px"}} />
+              </p>
             </div>
           </div>
           <div className="container-userprofile-2">

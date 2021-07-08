@@ -144,9 +144,10 @@ class Header extends Component {
                         <img
                           src={API_URL + this.props.dataUser.photo}
                           style={{
-                            height: "25px",
-                            width: "25px",
+                            height: "30px",
+                            width: "30px",
                             borderRadius: "50%",
+                            cursor: "pointer"
                           }}
                           alt="profile-picture"
                         />
@@ -154,6 +155,8 @@ class Header extends Component {
                       <div
                         style={{
                           marginLeft: "15px",
+                          marginTop: "3px",
+                          cursor: "pointer"
                         }}
                       >
                        <span>{this.props.dataUser.username}</span> 
