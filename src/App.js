@@ -22,6 +22,7 @@ import ManageProduct from "./pages/admin/ManageProduct";
 import Report from "./pages/admin/Report";
 import ProductsFlow from "./pages/admin/ProductsFlow";
 import ProductWarehouse from "./pages/admin/ProductWarehouse";
+import CreateAdmin from "./pages/admin/CreateAdmin";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 import Cart from "./pages/users/Cart";
@@ -101,6 +102,7 @@ class App extends Component {
             <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/dashboard/" component={WareHouseDashboard} />
             <Route path="/admin/report" exact component={Report} />
+            <Route path="/admin/addAdmin" exact component={CreateAdmin} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

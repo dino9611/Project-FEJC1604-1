@@ -4,6 +4,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import Empty from "./../../images/pf-empty.svg";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import ModalPW from "../../components/ModalPW";
+import AlertAdmin from "../../components/AlertAdmin";
 import Axios from "axios";
 import "./../styles/ProductWarehouse.css";
 import "./../../components/styles/ModalPW.css";
@@ -16,9 +17,12 @@ class ProductWarehouse extends Component {
     idProd: 0,
     modalUpdate: false,
     loading: false,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
     page: 0,
     limit: 10,
-    qty: 0,
+    qty: null,
   };
 
   componentDidMount() {
@@ -102,6 +106,7 @@ class ProductWarehouse extends Component {
   onUpdateAdd = () => {
     const qty = parseInt(this.state.qty);
     const id = this.state.detailProd[0].id;
+    const name = this.state.detailProd[0].name;
     let data = { products_id: id, qty: qty };
     let tokenAccess = localStorage.getItem("TA");
     if (qty > -1) {
@@ -118,9 +123,12 @@ class ProductWarehouse extends Component {
           })
             .then((res1) => {
               this.setState({
-                qty: 0,
+                qty: null,
                 modalUpdate: false,
                 detailProd: [],
+                message: `Update stock ${name} success!`,
+                openSnack: true,
+                alertStatus: "success",
                 dataProd: res1.data.dataProducts,
                 totalData: res1.data.totalData,
                 loading: false,
@@ -134,8 +142,13 @@ class ProductWarehouse extends Component {
         .catch((err) => {
           console.log(err);
         });
+      this.setState({ message: "", openSnack: false, alertStatus: "" });
     } else {
-      alert("data harus diinput");
+      this.setState({
+        alertStatus: "error",
+        message: "Data must be filled correctly to update!",
+        openSnack: true,
+      });
     }
   };
 
@@ -222,7 +235,11 @@ class ProductWarehouse extends Component {
               <div className="modal-pw-button">
                 <button
                   onClick={() =>
-                    this.setState({ modalUpdate: false, detailProd: [] })
+                    this.setState({
+                      modalUpdate: false,
+                      detailProd: [],
+                      qty: null,
+                    })
                   }
                 >
                   Cancel
@@ -239,7 +256,11 @@ class ProductWarehouse extends Component {
   };
 
   onCloseClick = () => {
-    this.setState({ modalUpdate: false, detailProd: [] });
+    this.setState({ modalUpdate: false, detailProd: [], qty: null });
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: "", alertStatus: "" });
   };
 
   render() {
@@ -303,6 +324,12 @@ class ProductWarehouse extends Component {
             </div>
           </div>
         </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }
