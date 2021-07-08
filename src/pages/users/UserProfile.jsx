@@ -86,6 +86,7 @@ class UserProfile extends Component {
   };
 
   onUploadClick = () => {
+    // upload & edit photo
     let formData = new FormData();
     formData.append("photo", this.state.photo);
     console.log(formData);
