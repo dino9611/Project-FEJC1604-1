@@ -251,10 +251,19 @@ class Processing extends Component {
     }
   };
 
-  onSendingClick = (rowId) => {
+  onSendingClick = (row) => {
+    let tokenAccess = localStorage.getItem("TA");
+    let { transaction, transactionDetail} = this.state;
     axios
-      .put(`${API_URL}/admin-warehouse-processing/sending-item`, {
-        rowId: rowId,
+      .post(`${API_URL}/admin-warehouse-processing/sending-item`, {
+        row: row,
+        transactionDetail: transactionDetail,
+        transaction: transaction
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
       })
       .then((res) => {
         this.setState({
@@ -768,7 +777,7 @@ class Processing extends Component {
                                   })}
                                 </TableBody>
                               </Table>
-                              {this.renderButtonSending(row.id)}
+                              {this.renderButtonSending(row)}
                             </Box>
                           </Collapse>
                         </TableCell>
