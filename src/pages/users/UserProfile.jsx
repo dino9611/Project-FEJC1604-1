@@ -165,85 +165,89 @@ class UserProfile extends Component {
 
         {/* SIDEBAR */}
         <Sidebar page="profile">
-          <div className="container-userprofile">
-            <div className="photo">
-              <img
-                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-                alt="photo"
-                height="100%"
-                width="100%"
-              />
+          <div>
+            <div className="d-flex justify-content-center">
+              <div className="photo">
+                <img
+                  src={API_URL + this.state.photoDefault}
+                  alt="photo"
+                  height="100%"
+                  width="100%"
+                />
+              </div>
             </div>
-          </div>
-          <div className="container-userprofile-2">
-            <div>
-              <div className="d-flex">
-                <div>
-                  <div className="text-1-userprofile">First Name</div>
-                  <input
-                    name="first_name"
-                    type="text"
-                    className="form-control mt-1 input-border"
-                    placeholder="First Name"
-                    value={this.state.dataUser.first_name}
-                    onChange={this.onInputChange}
-                  />
-                </div>
-                <div className="ml-5">
-                  <div className="text-1-userprofile">Last Name</div>
-                  <input
-                    name="last_name"
-                    className="form-control mt-1 input-border"
-                    type="text"
-                    placeholder="Last Name"
-                    value={this.state.dataUser.last_name}
-                    onChange={this.onInputChange}
-                  />
-                </div>
-              </div>
+            <p onClick={this.toggle} className="change-photo">
+              Change Profile Picture
+            </p>
+            <div className="d-flex flex-column align-items-center mt-4">
               <div>
-                <div className="mt-3">
-                  <div className="text-1-userprofile">Phone Number</div>
-                  <input
-                    name="phone_number"
-                    className="form-control mt-1 input-width input-border"
-                    type="text"
-                    placeholder="Phone Number"
-                    value={this.state.dataUser.phone_number}
-                    onChange={this.onInputChange}
-                  />
+                <div className="d-flex">
+                  <div>
+                    <div>First Name</div>
+                    <input
+                      name="first_name"
+                      type="text"
+                      className="form-control mt-1 input-border"
+                      placeholder="First Name"
+                      value={this.state.dataUser.first_name}
+                      onChange={this.onInputChange}
+                    />
+                  </div>
+                  <div className="ml-5">
+                    <div>Last Name</div>
+                    <input
+                      name="last_name"
+                      className="form-control mt-1 input-border"
+                      type="text"
+                      placeholder="Last Name"
+                      value={this.state.dataUser.last_name}
+                      onChange={this.onInputChange}
+                    />
+                  </div>
                 </div>
-                <div className="mt-3">
-                  <div className="text-1-userprofile">Age</div>
-                  <input
-                    name="age"
-                    className="form-control mt-1 input-border input-width"
-                    type="number"
-                    placeholder="Age"
-                    value={this.state.dataUser.age}
-                    onChange={this.onInputChange}
-                  />
+                <div>
+                  <div className="mt-3">
+                    <div>Phone Number</div>
+                    <input
+                      name="phone_number"
+                      className="form-control mt-1 input-width input-border"
+                      type="text"
+                      placeholder="Phone Number"
+                      value={this.state.dataUser.phone_number}
+                      onChange={this.onInputChange}
+                    />
+                  </div>
+                  <div className="mt-3">
+                    <div>Age</div>
+                    <input
+                      name="age"
+                      className="form-control mt-1 input-border input-width"
+                      type="number"
+                      placeholder="Age"
+                      value={this.state.dataUser.age}
+                      onChange={this.onInputChange}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="d-flex mt-5 justify-content-end">
-                <button
-                  className="button-utama"
-                  disabled={this.state.save}
-                  onClick={this.onSaveClick}
-                >
-                  Save
-                </button>
-                <button
-                  className="button-cancel ml-4"
-                  onClick={this.onCancelClick}
-                >
-                  Cancel
-                </button>
+                <div className="d-flex mt-5 justify-content-end">
+                  <button
+                    className="button-utama"
+                    disabled={this.state.save}
+                    onClick={this.onSaveClick}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="button-cancel ml-4"
+                    onClick={this.onCancelClick}
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </Sidebar>
-        <ToastContainer />
       </div>
     );
   }
