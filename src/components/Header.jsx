@@ -66,7 +66,7 @@ class Header extends Component {
                   padding: 10,
                 }}
               >
-                Product
+                Collection
               </ButtonBase>
             </Link>
           </div>

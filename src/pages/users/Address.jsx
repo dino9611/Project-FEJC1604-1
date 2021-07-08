@@ -1,17 +1,11 @@
 import React, { Component } from "react";
-import {
-  Table,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
+import { Table, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import axios from "axios";
 import Sidebar from "../../components/SideBar";
 import { API_URL } from "../../helper";
 import { connect } from "react-redux";
-import Swal from 'sweetalert2';
-import LoaderComp from '../../components/Loader';
+import Swal from "sweetalert2";
+import LoaderComp from "../../components/Loader";
 
 class AddressList extends Component {
   state = {
@@ -23,14 +17,14 @@ class AddressList extends Component {
     },
     addresses: [],
     modalVisible: false,
-    loading: false
+    loading: false,
   };
 
   componentDidMount() {
     axios
       .get(`${API_URL}/auth/address/${this.props.Auth.id}`)
       .then((res) => {
-        console.log('isi res.data', res.data);
+        console.log("isi res.data", res.data);
         this.setState({ addresses: res.data });
       })
       .catch((err) => {
@@ -55,11 +49,19 @@ class AddressList extends Component {
             {val.is_default ? (
               "Default"
             ) : (
-              <button className="button-second" onClick={() => this.onDefaultClick(index)}>Make Default</button>
+              <button
+                className="button-second"
+                onClick={() => this.onDefaultClick(index)}
+              >
+                Make Default
+              </button>
             )}{" "}
           </td>
           <td className="text-center">
-            <button className="button-cancel" onClick={() => this.onDeleteClick(index)}>
+            <button
+              className="button-cancel"
+              onClick={() => this.onDeleteClick(index)}
+            >
               Delete
             </button>
           </td>
@@ -73,24 +75,24 @@ class AddressList extends Component {
     Swal.fire({
       title: `Are you sure want to delete ${alamat[index].address} ?`,
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         let address_id = alamat[index].id;
         let tokenAccess = localStorage.getItem("TA");
-        axios.delete(`${API_URL}/auth/address/delete/${address_id}/${this.props.Auth.id}`)
+        axios
+          .delete(
+            `${API_URL}/auth/address/delete/${address_id}/${this.props.Auth.id}`
+          )
           .then((res) => {
             this.setState({ addresses: res.data });
-            Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
-              'success'
-            );
-          }).catch((error) => {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+          })
+          .catch((error) => {
             console.error(error);
           });
       }
@@ -104,22 +106,20 @@ class AddressList extends Component {
     Swal.fire({
       title: `Are you sure want to make detault ${this.state.addresses[index].address} ?`,
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, make default'
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, make default",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.post(`${API_URL}/auth/defaultaddress/${address_id}/${users_id}`)
+        axios
+          .post(`${API_URL}/auth/defaultaddress/${address_id}/${users_id}`)
           .then((res) => {
             this.setState({ addresses: res.data });
-            Swal.fire(
-              'Success!',
-              'Address updated.',
-              'success'
-            );
-          }).catch((error) => {
+            Swal.fire("Success!", "Address updated.", "success");
+          })
+          .catch((error) => {
             console.error(error);
           });
       }
@@ -189,59 +189,57 @@ class AddressList extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loading ? <LoaderComp /> : null}
-
-        {/* MODAL ADD ADDRESS */}
-        <Modal
-          isOpen={this.state.modalVisible}
-          toggle={this.toggle}
-          centered
-          size="xl"
-        >
-          <ModalHeader toggle={this.toggle}>Add Address</ModalHeader>
-          <ModalBody>
-            <input
-              placeholder="City"
-              className="form-control my-3"
-              name="city"
-              value={this.state.addAddress.city}
-              onChange={this.onInputChange}
-            />
-            <input
-              placeholder="ZIP"
-              className="form-control"
-              name="zip"
-              value={this.state.addAddress.zip}
-              onChange={this.onInputChange}
-            />
-            <textarea
-              placeholder="Address"
-              className="form-control my-3"
-              rows="5"
-              name="address"
-              value={this.state.addAddress.address}
-              onChange={this.onInputChange}
-            ></textarea>
-            <textarea
-              placeholder="Description"
-              className="form-control my-3"
-              rows="5"
-              name="description"
-              value={this.state.addAddress.description}
-              onChange={this.onInputChange}
-            ></textarea>
-          </ModalBody>
-          <ModalFooter>
-            <button className="button-utama" onClick={this.onAddClick}>
-              Add
-            </button>
-            <button className="button-cancel" onClick={this.toggle}>
-              Cancel
-            </button>
-          </ModalFooter>
-        </Modal>
-        <Sidebar page="address">
+      <Sidebar page="address">
+        <div className="address-container">
+          {this.state.loading ? <LoaderComp /> : null}
+          <Modal
+            isOpen={this.state.modalVisible}
+            toggle={this.toggle}
+            centered
+            size="xl"
+          >
+            <ModalHeader toggle={this.toggle}>Add Address</ModalHeader>
+            <ModalBody>
+              <input
+                placeholder="City"
+                className="form-control my-3"
+                name="city"
+                value={this.state.addAddress.city}
+                onChange={this.onInputChange}
+              />
+              <input
+                placeholder="ZIP"
+                className="form-control"
+                name="zip"
+                value={this.state.addAddress.zip}
+                onChange={this.onInputChange}
+              />
+              <textarea
+                placeholder="Address"
+                className="form-control my-3"
+                rows="5"
+                name="address"
+                value={this.state.addAddress.address}
+                onChange={this.onInputChange}
+              ></textarea>
+              <textarea
+                placeholder="Description"
+                className="form-control my-3"
+                rows="5"
+                name="description"
+                value={this.state.addAddress.description}
+                onChange={this.onInputChange}
+              ></textarea>
+            </ModalBody>
+            <ModalFooter>
+              <button className="button-utama" onClick={this.onAddClick}>
+                Add
+              </button>
+              <button className="button-cancel" onClick={this.toggle}>
+                Cancel
+              </button>
+            </ModalFooter>
+          </Modal>
           <Table>
             <thead>
               <tr className="text-center">
@@ -254,13 +252,15 @@ class AddressList extends Component {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>{this.renderAddress()}</tbody>
+            <tbody>
+              {this.renderAddress()}
+            </tbody>
           </Table>
           <button className="button-utama" onClick={this.toggle}>
             Add Address
           </button>
-        </Sidebar>
-      </div>
+        </div>
+      </Sidebar>
     );
   }
 }

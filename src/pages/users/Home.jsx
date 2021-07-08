@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../../components/Header";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import ChairHome from "../../images/chair-home.jpg";
+// import ChairHome from "../../images/chair-home.jpg";
 import Deal from "../../images/great-deal.png";
 import Design from "../../images/great-design.png";
 import Minimalist from "../../images/minimalist.png";
@@ -35,7 +35,7 @@ class Home extends Component {
             </div>
           </div>
           <div className="right-content-home">
-            <img className="chair-home" src={ChairHome} />
+            {/* <img className="chair-home" src={ChairHome} /> */}
           </div>
         </div>
         <div className="jumbotron-two-home">

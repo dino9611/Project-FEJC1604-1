@@ -121,7 +121,7 @@ class App extends Component {
               component={ProductsFlow}
             />
             <Route
-              path="/admin/dashboard"
+              path="/admin/dashboard/"
               component={WareHouseDashboard}
             />
             <Route path="/admin/dashboard/" component={WareHouseDashboard} />

@@ -5,16 +5,15 @@
 
 .history-content {
   width: 100%;
-  margin: 5%;
-  margin-top: 10%;
+  margin: 3%;
+  margin-top: 6%;
   padding: 3% 2%;
-  border: solid 2px gainsboro;
   border-radius: 10px;
 }
 
 .history-filter {
   display: flex;
-  margin-bottom: 2%;
+  margin-bottom: 4%;
 }
 
 .history-dropdown {
@@ -25,7 +24,7 @@
   padding: 5px 10px;
   border: solid 1px gainsboro;
   height: 45px;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 .history-searchbar {
@@ -88,11 +87,11 @@
   flex-direction: column;
   margin-bottom: 2%;
   border-radius: 5px;
-  height: 250px;
-  padding: 0 1.5%;
-  box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
-  -webkit-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
-  -moz-box-shadow: 1px 1px 7px 0px rgba(187, 187, 187, 0.44);
+  height: 280px;
+  padding: 2% 2%;
+  box-shadow: 1px 1px 5px 0px rgba(187, 187, 187, 0.44); 
+  -webkit-box-shadow: 1px 1px 5px 0px rgba(187, 187, 187, 0.44);
+  -moz-box-shadow: 1px 1px 5px 0px rgba(187, 187, 187, 0.44);
 }
 
 .history-upper {
@@ -104,26 +103,45 @@
 .history-bottom {
   display: flex;
   flex-direction: row;
+  margin-top: 2%;
   width: 100%;
 }
 
 .history-button-content {
   align-items: center;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: space-between;
   height: 25%;
 }
 
 .history-button-detail {
-  height: 100%;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: center;
   align-items: center;
-  background-color: transparent;
-  color: #89adc3;
-  font-weight: bold;
-  border-radius: 5px;
+  background-color: #89adc3;
+  color: white;
   cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 60%;
+  height: 30%;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+.delivered-order {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4aa96b5e;
+  color: #4aa96c;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 100%;
+  height: 17%;
+  font-size: 13px;
+  border-radius: 3px;
 }
 
 .history-bottom-left {
@@ -159,21 +177,23 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 1.5%;
+  margin-left: 3%;
 }
 
 .history-name {
+  font-size: 23px;
   font-weight: bold;
   margin-bottom: 3%;
 }
 
 .history-price {
-  font-size: 0.8rem;
+  font-size: 15px;
   color: grey;
 }
 
 .history-status {
   color: #89adc3;
+  text-transform: capitalize;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,8 +217,14 @@
   width: 1px;
 }
 
+.totalprice {
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .history-totalprice {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: center;
   margin-left: 15%;
@@ -210,6 +236,14 @@
   color: grey;
 }
 
-.history-totalprice > div:last-child {
-  font-weight: bold;
+.accepted-order {
+  padding-left: 2%;
+  padding-right: 2%;
+  margin-top: 8%;
+  margin-bottom: 8%;
+}
+
+.accepted-orders {
+  width: 100%;
+  flex: 1;
 }

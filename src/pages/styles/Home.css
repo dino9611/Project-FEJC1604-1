@@ -10,7 +10,7 @@
 .jumbotron-one-home {
   display: flex;
   height: 100vh;
-  /* background-color: red; */
+  background-color: red;
   overflow: hidden;
 }
 
