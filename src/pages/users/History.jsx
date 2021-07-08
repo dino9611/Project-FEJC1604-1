@@ -386,6 +386,9 @@ class History extends Component {
                   <MenuItem value="sending">
                     <span>Sending</span>
                   </MenuItem>
+                  <MenuItem value="delivered">
+                    <span>Delivered</span>
+                  </MenuItem>
                 </Select>
               </div>
             </div>
