@@ -123,13 +123,15 @@
 .button-second {
   background-color: #d4eaf5;
   border: none;
-  color: black;
+  color: #052c43;
   text-align: center;
   display: inline-block;
   font-size: 15px;
   text-decoration: none;
-  padding: 5px 30px;
+  padding: 5px 25px;
   height: 40px;
+  border-radius: 5px;
+  font-weight: 600;
 }
 
 .button-cancel {
@@ -138,7 +140,7 @@
   color: white;
   text-align: center;
   display: inline-block;
-  border-radius: 3px;
+  border-radius: 5px;
   font-size: 17px;
   text-decoration: none;
   padding: 5px 40px;
@@ -157,5 +159,6 @@
   display: inline-block;
   font-size: 17px;
   text-decoration: none;
-  padding: 15px 32px;
+  padding: 15px 25px;
+  border-radius: 5px;
 }

@@ -8,13 +8,16 @@ import { connect } from "react-redux";
 import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+import AlertAdmin from '../../components/AlertAdmin';
 
 class ProductDetail extends Component {
   state = {
     product: {},
     qty: 1,
     loading: true,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
@@ -57,6 +60,10 @@ class ProductDetail extends Component {
         this.setState({ qty: this.state.qty - 1 });
       }
     }
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
   };
 
   //======================== Function Add To Cart ( Willy ) ===========================//
@@ -104,14 +111,11 @@ class ProductDetail extends Component {
         .then((res) => {
           console.log("isi dari res.data", res.data);
           this.props.CartAction(res.data);
-          toast.success("Product added to cart", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
+          this.setState({
+            message: 'Product added to cart',
+            openSnack: true,
+            alertStatus: 'success',
+            loading: false
           });
         })
         .catch((error) => {
@@ -178,7 +182,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                    this.state.product.quantity == null
+                      this.state.product.quantity == null
                       ? true
                       : false
                   }
@@ -203,6 +207,12 @@ class ProductDetail extends Component {
             </div>
           </div>
         </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }

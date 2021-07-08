@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { LoginAdminActionThunk, ResetActionthunk } from "../../redux/actions";
 import { Redirect, Link } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import LoaderComp from '../../components/Loader';
 import { Container } from 'reactstrap';
 import '../styles/adminLogin.css';
-import AiFillEye from 'react-icons/ai';
+import { AiFillEye } from 'react-icons/ai';
+import AlertAdmin from '../../components/AlertAdmin';
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Collapse from '@material-ui/core/Collapse';
 
 
 class LoginAdmin extends Component {
@@ -15,11 +18,19 @@ class LoginAdmin extends Component {
         isVisible: false,
         password: "",
         emailOrUsername: "",
-        loading: false
+        loading: false,
+        openSnack: false,
+        message: "",
+        alertStatus: "",
+        open: true
     };
 
     toggle = () => {
         this.setState({ isVisible: !this.state.isVisible });
+    };
+
+    handleSnack = () => {
+        this.setState({ openSnack: false, message: '', alertStatus: '' });
     };
 
     onInputChange = (e) => {
@@ -29,18 +40,6 @@ class LoginAdmin extends Component {
     onLoginSubmit = (e) => {
         e.preventDefault();
         const { emailOrUsername, password } = this.state;
-        if (!emailOrUsername || !password) {
-            // alert(this.props.dataAdmin.error);
-            toast.error('Input can not be empty', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-            });
-        }
         let dataLogin = {
             emailOrUsername: emailOrUsername,
             password: password,
@@ -67,6 +66,11 @@ class LoginAdmin extends Component {
                             <div style={{ marginBottom: '20px', textAlign: 'center' }}>
                                 <h1 style={{ color: '#052C43', fontWeight: 'bold' }}>Fournir Admin</h1>
                             </div>
+                            {this.props.dataAdmin.error ? (
+                                <Alert severity="error" style={{ marginBottom: "10px" }}>
+                                    {this.props.dataAdmin.error}
+                                </Alert>
+                            ) : null}
                             <div>
                                 <div className='login-box-1' >
                                     <div style={{ width: '100%' }}>
@@ -92,10 +96,9 @@ class LoginAdmin extends Component {
                                         </span>
                                     </div>
                                     <div>
-                                        <button type="submit" className="login-btn">
+                                        <button type="submit" className="login-btn" onClick={this.props.ResetActionthunk}>
                                             Login
                                         </button>
-                                        {/* {this.props.dataAdmin.error} */}
                                     </div>
                                 </div>
 
@@ -103,7 +106,12 @@ class LoginAdmin extends Component {
                         </form>
                     </div>
                 </Container >
-                <ToastContainer />
+                <AlertAdmin
+                    openSnack={this.state.openSnack}
+                    handleSnack={this.handleSnack}
+                    message={this.state.message}
+                    status={this.state.alertStatus}
+                />
             </div >
         );
     }

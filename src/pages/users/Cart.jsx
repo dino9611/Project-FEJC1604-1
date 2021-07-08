@@ -13,11 +13,11 @@ import {
 import { API_URL, currencyFormatter } from "../../helper";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import axios from "axios";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { toast, Slide, ToastContainer } from "react-toastify";
 import emptyCart from "../../images/empty-cart.svg";
 import LoaderComp from "../../components/Loader";
+import AlertAdmin from '../../components/AlertAdmin';
 
 class Cart extends Component {
   state = {
@@ -40,23 +40,19 @@ class Cart extends Component {
     pilihanId: 0,
     warehouses: [],
     selected_warehouse: 0,
-    isCheckout: false
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
     console.log("ini dataUser", this.props.dataUser);
+    this.setState({ loading: true });
     axios
       .get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
       .then((res) => {
         console.log("ini addresses", res.data);
-        // if (res.data.length) {
-        this.setState({ addresses: res.data, selected_address: res.data[0] });
-        // } else {
-        //   this.setState({
-        //     addresses: [{ address: "no data", zip: 0, city: "no data" }],
-        //     selected_address: { address: "no data", zip: 0, city: "no data" },
-        //   });
-        // }
+        this.setState({ addresses: res.data, selected_address: res.data[0], loading: false });
         console.log("ini selected_address", this.state.selected_address);
       })
       .catch((error) => {
@@ -110,6 +106,10 @@ class Cart extends Component {
     this.setState({ modalPayment: !this.state.modalPayment, pilihanId: 0 });
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
+  };
+
   updateQtyClick = () => {
     const users_id = this.props.dataUser.id;
     const { qtyInput, ordersdetail_id, stockByProduct } = this.state;
@@ -119,15 +119,7 @@ class Cart extends Component {
       qty: qtyInput,
     };
     if (qtyInput > stockByProduct) {
-      toast.error("Qty input over!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+      alert('stock kurang');
     } else {
       axios
         .patch(`${API_URL}/transaction/editqty`, data)
@@ -183,7 +175,6 @@ class Cart extends Component {
         <div key={index} className="box-cart">
           <div
             style={{
-              // border: '1px solid black',
               padding: "10px 10px 10px 10px",
             }}
           >
@@ -204,9 +195,10 @@ class Cart extends Component {
                 <div style={{ display: "flex" }}>
                   <div
                     style={{
-                      border: "1px solid black",
+                      border: "1px solid gray",
                       borderRadius: "7px",
-                      // background: 'gray'
+                      // background: 'gray',
+                      overflow: 'hidden'
                     }}
                   >
                     <img
@@ -362,16 +354,10 @@ class Cart extends Component {
     this.setState({
       selected_address: this.state.addresses[index],
       modalAddress: !this.state.modalAddress,
-    });
-    toast.dark("Address successfuly changed", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-      transition: Slide,
+      message: 'Address has successfuly changed!',
+      openSnack: true,
+      alertStatus: 'success',
+      loading: false
     });
   };
 
@@ -400,9 +386,14 @@ class Cart extends Component {
     const users_latitude = this.state.selected_address.latitude;
     const users_longitude = this.state.selected_address.longitude;
     const orders_id = this.props.dataUser.cart[0].orders_id;
-    let cart = this.props.dataUser.cart;
+    const cart = this.props.dataUser.cart;
     if (!bank_id) {
-      alert("harus di isi");
+      this.setState({
+        message: 'Please choose bank account',
+        openSnack: true,
+        alertStatus: 'warning',
+        loading: false
+      });
     } else {
       let body = {
         bank_id: bank_id,
@@ -422,16 +413,15 @@ class Cart extends Component {
       axios
         .post(`${API_URL}/transaction/checkout`, body, options)
         .then((res) => {
-          this.setState({ modalPayment: !this.state.modalPayment, isCheckout: true });
+          this.setState({
+            modalPayment: !this.state.modalPayment,
+            message: 'Checkout success',
+            openSnack: true,
+            alertStatus: 'success',
+            loading: false
+          });
           this.props.CartAction(res.data);
-          // console.log(this.props.CartAction(res.data));
-          // Swal.fire({
-          //   position: "top-end",
-          //   icon: "success",
-          //   title: "Your work has been saved",
-          //   showConfirmButton: false,
-          //   timer: 1500,
-          // });
+          console.log(this.props.CartAction(res.data));
         })
         .catch((error) => {
           console.error(error);
@@ -440,9 +430,6 @@ class Cart extends Component {
   };
 
   render() {
-    if (this.state.isCheckout) {
-      return <Redirect to='/payment' />;
-    }
     return (
       <div>
         {this.state.loading ? <LoaderComp /> : null}
@@ -586,7 +573,7 @@ class Cart extends Component {
               <div className="table-margin">{this.renderCart()}</div>
               <button
                 className="checkout-btn"
-                style={{ marginTop: "20px" }}
+                style={{ marginTop: "20px", marginBottom: '50px' }}
                 onClick={this.togglePayment}
                 disabled={!this.state.selected_address}
               >
@@ -595,6 +582,12 @@ class Cart extends Component {
             </Fragment>
           )}
         </Container>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }

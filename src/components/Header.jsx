@@ -7,11 +7,12 @@ import "./styles/Header.css";
 import { FaShoppingCart } from 'react-icons/fa';
 import { API_URL } from '../helper';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge } from 'reactstrap';
+import axios from 'axios';
 
 class Header extends Component {
   state = {
     isOpenModalCH: false,
-    isOpen: false
+    isOpen: false,
   };
 
   componentDidMount() {
@@ -88,7 +89,7 @@ class Header extends Component {
               <DropdownToggle caret className='dropdown-header' tag='a' size='20px'>
                 <img
                   src={API_URL + this.props.dataUser.photo}
-                  style={{ height: '50px', borderRadius: '50%' }}
+                  style={{ height: '50px', width: '50px', borderRadius: '50%', objectFit: 'cover' }}
                   alt='profile-picture'
                 />
               </DropdownToggle>

@@ -140,6 +140,7 @@ class App extends Component {
           <Route path="/login" exact component={Login} />
           <Route path="/admin/login" exact component={LoginAdmin} />
           <Route path="/admin/home" exact component={HomeAdmin} />
+          <Route path="/admin/dashboard" exact component={WareHouseDashboard} />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
           <Route path="*" component={NotFound} />
