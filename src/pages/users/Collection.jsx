@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "../../components/Header";
+import LoaderComp from "../../components/Loader";
 import Axios from "axios";
 import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
@@ -25,9 +26,11 @@ class Collection extends Component {
     statusCategory: [],
     sortPrice: [],
     searchInput: "",
+    loading: false
   };
 
   componentDidMount() {
+    this.setState({ loading: true })
     Axios.get(`${API_URL}/product/paging`, {
       params: { pages: this.state.page, limit: this.state.limit },
     })
@@ -38,6 +41,7 @@ class Collection extends Component {
               products: res.data.dataProduct,
               totaldata: res.data.totaldata,
               categories: res1.data,
+              loading: false
             });
             console.log(this.state.categories);
           })
@@ -108,7 +112,7 @@ class Collection extends Component {
                   <p>{val.category}</p>
                 </div>
                 <div className="card-price-content">
-                  <p>{currencyFormatter(val.price)}</p>
+                  <p>{currencyFormatter(val.price).split(",")[0]}</p>
                 </div>
               </div>
             </div>
@@ -162,6 +166,7 @@ class Collection extends Component {
 
     return (
       <div>
+        {this.state.loading ? <LoaderComp /> : null}
         <Header />
         <Carousel />
         <div className="jumbotron-1-collection">

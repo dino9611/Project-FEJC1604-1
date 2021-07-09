@@ -91,74 +91,114 @@
   border: 2px #d4eaf5 solid !important;
 }
 
-.photo {
-  border: 2px #89adc3 solid;
-  border-radius: 50%;
-  background-color: #d4eaf5;
-  height: 200px;
-  width: 200px;
-  overflow: auto;
+.photo{
+    border: 2px #89ADC3 solid;
+    border-radius: 50% ;
+    background-color:#D4EAF5 ;
+    height: 150px;
+    width: 150px;
+    overflow: auto;
 }
 
 .container-width {
   width: 50%;
 }
 
-.button-utama {
-  background-color: #89adc3;
-  border: none;
-  border-radius: 3px;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 5px 50px;
-  height: 45px;
+.button-utama{
+    background-color:#89ADC3 ;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 5px 50px;
+    height: 45px;
 }
-.button-utama:disabled {
-  background-color: #b2c9d8;
-}
-
-.button-second {
-  background-color: #d4eaf5;
-  border: none;
-  color: #052c43;
-  text-align: center;
-  display: inline-block;
-  font-size: 15px;
-  text-decoration: none;
-  padding: 5px 25px;
-  height: 40px;
-  border-radius: 5px;
-  font-weight: 600;
+.button-utama:disabled{
+    background-color:#b2c9d8;
 }
 
-.button-cancel {
-  background-color: gray;
-  border: none;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  border-radius: 5px;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 5px 40px;
-  height: 45px;
+.button-second{
+    background-color:#D4EAF5  ;
+    border: none;
+    color: black;
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;
+    text-decoration: none;
+    padding: 5px 30px;
+    height: 40px;
+}
+
+.button-cancel{
+    background-color:gray ;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 5px 40px;
+    height: 45px;
 }
 
 .link:hover {
   text-decoration: none;
 }
 
-.button-delete {
-  background-color: #052c43;
-  border: none;
-  color: white;
-  text-align: center;
-  display: inline-block;
-  font-size: 17px;
-  text-decoration: none;
-  padding: 15px 25px;
-  border-radius: 5px;
+.button-delete{
+    background-color:#052C43;
+    border: none;
+    color: white;
+    text-align: center;
+    display: inline-block;
+    font-size: 17px;
+    text-decoration: none;
+    padding: 15px 32px;
 }
+
+.edit-photo{
+    font-size: 20px;
+    margin-top: 17vh;
+    /* margin-right: 10px; */
+}
+
+.change-photo{
+    /* background-color: tomato; */
+    display: flex;
+    justify-content: center;
+    margin-top: 6px;
+    color:#89ADC3 ;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 500ms;
+}
+
+.change-photo:hover{
+    color:#052C43 ;
+    transition: 500ms;
+}
+
+.btn-upload-profile {
+    background-color: #89adc3;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.btn-cancel-profile {
+    background-color: gray;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }

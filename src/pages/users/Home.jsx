@@ -65,7 +65,7 @@ class Home extends Component {
                   <p>{val.category}</p>
                 </div>
                 <div className="card-price-content-home">
-                  <p>{currencyFormatter(val.price)}</p>
+                  <p>{currencyFormatter(val.price).split(",")[0]}</p>
                 </div>
               </div>
             </div>

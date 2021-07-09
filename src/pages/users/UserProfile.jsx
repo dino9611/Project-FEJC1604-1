@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import "../styles/userProfile.css";
 import Sidebar from "../../components/SideBar";
 import { toast, ToastContainer } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
+import EditIcon from "@material-ui/icons/Edit";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import AlertAdmin from '../../components/AlertAdmin';
 

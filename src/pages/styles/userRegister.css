@@ -3,7 +3,7 @@
 }
 
 .left-content-regist {
-  background-color: #89ADC3;
+  height: 100vh;
   flex: 1;
 }
 
@@ -23,8 +23,8 @@
 }
 
 .regist-form{
-  margin-left: 13%;
-  margin-right: 13%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .regist-form-1 {

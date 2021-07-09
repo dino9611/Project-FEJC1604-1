@@ -1,5 +1,6 @@
 :root {
   --textprimary: #052c43;
+  width: 100%;
 }
 
 .home-content {
@@ -10,7 +11,7 @@
 .jumbotron-one-home {
   display: flex;
   height: 100vh;
-  /* background-color: red; */
+  background-color: red;
   overflow: hidden;
 }
 
@@ -81,7 +82,6 @@
   box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
   -webkit-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
   -moz-box-shadow: 5px 24px 46px -19px rgba(137, 174, 196, 0.97);
-  border-radius: 5px;
 }
 
 .btn-collection-home:hover {
@@ -149,11 +149,10 @@
 .slider-content-home {
   width: 100%;
   padding: 20px 0;
-  /* background-color: blue; */
 }
 .slider-inside-home {
+  width: 100%;
   padding: 10px;
-  /* background-color: red; */
 }
 
 .render-prod-home {

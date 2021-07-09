@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { RegActionThunk, ResetActionthunk } from "../../redux/actions";
 import LoaderComp from "../../components/Loader";
 import googleIcon from "../../search.svg";
+import bgRegist from "../../images/regis.jpg";
 import "../styles/userRegister.css";
 
 class Registration extends Component {
@@ -105,7 +106,7 @@ class Registration extends Component {
         {this.props.dataUser.loading ? <LoaderComp /> : null}
         <div className="regist-content">
           <div className="left-content-regist">
-            <img alt="bg-register" />
+            <img alt="bg-register" src={bgRegist} width="100%" height="100%" />
           </div>
           <div className="right-content-regist">
             <div className="regist-form">

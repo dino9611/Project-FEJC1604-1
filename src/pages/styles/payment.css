@@ -20,6 +20,7 @@
   /* height: 25vh; */
   font-size: 25px;
   margin-bottom: 5vh;
+  margin-top: 5%;
   color: #052c43;
   font-weight: 600;
 }
@@ -148,10 +149,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.center-payment{
-
 }
 
 .tombol-home-pay{

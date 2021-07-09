@@ -13,15 +13,21 @@
   display: flex;
   flex: 1;
   flex-direction: row-reverse;
-  margin-left: 18.3%;
-  padding: 1.5%;
+  margin-left: 0%;
+  padding-left: 3%;
+  padding-right: 2%;
+  padding-top: 5%;
 }
 
 .report-content-2 {
   display: flex;
   flex: 1;
-  margin-left: 18.3%;
-  padding: 0 1.5% 1.5% 1.5%;
+  flex-direction: row-reverse;
+  margin-left: 0%;
+  padding-left: 3%;
+  padding-right: 2%;
+  padding-top: 1%;
+  padding-bottom: 5%;
 }
 
 .report-gender {

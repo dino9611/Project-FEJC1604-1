@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Container } from "reactstrap";
+import {TransactionAction} from "../../redux/actions"
 import "../styles/payment.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -28,13 +29,12 @@ class Payment extends Component {
   };
 
   componentDidMount() {
-    this.setState({ loading: true });
+    this.setState({ loading: true })
     axios
       .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
       .then((res) => {
         console.log(res.data);
         this.setState({ orders: res.data, loading: false });
-        console.log(this.state.orders);
       })
       .catch((error) => {
         console.error(error);
@@ -104,18 +104,15 @@ class Payment extends Component {
   };
 
   renderDetails = () => {
-    if (this.state.loading) {
-      return <LoaderComp />;
-    }
     return this.state.orders_detail.map((val, index) => {
       return (
         <div key={index}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={{ fontWeight: "600" }}>{val.productName}</div>
-            <div style={{ color: "gray" }}>{currencyFormatter(val.amount)}</div>
+            <div style={{ color: "gray" }}>{currencyFormatter(val.amount).split(",")[0]}</div>
           </div>
           <div style={{ color: "gray" }}>
-            {val.quantity} X {currencyFormatter(val.price)}
+            {val.quantity} X {currencyFormatter(val.price).split(",")[0]}
           </div>
         </div>
       );
@@ -147,6 +144,7 @@ class Payment extends Component {
           openSnack: true,
           alertStatus: 'success',
         });
+        this.props.TransactionAction(res.data)
       })
       .catch((error) => {
         console.error(error);
@@ -178,7 +176,7 @@ class Payment extends Component {
               <div>
                 <div className="judul">Total Amount</div>
                 <div className="nomor">
-                  {currencyFormatter(val.total + val.ongkir)}
+                  {currencyFormatter(val.total + val.ongkir).split(",")[0]}
                 </div>
               </div>
               <div
@@ -228,7 +226,7 @@ class Payment extends Component {
               }}
             >
               <div>Ongkos Kirim</div>
-              <div>{currencyFormatter(this.state.ongkir)}</div>
+              <div>{currencyFormatter(this.state.ongkir).split(",")[0]}</div>
             </div>
             <div
               style={{
@@ -240,7 +238,7 @@ class Payment extends Component {
             >
               <div>Grand Total</div>
               <div>
-                {currencyFormatter(this.state.total + this.state.ongkir)}
+                {currencyFormatter(this.state.total + this.state.ongkir).split(",")[0]}
               </div>
             </div>
           </ModalBody>
@@ -335,4 +333,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Payment);
+export default connect(mapStateToProps, {TransactionAction})(Payment);

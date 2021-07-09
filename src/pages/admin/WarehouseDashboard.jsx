@@ -9,13 +9,19 @@ import DraftsIcon from "@material-ui/icons/Drafts";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
-import BallotIcon from "@material-ui/icons/Ballot";
-import AssessmentIcon from "@material-ui/icons/Assessment";
+import ListAltIcon from "@material-ui/icons/ListAlt";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
+import GroupIcon from "@material-ui/icons/Group";
+import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import DataUsageIcon from "@material-ui/icons/DataUsage";
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
 import ManageProduct from "./ManageProduct";
-import Report from "./Home";
+import Revenue from "./Home";
+import Report from "./Report";
+import CreateAdmin from "./CreateAdmin";
+import ProductsFlow from "./ProductsFlow";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
 class WarehouseDashboard extends Component {
@@ -68,7 +74,7 @@ class WarehouseDashboard extends Component {
             </div>
             <div className="wh-sb-content-2">
               <Link
-                to="/admin/dashboard"
+                to="/admin/dashboard/transaction"
                 style={{
                   textDecoration: "none",
                   color: "#535353",
@@ -80,8 +86,7 @@ class WarehouseDashboard extends Component {
                     marginBottom: "27px",
                     fontSize: "14px",
                     color:
-                      window.location.href ===
-                      "http://localhost:3000/admin/dashboard"
+                      this.props.match.params.status == "transaction"
                         ? "#535353"
                         : "#b4b4b4",
                     fontWeight: "bold",
@@ -91,8 +96,7 @@ class WarehouseDashboard extends Component {
                     style={{
                       marginRight: "20px",
                       color:
-                        window.location.href ===
-                        "http://localhost:3000/admin/dashboard"
+                        this.props.match.params.status == "transaction"
                           ? "#535353"
                           : "#b4b4b4",
                     }}
@@ -101,7 +105,134 @@ class WarehouseDashboard extends Component {
                 </ButtonBase>
               </Link>
 
-              {role === 2 ? null : (
+              {role == 2 ? (
+                <React.Fragment>
+                  <Link
+                    to="/admin/dashboard/report-admin"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "report-admin"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <DataUsageIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "report-admin"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Report
+                    </ButtonBase>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/add-admin"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "add-admin"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <GroupIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "add-admin"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Create Admin
+                    </ButtonBase>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/manage-product"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "manage-product"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <ListAltIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "manage-product"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Manage Product
+                    </ButtonBase>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/revenue"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "27px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "revenue"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <EqualizerIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "revenue"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Revenue
+                    </ButtonBase>
+                  </Link>
+                </React.Fragment>
+              ) : (
                 <React.Fragment>
                   <Link
                     to="/admin/dashboard/requeststock"
@@ -116,8 +247,7 @@ class WarehouseDashboard extends Component {
                         marginBottom: "27px",
                         fontSize: "14px",
                         color:
-                          window.location.href ===
-                          "http://localhost:3000/admin/dashboard/requeststock"
+                          this.props.match.params.status == "requeststock"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -127,8 +257,7 @@ class WarehouseDashboard extends Component {
                         style={{
                           marginRight: "20px",
                           color:
-                            window.location.href ===
-                            "http://localhost:3000/admin/dashboard/requeststock"
+                            this.props.match.params.status == "requeststock"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -150,8 +279,7 @@ class WarehouseDashboard extends Component {
                         marginBottom: "27px",
                         fontSize: "14px",
                         color:
-                          window.location.href ===
-                          "http://localhost:3000/admin/dashboard/processing"
+                          this.props.match.params.status == "processing"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -161,8 +289,7 @@ class WarehouseDashboard extends Component {
                         style={{
                           marginRight: "20px",
                           color:
-                            window.location.href ===
-                            "http://localhost:3000/admin/dashboard/processing"
+                            this.props.match.params.status == "processing"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -172,7 +299,7 @@ class WarehouseDashboard extends Component {
                   </Link>
 
                   <Link
-                    to="/admin/dashboard/manage-product"
+                    to="/admin/dashboard/products-flow"
                     style={{
                       textDecoration: "none",
                       color: "#535353",
@@ -184,64 +311,34 @@ class WarehouseDashboard extends Component {
                         marginBottom: "27px",
                         fontSize: "14px",
                         color:
-                          window.location.href ===
-                          "http://localhost:3000/admin/dashboard/manage-product"
+                          this.props.match.params.status == "products-flow"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
                       }}
                     >
-                      <BallotIcon
+                      <SwapHorizIcon
                         style={{
                           marginRight: "20px",
                           color:
-                            window.location.href ===
-                            "http://localhost:3000/admin/dashboard/manage-product"
+                            this.props.match.params.status == "products-flow"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
                       />
-                      Manage Product
-                    </ButtonBase>
-                  </Link>
-
-                  <Link
-                    to="/admin/dashboard/report"
-                    style={{
-                      textDecoration: "none",
-                      color: "#535353",
-                    }}
-                  >
-                    <ButtonBase
-                      disableRipple
-                      style={{
-                        marginBottom: "27px",
-                        fontSize: "14px",
-                        color:
-                          window.location.href ===
-                          "http://localhost:3000/admin/dashboard/report"
-                            ? "#535353"
-                            : "#b4b4b4",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <AssessmentIcon
-                        style={{
-                          marginRight: "20px",
-                          color:
-                            window.location.href ===
-                            "http://localhost:3000/admin/dashboard/report"
-                              ? "#535353"
-                              : "#b4b4b4",
-                        }}
-                      />
-                      Report
+                      Products Flow
                     </ButtonBase>
                   </Link>
                 </React.Fragment>
               )}
 
-              <div className="container-bottom-wh-ds">
+              <div
+                className={
+                  role == 2
+                    ? "container-bottom-wh-ds-super"
+                    : "container-bottom-wh-ds"
+                }
+              >
                 <Link
                   to="/admin/login"
                   style={{
@@ -289,7 +386,11 @@ class WarehouseDashboard extends Component {
         </div>
         <div className="whdashboard-content">
           <Switch>
-            <Route path="/admin/dashboard" exact component={Transaction} />
+            <Route
+              path="/admin/dashboard/transaction"
+              exact
+              component={Transaction}
+            />
             <Route
               path="/admin/dashboard/requeststock"
               exact
@@ -305,7 +406,22 @@ class WarehouseDashboard extends Component {
               exact
               component={ManageProduct}
             />
-            <Route path="/admin/dashboard/report" exact component={Report} />
+            <Route path="/admin/dashboard/revenue" exact component={Revenue} />
+            <Route
+              path="/admin/dashboard/report-admin"
+              exact
+              component={Report}
+            />
+            <Route
+              path="/admin/dashboard/add-admin"
+              exact
+              component={CreateAdmin}
+            />
+            <Route
+              path="/admin/dashboard/products-flow"
+              exact
+              component={ProductsFlow}
+            />
           </Switch>
         </div>
       </div>
