@@ -6,6 +6,8 @@ import { API_URL } from "../../helper";
 import { connect } from "react-redux";
 import Swal from "sweetalert2";
 import LoaderComp from "../../components/Loader";
+import AlertAdmin from '../../components/AlertAdmin';
+
 
 class AddressList extends Component {
   state = {
@@ -18,26 +20,35 @@ class AddressList extends Component {
     addresses: [],
     modalVisible: false,
     loading: false,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     axios
       .get(`${API_URL}/auth/address/${this.props.Auth.id}`)
       .then((res) => {
         console.log("isi res.data", res.data);
-        this.setState({ addresses: res.data });
+        this.setState({ addresses: res.data, loading: false });
       })
       .catch((err) => {
         console.error(err);
       });
   }
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
+  };
+
+
   renderAddress = () => {
     return this.state.addresses.map((val, index) => {
       return (
         <tr
           key={index}
-          style={{ backgroundColor: val.is_default == 1 ? "#D4EAF5" : "white" }}
+          style={{ backgroundColor: val.is_default == 1 ? "#89ADC3" : "white", color: val.is_default == 1 ? 'white' : 'black' }}
         >
           <td className="text-center">{index + 1}</td>
           <td>{val.address}</td>
@@ -58,12 +69,17 @@ class AddressList extends Component {
             )}{" "}
           </td>
           <td className="text-center">
-            <button
-              className="button-cancel"
-              onClick={() => this.onDeleteClick(index)}
-            >
-              Delete
-            </button>
+            {
+              val.is_default == 1 ?
+                null
+                :
+                <button
+                  className="button-cancel"
+                  onClick={() => this.onDeleteClick(index)}
+                >
+                  Delete
+                </button>
+            }
           </td>
         </tr>
       );
@@ -169,21 +185,46 @@ class AddressList extends Component {
                     zip: "",
                     description: "",
                   },
+                  message: 'Address has successfuly added!',
+                  openSnack: true,
+                  alertStatus: 'success',
+                  loading: false
                 });
               })
               .catch((error) => {
-                alert("server error");
+                console.error(error);
+                this.setState({
+                  message: 'Server error',
+                  openSnack: true,
+                  alertStatus: 'error',
+                  loading: false
+                });
               });
           } else {
-            alert("kota tidak terdaftar");
+            this.setState({
+              message: 'City not found',
+              openSnack: true,
+              alertStatus: 'warning',
+              loading: false
+            });
           }
         })
         .catch((error) => {
           console.error(error);
-          alert("server dalam pemeliharaan");
+          this.setState({
+            message: 'Server is under construction',
+            openSnack: true,
+            alertStatus: 'error',
+            loading: false
+          });
         });
     } else {
-      alert("input kurang");
+      this.setState({
+        message: 'All input must be filled',
+        openSnack: true,
+        alertStatus: 'info',
+        loading: false
+      });
     }
   };
 
@@ -240,7 +281,8 @@ class AddressList extends Component {
               </button>
             </ModalFooter>
           </Modal>
-          <Table>
+
+          <Table bordered>
             <thead>
               <tr className="text-center">
                 <th>No</th>
@@ -258,6 +300,12 @@ class AddressList extends Component {
             Add Address
           </button>
         </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </Sidebar>
     );
   }

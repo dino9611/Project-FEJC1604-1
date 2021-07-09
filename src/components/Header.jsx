@@ -114,6 +114,7 @@ class Header extends Component {
                     height: "50px",
                     width: "50px",
                     borderRadius: "50%",
+                    objectFit: "cover",
                   }}
                   alt="profile-picture"
                 />

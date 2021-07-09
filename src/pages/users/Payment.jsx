@@ -6,10 +6,11 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL, currencyFormatter } from "../../helper";
-import BCA from "../../images/BCALogo.png";
 import LoaderComp from "../../components/Loader";
 import Header from '../../components/Header';
 import payment from "../../images/payment.svg";
+import AlertAdmin from '../../components/AlertAdmin';
+
 class Payment extends Component {
   state = {
     modalDetails: false,
@@ -21,18 +22,38 @@ class Payment extends Component {
     orders_detail: [],
     ongkir: 0,
     total: 0,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
     axios
       .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
       .then((res) => {
         console.log(res.data);
-        this.setState({ orders: res.data });
+        this.setState({ orders: res.data, loading: false });
+        console.log(this.state.orders);
       })
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.orders != this.state.orders) {
+      axios
+        .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
+        .then((res) => {
+          console.log(res.data);
+          this.setState({ orders: res.data, loading: false });
+          console.log(this.state.orders);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   toggleDetails = (orders_id, index) => {
@@ -67,6 +88,10 @@ class Payment extends Component {
 
   toggle = () => {
     this.setState({ modalDetails: !this.state.modalDetails });
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
   };
 
   addFileChange = (e) => {
@@ -114,8 +139,14 @@ class Payment extends Component {
         },
       })
       .then((res) => {
-        alert("berhasil");
-        this.setState({ orders: res.data, modalUpload: false, photo: null });
+        this.setState({
+          orders: res.data,
+          modalUpload: false,
+          photo: null,
+          message: 'Photo has successfuly uploaded!',
+          openSnack: true,
+          alertStatus: 'success',
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -129,11 +160,11 @@ class Payment extends Component {
           <div className="box-2">
             <div>{val.name}</div>
             <div>
-              {/* <img
-                                src={BCA}
-                                alt='icon'
-                                className='icon-bank'
-                            /> */}
+              <img
+                src={API_URL + val.logo}
+                alt='icon'
+                className='icon-bank'
+              />
             </div>
           </div>
           <div className="box-3">
@@ -267,7 +298,7 @@ class Payment extends Component {
               <div className="box-1">
                 <div>Finish your payment</div>
               </div>
-              {this.renderPayment()}=
+              {this.renderPayment()}
             </div>
             :
             <div className="container-payment">
@@ -287,6 +318,12 @@ class Payment extends Component {
             </div>
           }
         </Container>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </React.Fragment>
     );
   }

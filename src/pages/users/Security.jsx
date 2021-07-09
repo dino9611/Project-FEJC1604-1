@@ -6,6 +6,8 @@ import axios from 'axios';
 import { API_URL } from '../../helper';
 import { connect } from 'react-redux';
 import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
+import AlertAdmin from '../../components/AlertAdmin';
+
 
 class Security extends Component {
   state = {
@@ -15,6 +17,9 @@ class Security extends Component {
     isVisibleOld: false,
     isVisibleNew: false,
     isVisibleConf: false,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
@@ -38,13 +43,26 @@ class Security extends Component {
     this.setState({ isVisibleConf: !this.state.isVisibleConf });
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
+  };
+
+
   saveClick = () => {
     const { newPassword, confirmPassword, oldPassword } = this.state;
     if (!oldPassword || !newPassword || !confirmPassword) {
-      alert('input tidak boleh kosong');
+      this.setState({
+        message: 'All input must be filled',
+        openSnack: true,
+        alertStatus: 'info',
+      });
     } else {
       if (newPassword !== confirmPassword) {
-        alert('new pass & confirm pass tidak sama');
+        this.setState({
+          message: 'New password & confirm password is different',
+          openSnack: true,
+          alertStatus: 'warning',
+        });
       } else {
         let data = {
           oldPassword: oldPassword,
@@ -54,11 +72,24 @@ class Security extends Component {
         axios.patch(`${API_URL}/password/change/${this.props.dataUser.id}`, data)
           .then((res) => {
             console.log(res.data);
-            this.setState({ newPassword: '', confirmPassword: '', oldPassword: '', isVisibleOld: false, isVisibleNew: false, isVisibleConf: false });
-            alert('berhasil');
+            this.setState({
+              newPassword: '',
+              confirmPassword: '',
+              oldPassword: '',
+              isVisibleOld: false,
+              isVisibleNew: false,
+              isVisibleConf: false,
+              message: 'Password has successfuly changed',
+              openSnack: true,
+              alertStatus: 'success',
+            });
           }).catch((error) => {
             console.error(error);
-            alert('gagal');
+            this.setState({
+              message: 'Old password is wrong',
+              openSnack: true,
+              alertStatus: 'error',
+            });
           });
       }
     }
@@ -70,8 +101,7 @@ class Security extends Component {
       <div>
         <Sidebar page="security">
           <Container>
-            <h1>Security</h1>
-            <div>
+            <div style={{ marginLeft: '150px', marginTop: '50px' }}>
               <div style={{ marginTop: '20px' }}>
                 <label className='form-judul'>Old Password</label>
                 <div className='kotak-pass-sec'>
@@ -84,7 +114,7 @@ class Security extends Component {
                   />
                   <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleOld ?
-                      <AiFillEye onClick={this.toggleOld} style={{ color: '#89ADC3' }} />
+                      <AiFillEye onClick={this.toggleOld} style={{ color: '#052C43' }} />
                       :
                       <AiFillEyeInvisible onClick={this.toggleOld} style={{ color: 'gray' }} />
                     }
@@ -103,7 +133,7 @@ class Security extends Component {
                   />
                   <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleNew ?
-                      <AiFillEye onClick={this.toggleNew} style={{ color: '#89ADC3' }} />
+                      <AiFillEye onClick={this.toggleNew} style={{ color: '#052C43' }} />
                       :
                       <AiFillEyeInvisible onClick={this.toggleNew} style={{ color: 'gray' }} />
                     }
@@ -122,20 +152,26 @@ class Security extends Component {
                   />
                   <div style={{ fontSize: '25px', margin: '0px 10px' }}>
                     {this.state.isVisibleConf ?
-                      <AiFillEye onClick={this.toggleConf} style={{ color: '#89ADC3' }} />
+                      <AiFillEye onClick={this.toggleConf} style={{ color: '#052C43' }} />
                       :
                       <AiFillEyeInvisible onClick={this.toggleConf} style={{ color: 'gray' }} />
                     }
                   </div>
                 </div>
               </div>
-            </div>
-            <div className='btn-save'>
-              <button className='btn-save1' onClick={this.saveClick}>Save</button>
+              <div className='btn-save'>
+                <button className='btn-save1' onClick={this.saveClick}>Save</button>
+              </div>
             </div>
           </Container>
         </Sidebar>
-      </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
+      </div >
     );
   }
 }

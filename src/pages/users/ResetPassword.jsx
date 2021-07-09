@@ -4,13 +4,21 @@ import { API_URL } from '../../helper';
 import '../styles/resetPassword.css';
 import Header from '../../components/Header';
 import resetPass from '../../images/reset-pass.jpg';
-// import { Alert, AlertTitle } from "@material-ui/lab";
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AlertAdmin from '../../components/AlertAdmin';
+import { ImArrowLeft2 } from 'react-icons/im';
+
+
 
 class ResetPassword extends Component {
     state = {
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        openSnack: false,
+        message: "",
+        alertStatus: "",
+        loading: false,
+        resetPass: false
     };
 
     componentDidMount() {
@@ -21,29 +29,54 @@ class ResetPassword extends Component {
         this.setState({ [e.target.name]: e.target.value });
     };
 
+    backToHome = () => {
+        this.setState({ resetPass: true });
+    };
+
 
     onResetPassword = () => {
         const { password, confirmPassword } = this.state;
         let token = this.props.match.params.token;
         if (password !== confirmPassword) {
-            alert('confirm pass tidak sama');
+            this.setState({
+                openSnack: true,
+                alertStatus: 'warning',
+                loading: false,
+                message: 'New password and confirm password are different',
+            });
         } else {
             let data = {
                 newPassword: confirmPassword
             };
             axios.put(`${API_URL}/password/resetpassword`, data, {
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    Authorization: 'Bearer ' + token
                 }
             })
                 .then((res) => {
                     console.log(res);
-                    alert('berhasil');
-                    <Redirect to='/' />;
+                    this.setState({
+                        openSnack: true,
+                        alertStatus: 'success',
+                        loading: false,
+                        message: 'Reset password success',
+                        resetPass: true
+                    });
+
                 }).catch((error) => {
                     console.error(error);
+                    this.setState({
+                        openSnack: true,
+                        alertStatus: 'error',
+                        loading: false,
+                        message: 'error',
+                    });
                 });
         }
+    };
+
+    handleSnack = () => {
+        this.setState({ openSnack: false, message: '', alertStatus: '' });
     };
 
     render() {
@@ -75,18 +108,32 @@ class ResetPassword extends Component {
                                 value={this.state.confirmPassword}
                             />
                         </div>
-                        <div>
-                            <button className='reset-click' onClick={this.onResetPassword}>Reset Password</button>
-                        </div>
+                        {this.state.resetPass ?
+                            <div>
+                                <Link to='/'>
+                                    <button className='backhome-click' onClick={this.backToHome}><ImArrowLeft2 /> Back To Home</button>
+                                </Link>
+                            </div>
+                            :
+                            <div>
+                                <button className='reset-click' onClick={this.onResetPassword}>Reset Password</button>
+                            </div>
+                        }
                     </div>
                     <div className='kotak-reset-2'>
                         <img
                             src={resetPass}
                             // height='1000px'
-                            width='1000px'
+                            width='100%'
                         />
                     </div>
                 </div>
+                <AlertAdmin
+                    openSnack={this.state.openSnack}
+                    handleSnack={this.handleSnack}
+                    message={this.state.message}
+                    status={this.state.alertStatus}
+                />
             </Fragment>
         );
     }
