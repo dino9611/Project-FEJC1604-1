@@ -124,41 +124,33 @@ class Header extends Component {
                 />
               </DropdownToggle>
               <DropdownMenu>
-                <DropdownItem>
-                  <Link
-                    to="/userprofile"
-                    style={{ textDecoration: "none", color: "#052c43" }}
-                  >
-                    My Profile
-                  </Link>
-                </DropdownItem>
-                <DropdownItem>
-                  <Link
-                    to="/history"
-                    style={{ textDecoration: "none", color: "#052c43" }}
-                  >
-                    History
-                  </Link>
-                </DropdownItem>
-                <DropdownItem>
-                  <Link
-                    to="/payment"
-                    style={{ textDecoration: "none", color: "#052c43" }}
-                  >
-                    Payment
-                  </Link>{" "}
-                </DropdownItem>
+                <Link
+                  to="/userprofile"
+                  style={{ textDecoration: "none", color: "#052c43" }}
+                >
+                  <DropdownItem>My Profile</DropdownItem>
+                </Link>
+                <Link
+                  to="/history"
+                  style={{ textDecoration: "none", color: "#052c43" }}
+                >
+                  <DropdownItem>History</DropdownItem>
+                </Link>
+                <Link
+                  to="/payment"
+                  style={{ textDecoration: "none", color: "#052c43" }}
+                >
+                  <DropdownItem>Payment</DropdownItem>
+                </Link>
                 <DropdownItem divider />
-                <DropdownItem>
-                  <Link
-                    to="/"
-                    className="normal-link-header"
-                    onClick={this.onLogoutClick}
-                    style={{ color: "#052c43" }}
-                  >
-                    Log Out
-                  </Link>
-                </DropdownItem>
+                <Link
+                  to="/"
+                  className="normal-link-header"
+                  onClick={this.onLogoutClick}
+                  style={{ color: "#052c43" }}
+                >
+                  <DropdownItem>Log Out</DropdownItem>
+                </Link>
               </DropdownMenu>
             </Dropdown>
           ) : null}
