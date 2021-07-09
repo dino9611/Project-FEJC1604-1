@@ -3,17 +3,17 @@ import Header from "../../components/Header";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import Loader from "react-loader-spinner";
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from "@material-ui/icons/Add";
 import { connect } from "react-redux";
 import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
-import AlertAdmin from '../../components/AlertAdmin';
+import AlertAdmin from "../../components/AlertAdmin";
 
 class ProductDetail extends Component {
   state = {
     product: {},
-    qty: 1,
+    qty: 0,
     loading: true,
     openSnack: false,
     message: "",
@@ -63,7 +63,7 @@ class ProductDetail extends Component {
   };
 
   handleSnack = () => {
-    this.setState({ openSnack: false, message: '', alertStatus: '' });
+    this.setState({ openSnack: false, message: "", alertStatus: "" });
   };
 
   //======================== Function Add To Cart ( Willy ) ===========================//
@@ -112,10 +112,10 @@ class ProductDetail extends Component {
           console.log("isi dari res.data", res.data);
           this.props.CartAction(res.data);
           this.setState({
-            message: 'Product added to cart',
+            message: "Product added to cart",
             openSnack: true,
-            alertStatus: 'success',
-            loading: false
+            alertStatus: "success",
+            loading: false,
           });
         })
         .catch((error) => {
@@ -181,7 +181,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                      this.state.product.quantity == null
+                    this.state.product.quantity == null
                       ? true
                       : false
                   }
