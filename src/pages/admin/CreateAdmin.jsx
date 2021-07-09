@@ -220,10 +220,9 @@ class CreateAdmin extends Component {
           closeAA={this.onCloseClick}
           name={this.state.detailModal.map((val) => val.name_)}
         />
-        <div className="sidebar-cread"> untuk side bar</div>
         <div className="cread-content">
           <div className="cread-title-content">
-            <p>Super Admin</p>
+            <p>Add Admin</p>
           </div>
           <div className="cread-content-in">
             <div className="cread-search-content">

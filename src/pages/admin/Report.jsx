@@ -102,7 +102,6 @@ class Report extends Component {
     console.log(this.state.gender);
     return (
       <div className="jumbotron-1-report">
-        <SideBarAdmin />
         <div className="jumbotron-1-report-in">
           <div className="report-content">
             <div className="report-gender">

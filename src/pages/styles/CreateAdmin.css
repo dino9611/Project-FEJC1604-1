@@ -47,6 +47,10 @@
   display: flex;
   flex-direction: column;
   flex: 4.5;
+  padding-left: 1.5%;
+  padding-right: 2%;
+  padding-top: 5%;
+  padding-bottom: 5%;
   background-color: whitesmoke;
 }
 
@@ -58,9 +62,9 @@
 
 .cread-title-content {
   background-color: transparent;
-  border-bottom: solid 1px gainsboro;
   display: flex;
   align-items: center;
+  padding-left: 2%;
   height: 60px;
 }
 

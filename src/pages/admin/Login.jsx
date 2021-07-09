@@ -50,7 +50,7 @@ class LoginAdmin extends Component {
 
     render() {
         if (this.props.dataAdmin.islogin) {
-            return <Redirect to='/admin/dashboard' />;
+            return <Redirect to='/admin/dashboard/transaction' />;
         }
         return (
             <div className='div-luar'>

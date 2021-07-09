@@ -114,7 +114,6 @@ class ProductsFlow extends Component {
 
     return (
       <div className="jumbotron-1-profo">
-        <div className="sidebar-profo"> untuk side bar</div>
         <div className="profo-content">
           <div className="profo-title-content">
             <p>Products Flow</p>
