@@ -13,7 +13,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { API_URL } from "../helper";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Badge from "@material-ui/core/Badge";
 import HistoryIcon from "@material-ui/icons/History";
 import ModalCH from "./ModalCH";
@@ -151,7 +151,6 @@ class Header extends Component {
               >
                 <FavoriteBorderIcon />
               </Link>
-
             </div>
           ) : null}
 

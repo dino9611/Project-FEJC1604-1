@@ -1,14 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { API_URL } from '../../helper/API';
 import axios from 'axios';
-// import { Alert } from "@material-ui/lab";
 import '../styles/forgot.css';
 // import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
+import AlertAdmin from '../../components/AlertAdmin';
+
+
 
 class ForgotPassword extends Component {
     state = {
-        email: ''
+        email: '',
+        openSnack: false,
+        message: "",
+        alertStatus: "",
+        loading: false,
+        error: ''
     };
 
     onInputChange = (e) => {
@@ -22,19 +29,37 @@ class ForgotPassword extends Component {
             email: email
         };
         if (!email) {
-            alert('Email tidak boleh kosong');
+            this.setState({
+                message: 'Please enter your email',
+                openSnack: true,
+                alertStatus: 'warning',
+                loading: false
+            });
         } else {
             axios.post(`${API_URL}/password/forgot`, data)
                 .then((res) => {
-                    console.log(res.data.message);
-                    alert(res.data.message);
-                    this.setState({ email: '' });
-                }).catch((error) => {
-                    alert(error.message);
-                    console.error(error);
-                    this.setState({ email: '' });
+                    this.setState({
+                        email: '',
+                        message: res.data.message,
+                        openSnack: true,
+                        alertStatus: 'success',
+                        loading: false,
+                    });
+                }).catch((res, error) => {
+                    console.log(res);
+                    this.setState({
+                        email: '',
+                        message: 'Email unregistered',
+                        openSnack: true,
+                        alertStatus: 'error',
+                        loading: false
+                    });
                 });
         }
+    };
+
+    handleSnack = () => {
+        this.setState({ openSnack: false, message: '', alertStatus: '' });
     };
 
     render() {
@@ -70,6 +95,12 @@ class ForgotPassword extends Component {
                         </div> */}
                     </div>
                 </div>
+                <AlertAdmin
+                    openSnack={this.state.openSnack}
+                    handleSnack={this.handleSnack}
+                    message={this.state.message}
+                    status={this.state.alertStatus}
+                />
             </Fragment>
         );
     }

@@ -7,6 +7,8 @@ import Sidebar from "../../components/SideBar";
 import { toast, ToastContainer } from "react-toastify";
 import EditIcon from "@material-ui/icons/Edit";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import AlertAdmin from '../../components/AlertAdmin';
+
 
 class UserProfile extends Component {
   state = {
@@ -26,6 +28,10 @@ class UserProfile extends Component {
     modalVisible: false,
     photo: null,
     photoDefault: null,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
+    loading: false
   };
 
   componentDidMount() {
@@ -48,6 +54,11 @@ class UserProfile extends Component {
     this.setState({ modalVisible: !this.state.modalVisible, photo: null });
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
+  };
+
+
   onInputChange = (e) => {
     let data = this.state.dataUser;
     let dataUsers = { ...data, [e.target.name]: e.target.value };
@@ -69,15 +80,10 @@ class UserProfile extends Component {
           dataUser: res.data[0],
           dataInit: res.data[0],
           save: true,
-        });
-        toast.success("Profile updated!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+          openSnack: true,
+          alertStatus: 'success',
+          loading: false,
+          message: 'Profile updated!',
         });
       })
       .catch((error) => {
@@ -105,8 +111,11 @@ class UserProfile extends Component {
           photo: null,
           modalVisible: false,
           photoDefault: res.data[0].photo,
+          openSnack: true,
+          alertStatus: 'success',
+          loading: false,
+          message: 'Profile picture changed!',
         });
-        alert("berhasil");
       })
       .catch((error) => {
         console.error(error.message);
@@ -165,7 +174,7 @@ class UserProfile extends Component {
 
         {/* SIDEBAR */}
         <Sidebar page="profile">
-          <div>
+          <div style={{ marginTop: '50px' }}>
             <div className="d-flex justify-content-center">
               <div className="photo">
                 <img
@@ -173,6 +182,7 @@ class UserProfile extends Component {
                   alt="photo"
                   height="100%"
                   width="100%"
+                  style={{ objectFit: 'cover' }}
                 />
               </div>
             </div>
@@ -248,6 +258,12 @@ class UserProfile extends Component {
             </div>
           </div>
         </Sidebar>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }
