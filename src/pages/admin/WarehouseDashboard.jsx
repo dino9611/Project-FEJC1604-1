@@ -388,38 +388,22 @@ class WarehouseDashboard extends Component {
           <Switch>
             <Route
               path="/admin/dashboard/transaction"
-              exact
               component={Transaction}
             />
             <Route
               path="/admin/dashboard/requeststock"
-              exact
               component={RequestStock}
             />
-            <Route
-              path="/admin/dashboard/processing"
-              exact
-              component={Processing}
-            />
+            <Route path="/admin/dashboard/processing" component={Processing} />
             <Route
               path="/admin/dashboard/manage-product"
-              exact
               component={ManageProduct}
             />
-            <Route path="/admin/dashboard/revenue" exact component={Revenue} />
-            <Route
-              path="/admin/dashboard/report-admin"
-              exact
-              component={Report}
-            />
-            <Route
-              path="/admin/dashboard/add-admin"
-              exact
-              component={CreateAdmin}
-            />
+            <Route path="/admin/dashboard/revenue" component={Revenue} />
+            <Route path="/admin/dashboard/report-admin" component={Report} />
+            <Route path="/admin/dashboard/add-admin" component={CreateAdmin} />
             <Route
               path="/admin/dashboard/products-flow"
-              exact
               component={ProductsFlow}
             />
           </Switch>

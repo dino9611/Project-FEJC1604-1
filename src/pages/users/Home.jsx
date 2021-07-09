@@ -13,6 +13,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./../styles/Home.css";
+import ScrollToTop from "../../components/ScrollToTop";
 
 class Home extends Component {
   state = {

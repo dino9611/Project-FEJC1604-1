@@ -13,7 +13,7 @@ import AlertAdmin from "../../components/AlertAdmin";
 class ProductDetail extends Component {
   state = {
     product: {},
-    qty: 1,
+    qty: 0,
     loading: true,
     openSnack: false,
     message: "",
@@ -95,6 +95,15 @@ class ProductDetail extends Component {
       let users_id = this.props.dataUser.id;
       let prod_id = this.state.product.id;
       let qty = this.state.qty;
+      if (qty < 1) {
+        this.setState({
+          message: "Stock tidak ada",
+          openSnack: true,
+          alertStatus: "error",
+          loading: false,
+        });
+        return;
+      }
       let tokenAccess = localStorage.getItem("TA");
       console.log("isi tokenAccess", tokenAccess);
       let data = {
@@ -169,7 +178,7 @@ class ProductDetail extends Component {
                 <button
                   className="button-minus"
                   onClick={() => this.quantityClick("minus")}
-                  disabled={this.state.qty === 1 ? true : false}
+                  disabled={this.state.qty <= 1 ? true : false}
                 >
                   <div>-</div>
                 </button>
