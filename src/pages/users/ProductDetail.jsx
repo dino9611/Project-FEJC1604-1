@@ -13,7 +13,7 @@ import AlertAdmin from "../../components/AlertAdmin";
 class ProductDetail extends Component {
   state = {
     product: {},
-    qty: 0,
+    qty: 1,
     loading: true,
     openSnack: false,
     message: "",
