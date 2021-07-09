@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import {
-  Table,
+  // Table,
   Button,
   Modal,
   ModalBody,
@@ -10,13 +10,13 @@ import {
   ModalHeader,
   CustomInput,
 } from "reactstrap";
-import {
-  BsChevronRight,
-  BsChevronLeft,
-  BsSearch,
-  BsPlus,
-} from "react-icons/bs";
+import { BsPlus } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
+import { Select, MenuItem, InputBase } from "@material-ui/core";
+import TablePagination from "@material-ui/core/TablePagination";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { styles } from "./../../components/PaginationStyle";
+import { withStyles } from "@material-ui/core/styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../styles/ManageProduct.css";
@@ -41,6 +41,7 @@ class ManageProd extends Component {
     qty: [],
     categories: [],
     locations: [],
+    statusCategory: [],
     addimage: null,
     editimage: null,
     modalAdd: false,
@@ -48,14 +49,19 @@ class ManageProd extends Component {
     indexEdit: -1,
     limit: 10,
     totaldata: 0,
-    minPage: 0,
-    maxPage: 5,
-    pageLimit: 5,
-    page: 1,
+    page: 0,
+    searchInput: "",
   };
 
   componentDidMount() {
-    Axios.get(`${API_URL}/admin/product?pages=${this.state.page}&limit=10`)
+    let tokenAccess = localStorage.getItem("TA");
+    Axios.get(`${API_URL}/admin/product`, {
+      headers: { Authorization: "Bearer " + tokenAccess },
+      params: {
+        pages: this.state.page,
+        limit: this.state.limit,
+      },
+    })
       .then((res1) => {
         Axios.get(`${API_URL}/admin/category`)
           .then((res2) => {
@@ -86,12 +92,29 @@ class ManageProd extends Component {
   }
 
   componentDidUpdate(prevprops, prevstate) {
-    console.log(this.state.products);
-    if (this.state.page !== prevstate.page) {
-      Axios.get(`${API_URL}/admin/product?pages=${this.state.page}&limit=10`)
+    let tokenAccess = localStorage.getItem("TA");
+    if (
+      this.state.page !== prevstate.page ||
+      this.state.limit !== prevstate.limit ||
+      this.state.statusCategory !== prevstate.statusCategory ||
+      this.state.searchInput !== prevstate.searchInput
+    ) {
+      Axios.get(`${API_URL}/admin/product`, {
+        headers: { Authorization: "Bearer " + tokenAccess },
+        params: {
+          pages: this.state.page,
+          limit: this.state.limit,
+          status:
+            this.state.statusCategory === "All"
+              ? ""
+              : this.state.statusCategory,
+          search: this.state.searchInput,
+        },
+      })
         .then((res) => {
           this.setState({
             products: res.data.dataProduct,
+            totaldata: res.data.totaldata,
           });
         })
         .catch((err) => {
@@ -100,30 +123,33 @@ class ManageProd extends Component {
     }
   }
 
-  nextButton = () => {
-    const { page, maxPage, minPage, pageLimit } = this.state;
-    this.setState({ page: page + 1 });
-    if (page + 1 > maxPage) {
-      this.setState({ maxPage: maxPage + pageLimit });
-      this.setState({ minPage: minPage + pageLimit });
-    }
-  };
-
-  prevButton = () => {
-    const { page, maxPage, minPage, pageLimit } = this.state;
-    this.setState({ page: page - 1 });
-    if ((page - 1) % pageLimit == 0) {
-      this.setState({ maxPage: maxPage - pageLimit });
-      this.setState({ minPage: minPage - pageLimit });
-    }
-  };
-
   toggle = () => {
     this.setState({ modalAdd: !this.state.modalAdd });
   };
 
   toggleEdit = () => {
     this.setState({ modalEdit: !this.state.modalEdit });
+  };
+
+  categoryChange = (e) => {
+    this.setState({ statusCategory: e.target.value });
+  };
+
+  searchChange = (e) => {
+    this.setState({ searchInput: e.target.value });
+  };
+
+  handleChangePage = (e, newPage) => {
+    this.setState({
+      page: newPage,
+    });
+  };
+
+  handleChangeLimit = (e) => {
+    this.setState({
+      limit: e.target.value,
+      page: 0,
+    });
   };
 
   onAddFileChange = (e, propstate) => {
@@ -309,38 +335,22 @@ class ManageProd extends Component {
     });
   };
 
-  renderPagination = () => {
-    let { limit, totaldata, page, maxPage, minPage } = this.state;
-    let panjang = Math.ceil(totaldata / limit);
-    let paging = [];
-    for (let i = 1; i <= panjang; i++) {
-      paging.push(i);
-    }
-    let renderPageNumber = paging.map((number) => {
-      if (number < maxPage + 1 && number > minPage) {
-        return (
-          <li
-            key={number}
-            id={number}
-            onClick={() => this.setState({ page: number })}
-            className={page == number ? "active" : null}
-          >
-            {number}
-          </li>
-        );
-      } else {
-        return null;
-      }
-    });
-    return renderPageNumber;
-  };
-
   renderCategories = () => {
     return this.state.categories.map((val, index) => {
       return (
         <option value={val.id} key={index}>
           {val.category_name}
         </option>
+      );
+    });
+  };
+
+  renderCategoryFilter = () => {
+    return this.state.categories.map((val, index) => {
+      return (
+        <MenuItem key={index} value={val.category_name}>
+          <span>{val.category_name}</span>
+        </MenuItem>
       );
     });
   };
@@ -357,38 +367,41 @@ class ManageProd extends Component {
 
   renderProducts = () => {
     return this.state.products.map((val, index) => {
-      let x = this.state.limit * (this.state.page - 1);
+      let x = this.state.limit * this.state.page;
       return (
-        <tr key={val.id}>
-          <td width="50px">{x + index + 1}</td>
-          <td width="200px">{val.name}</td>
-          <td width="180px">{currencyFormatter(val.price)}</td>
-          <td width="220px">
-            <div style={{ height: "100px", overflow: "hidden" }}>
-              {val.image ? (
-                <img src={API_URL + val.image} height="100%" />
-              ) : (
-                "Unavailable"
-              )}
-            </div>
-          </td>
-          <td width="100px">{val.quantity}</td>
-          <td width="120px">{val.category}</td>
-          <td>
+        <div className="mp-render-data" key={index}>
+          <div className="mp-render-in">
+            <div className="mp-prod-num">{x + index + 1}.</div>
+          </div>
+          <div className="mp-render-in mp-prod-img">
+            <img width="100%" src={API_URL + val.image} alt="" />
+          </div>
+          <div className="mp-render-in">
+            <div className="mp-prod-name">{val.name}</div>
+          </div>
+          <div className="mp-render-in">
+            <div className="mp-prod-price">{currencyFormatter(val.price)}</div>
+          </div>
+          <div className="mp-render-in">
             <div
-              style={{
-                display: "flex",
-
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                marginTop: "4%",
-              }}
+              style={{ color: val.quantity === 0 ? "red" : "black" }}
+              className="mp-prod-qty"
             >
-              <FaEdit onClick={() => this.onEditClick(index)} />
-              <FaTrash onClick={() => this.onDeleteClick(index)} />
+              {val.quantity}
             </div>
-          </td>
-        </tr>
+          </div>
+          <div className="mp-render-in">
+            <div className="mp-prod-cat">{val.category}</div>
+          </div>
+          <div className="mp-render-in mp-render-button">
+            <div className="mp-prod-edit">
+              <FaEdit onClick={() => this.onEditClick(index)} />
+            </div>
+            <div className="mp-prod-delete">
+              <FaTrash onClick={() => this.onDeleteClick(index)} />{" "}
+            </div>
+          </div>
+        </div>
       );
     });
   };
@@ -414,12 +427,21 @@ class ManageProd extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+    const BootstrapInput = withStyles(() => ({
+      input: {
+        position: "relative",
+        backgroundColor: "none",
+        border: "none",
+        width: "150px",
+        fontSize: "1rem",
+        color: "gainsboro",
+        background: "none",
+      },
+    }))(InputBase);
     return (
-      <div className="jumbotron">
-        <div className="kiri">
-          <div className="nama-admin">Admin Fournir</div>
-        </div>
-        <div className="kanan">
+      <div className="jumbotron-mp">
+        <div className="kanan-mp">
           {/*===========Moal Add Data==========*/}
           <Modal size="lg" isOpen={this.state.modalAdd} toggle={this.toggle}>
             <ModalHeader className="color" toggle={this.toggle}>
@@ -529,73 +551,102 @@ class ManageProd extends Component {
               </Button>
             </ModalFooter>
           </Modal>
-
-          <div className="header">
-            <div className="search-content">
-              <input
-                type="text"
-                placeholder="Search..."
-                className="search-bar"
-              />
-              <BsSearch style={{ color: "grey", fontSize: "18px" }} />
+          <div className="header-mp">
+            <div className="header-mp-title">
+              <p>Manage Product</p>
             </div>
           </div>
-          <div className="kanan-title">
-            <div>Manage Product</div>
+          <div className="kanan-title-mp">
             <div>
               <button
                 className="button-add"
                 onClick={() => this.setState({ modalAdd: true })}
               >
                 <BsPlus />
+                Add Product
               </button>
             </div>
-          </div>
-          <div className="table-content">
-            <Table className="table-parent" bordered>
-              <thead className="table-head ">
-                <tr style={{ color: "#052c43" }}>
-                  <th>No.</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Image</th>
-                  <th>Quantity</th>
-                  <th>Category</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody className="table-body">{this.renderProducts()}</tbody>
-            </Table>
-          </div>
-          <div className="pagination-content">
-            <ul className="page-number">
-              <li>
-                <button
-                  disabled={this.state.page == 1 ? true : false}
-                  onClick={() => this.prevButton()}
+            <div>
+              <div>
+                <Select
+                  input={<BootstrapInput />}
+                  value={this.state.statusCategory}
+                  onChange={this.categoryChange}
+                  displayEmpty
+                  className="select-mp"
                 >
-                  <BsChevronLeft
-                    style={{ fontSize: "20px", color: "#052c43" }}
+                  <MenuItem value="" disabled>
+                    Choose category
+                  </MenuItem>
+                  <MenuItem value="All">All Category</MenuItem>
+                  {this.renderCategoryFilter()}
+                </Select>
+              </div>
+              <div className="searchbar-content-mp">
+                <input
+                  className="searchbar-mp"
+                  type="text"
+                  placeholder="Search product name"
+                  value={this.state.searchInput}
+                  onChange={this.searchChange}
+                />
+                <div className="search-logo-mp">
+                  <FiSearch
+                    style={{
+                      fontSize: "1.2rem",
+                      color: "black",
+                      height: "100%",
+                      color: "grey",
+                    }}
                   />
-                </button>
-              </li>
-              {this.renderPagination()}
-              <li>
-                <button
-                  disabled={
-                    this.state.page ==
-                      Math.ceil(this.state.totaldata / this.state.limit)
-                      ? true
-                      : false
-                  }
-                  onClick={() => this.nextButton()}
-                >
-                  <BsChevronRight
-                    style={{ fontSize: "20px", color: "#052c43" }}
-                  />
-                </button>
-              </li>
-            </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mp-table-content">
+            <div className="mp-th">
+              <div className="mp-t1">
+                <div>No.</div>
+              </div>
+              <div className="mp-t2">
+                <div>Image</div>
+              </div>
+              <div className="mp-t3">
+                <div>Name</div>
+              </div>
+              <div className="mp-t4">
+                <div>Price</div>
+              </div>
+              <div className="mp-t5">
+                <div>Stock</div>
+              </div>
+              <div className="mp-t6">
+                <div>Category</div>
+              </div>
+              <div className="mp-t7">
+                <div>Action</div>
+              </div>
+            </div>
+            <div>{this.renderProducts()}</div>
+          </div>
+        </div>
+        <div className="pagination-content">
+          <div>
+            <TablePagination
+              rowsPerPageOptions={[
+                5,
+                10,
+                15,
+                { label: "All", value: this.state.totaldata },
+              ]}
+              component="div"
+              count={this.state.totaldata}
+              page={this.state.page}
+              rowsPerPage={this.state.limit}
+              onChangePage={this.handleChangePage}
+              onChangeRowsPerPage={this.handleChangeLimit}
+              style={{ color: "grey" }}
+            />
           </div>
         </div>
       </div>
@@ -603,4 +654,4 @@ class ManageProd extends Component {
   }
 }
 
-export default ManageProd;
+export default withStyles(styles)(ManageProd);

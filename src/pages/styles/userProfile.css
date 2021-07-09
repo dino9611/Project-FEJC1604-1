@@ -1,98 +1,161 @@
-.icon{
-    font-size: 70px;
+.sidebar-user-profile {
+  height: auto;
+  width: 20%;
+  position: fixed;
+  box-shadow: -10px 0px 15px #555;
+  background-color: white;
 }
 
-.back-ground{
-    background-color: #89ADC3;
-    height: 99vh;
+.container-userprofile {
+  display: flex;
+  justify-content: center;
+  margin-right: 10%;
+  padding-top: 3%;
 }
 
-.font1{
-    color: white;
-    font-size: 25px;
-}
-.font2{
-    color: #052C43;
-    font-size: 25px;
+.container-userprofile-2 {
+  display: flex;
+  justify-content: center;
+  margin-right: 10%;
+  padding-top: 3%;
 }
 
-.icon-position{
-    text-align: center;
+.home-sidebar {
+  display: flex;
+  align-items: center;
+  text-align: start;
+  font-weight: bold;
+  color: #052c43;
+  font-size: 30px;
 }
 
-.my-profile{
-    font-weight: 650; 
+.sidebar-content-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20%;
+  margin-left: 20%;
+  height: 25vh;
 }
 
-
-.input-width{
-    width: 43%;
+.sidebar-content-2 {
+  height: 100vh;
+  background-color: #d4eaf5;
 }
 
-.input-border{
-    border: 2px #D4EAF5 solid !important;
+.text-1-userprofile {
+  font-size: 14px;
+  margin-left: 5px;
+  color: #555;
 }
 
-.photo{
-    border: 2px #89ADC3 solid;
-    border-radius: 50% ;
-    background-color:#D4EAF5 ;
-    height: 200px;
-    width:200px;
-    overflow: auto;
+.address-container {
+  padding-top: 3%;
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: 20%;
+  width: 80%;
 }
 
-.container-width{
-   width: 50%;
+.icon {
+  font-size: 70px;
 }
 
-.button-utama{
-    background-color:#89ADC3 ;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
-}
-.button-utama:disabled{
-    background-color:#b2c9d8;
+.back-ground {
+  background-color: #89adc3;
+  min-height: 100vh;
 }
 
-.button-second{
-    background-color:#D4EAF5  ;
-    border: none;
-    color: black;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.font1 {
+  color: white;
+  font-size: 25px;
+}
+.font2 {
+  color: #052c43;
+  font-size: 25px;
 }
 
-.button-cancel{
-    background-color:gray ;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.icon-position {
+  text-align: center;
 }
 
-.link:hover{
-    text-decoration: none;
+.my-profile {
+  font-weight: 650;
 }
 
-.button-delete{
-    background-color:#052C43;
-    border: none;
-    color: white;
-    text-align: center;
-    display: inline-block;
-    font-size: 17px;
-    text-decoration: none;
-    padding: 15px 32px;
+.input-width {
+  width: 43%;
+}
+
+.input-border {
+  border: 2px #d4eaf5 solid !important;
+}
+
+.photo {
+  border: 2px #89adc3 solid;
+  border-radius: 50%;
+  background-color: #d4eaf5;
+  height: 200px;
+  width: 200px;
+  overflow: auto;
+}
+
+.container-width {
+  width: 50%;
+}
+
+.button-utama {
+  background-color: #89adc3;
+  border: none;
+  border-radius: 3px;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 5px 50px;
+  height: 45px;
+}
+.button-utama:disabled {
+  background-color: #b2c9d8;
+}
+
+.button-second {
+  background-color: #d4eaf5;
+  border: none;
+  color: black;
+  text-align: center;
+  display: inline-block;
+  font-size: 15px;
+  text-decoration: none;
+  padding: 5px 30px;
+  height: 40px;
+}
+
+.button-cancel {
+  background-color: gray;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3px;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 5px 40px;
+  height: 45px;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.button-delete {
+  background-color: #052c43;
+  border: none;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 15px 32px;
 }

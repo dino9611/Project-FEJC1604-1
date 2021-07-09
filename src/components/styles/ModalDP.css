@@ -16,7 +16,7 @@
 
 .modal-dp-content {
   background: white;
-  height: 535px;
+  height: 440px;
   width: 600px;
   display: flex;
   flex-direction: column;
@@ -62,11 +62,24 @@
   font-weight: bold;
 }
 
+.modal-dp-render-content {
+  display: flex;
+  width: 100%;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+
+.modal-dp-render-dataprod {
+  height: fit-content;
+  display: flex;
+}
+
 .modal-dp-sm-prod {
+  /* background-color: goldenrod; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 .modal-dp-sm-prod > p:first-child {

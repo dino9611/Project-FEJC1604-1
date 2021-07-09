@@ -28,6 +28,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import CloseIcon from "@material-ui/icons/Close";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
+import ImageIcon from "@material-ui/icons/Image";
 import { API_URL, currencyFormatter } from "../../helper";
 import axios from "axios";
 import "../styles/adminTransaction.css";
@@ -50,6 +51,7 @@ class Transaction extends Component {
     open: false,
     openDialogConfirm: false,
     openDialogRejected: false,
+    openDialogBukti: false,
     openSnack: false,
     openSnackRejected: false,
     loading: false,
@@ -61,25 +63,27 @@ class Transaction extends Component {
     totalData: 0,
     orders_id: 0,
     roleAdmin: 0,
-
     confirmOrRejectedId: 0,
+    bukti: "",
   };
 
   async componentDidUpdate(prevProps, prevState) {
     try {
       if (
-        prevState.page != this.state.page ||
-        prevState.statusTransaction != this.state.statusTransaction ||
-        prevState.rowsPerPage != this.state.rowsPerPage ||
-        prevState.orders_id != this.state.orders_id ||
-        prevState.monthFrom != this.state.monthFrom ||
-        prevState.monthTo != this.state.monthTo ||
-        prevState.warehouse_id != this.state.warehouse_id
+        prevState.page !== this.state.page ||
+        prevState.statusTransaction !== this.state.statusTransaction ||
+        prevState.rowsPerPage !== this.state.rowsPerPage ||
+        prevState.orders_id !== this.state.orders_id ||
+        prevState.monthFrom !== this.state.monthFrom ||
+        prevState.monthTo !== this.state.monthTo ||
+        prevState.warehouse_id !== this.state.warehouse_id ||
+        prevState.openSnackRejected !== this.state.openSnackRejected ||
+        prevState.openSnack !== this.state.openSnack
       ) {
         this.setState({ loading: true });
         let tokenAccess = localStorage.getItem("TA");
         let getTransactionRow = await axios.get(
-          `${API_URL}/admin/transaction`,
+          `${API_URL}/admin-warehouse-transaction/transaction`,
           {
             headers: {
               Authorization: "Bearer " + tokenAccess,
@@ -108,7 +112,7 @@ class Transaction extends Component {
         });
 
         let getDetailTransactionRow = await axios.get(
-          `${API_URL}/admin/detail-transaction`,
+          `${API_URL}/admin-warehouse-transaction/detail-transaction`,
           {
             headers: {
               Authorization: "Bearer " + tokenAccess,
@@ -140,23 +144,27 @@ class Transaction extends Component {
         warehouse_id,
       } = this.state;
       let tokenAccess = localStorage.getItem("TA");
-      let getTransactionRow = await axios.get(`${API_URL}/admin/transaction`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-        params: {
-          status: statusTransaction,
-          page: page,
-          rowPerPage: rowsPerPage,
-          monthFrom: monthFrom,
-          monthTo: monthTo,
-          warehouse_id: warehouse_id,
-        },
-      });
+      let getTransactionRow = await axios.get(
+        `${API_URL}/admin-warehouse-transaction/transaction`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+          params: {
+            status: statusTransaction,
+            page: page,
+            rowPerPage: rowsPerPage,
+            monthFrom: monthFrom,
+            monthTo: monthTo,
+            warehouse_id: warehouse_id,
+          },
+        }
+      );
       this.setState({
         transaction: getTransactionRow.data.dataTransaction,
         totalData: getTransactionRow.data.totalData,
         roleAdmin: getTransactionRow.data.roleAdmin,
+        bukti: getTransactionRow.data.bukti,
       });
     } catch (error) {
       console.log(error);
@@ -177,6 +185,10 @@ class Transaction extends Component {
     });
   };
 
+  handleShowProof = (row) => {
+    this.setState({ openDialogBukti: true, bukti: row.bukti });
+  };
+
   onCofirmClick = () => {
     const { confirmOrRejectedId } = this.state;
     let tokenAccess = localStorage.getItem("TA");
@@ -184,14 +196,13 @@ class Transaction extends Component {
       id: confirmOrRejectedId,
     };
     axios
-      .put(`${API_URL}/admin/confirm-transaction`, data, {
+      .put(`${API_URL}/admin-warehouse-transaction/confirm-transaction`, data, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
       })
       .then((res3) => {
         this.setState({
-          transaction: res3.data,
           openDialogConfirm: false,
           openSnack: true,
         });
@@ -208,14 +219,13 @@ class Transaction extends Component {
       id: confirmOrRejectedId,
     };
     axios
-      .put(`${API_URL}/admin/reject-transaction`, data, {
+      .put(`${API_URL}/admin-warehouse-transaction/reject-transaction`, data, {
         headers: {
           Authorization: "Bearer " + tokenAccess,
         },
       })
       .then((res3) => {
         this.setState({
-          transaction: res3.data,
           openDialogRejected: false,
           openSnackRejected: true,
         });
@@ -240,6 +250,10 @@ class Transaction extends Component {
       rowsPerPage: e.target.value,
       page: 0,
     });
+  };
+
+  handleDialogBukti = () => {
+    this.setState({ openDialogBukti: false });
   };
 
   handleDialogCofirm = () => {
@@ -286,6 +300,7 @@ class Transaction extends Component {
       openDialogRejected,
       openSnack,
       openSnackRejected,
+      openDialogBukti,
       currentOpen,
       monthFrom,
       monthTo,
@@ -297,24 +312,30 @@ class Transaction extends Component {
     };
 
     const columns = [
-      { id: "dateTime", label: "DATE", minWidth: 120, align: "left" },
-      { id: "invoice", label: "INVOICE", minWidth: 80, align: "left" },
-      { id: "name", label: "CUSTOMER", minWidth: 120, align: "left" },
-      { id: "status", label: "STATUS", minWidth: 140, align: "left" },
+      { id: "dateTime", label: "DATE", minWidth: 130, align: "left" },
+      { id: "invoice", label: "INVOICE", minWidth: 130, align: "left" },
+      { id: "name", label: "CUSTOMER", minWidth: 130, align: "left" },
+      { id: "status", label: "STATUS", minWidth: 100, align: "left" },
       { id: "amountTotal", label: "AMOUNT", minWidth: 130, align: "left" },
-      { id: "warehouse", label: "WAREHOUSE", minWidth: 100, align: "left" },
-      { id: "confirm", label: "", minWidth: 20, align: "center" },
-      { id: "reject", label: "", minWidth: 20, align: "center" },
-      { id: "drop", label: "", minWidth: 30, align: "center" },
+      { id: "confirm", label: "", minWidth: 10, align: "right" },
+      { id: "reject", label: "", minWidth: 10, align: "right" },
+      {
+        id: "showBukti",
+        minWidth: 10,
+        label: "",
+        align: "right",
+      },
+      { id: "drop", label: "", minWidth: 10, align: "right" },
     ];
 
     const columnsSuper = [
-      { id: "dateTime", label: "DATE", minWidth: 80, align: "left" },
-      { id: "invoice", label: "INVOICE", minWidth: 80, align: "left" },
-      { id: "name", label: "CUSTOMER", minWidth: 80, align: "left" },
-      { id: "status", label: "STATUS", minWidth: 130, align: "left" },
+      { id: "dateTime", label: "DATE", minWidth: 130, align: "left" },
+      { id: "invoice", label: "INVOICE", minWidth: 130, align: "left" },
+      { id: "name", label: "CUSTOMER", minWidth: 100, align: "left" },
+      { id: "status", label: "STATUS", minWidth: 80, align: "left" },
       { id: "amountTotal", label: "AMOUNT", minWidth: 130, align: "left" },
       { id: "warehouse", label: "WAREHOUSE", minWidth: 50, align: "left" },
+      { id: "showBukti", minWidth: 10, label: "", align: "right" },
       { id: "drop", label: "", minWidth: 30, align: "center" },
     ];
 
@@ -387,6 +408,24 @@ class Transaction extends Component {
 
     return (
       <React.Fragment>
+        {
+          <div>
+            <Dialog
+              open={openDialogBukti}
+              onClose={this.handleDialogBukti}
+              aria-labelledby="form-dialog-title"
+            >
+              <DialogContent>
+                <img
+                  src={API_URL + this.state.bukti}
+                  alt="bukti-pembayaran"
+                  width="100%"
+                  height="auto"
+                />
+              </DialogContent>
+            </Dialog>
+          </div>
+        }
         {
           <div className={classes.root}>
             <Snackbar
@@ -631,17 +670,29 @@ class Transaction extends Component {
           <TableContainer>
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
-                  {arrMap.map((column) => (
-                    <StyledTableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      <p className="transaction-text-2">{column.label}</p>
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
+                {transaction.length == 0 ? (
+                  <div
+                    style={{
+                      margin: 20,
+                    }}
+                  >
+                    <p style={{ fontSize: "14px" }}>
+                      Table is empty.. no transaction yet on this section.
+                    </p>
+                  </div>
+                ) : (
+                  <TableRow>
+                    {arrMap.map((column) => (
+                      <StyledTableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        <p className="transaction-text-2">{column.label}</p>
+                      </StyledTableCell>
+                    ))}
+                  </TableRow>
+                )}
               </TableHead>
               <TableBody>
                 {transaction.map((row, index) => {
@@ -686,7 +737,13 @@ class Transaction extends Component {
                                     style6
                                       ? "center"
                                       : "",
-                                  fontSize: style3 ? "13px" : "",
+                                  fontSize: style3
+                                    ? "12px"
+                                    : column.id === "dateTime"
+                                    ? "12px"
+                                    : column.id === "invoice"
+                                    ? "12px"
+                                    : "",
                                   backgroundColor: style1
                                     ? "#1859db77"
                                     : style2
@@ -719,9 +776,8 @@ class Transaction extends Component {
                                 }}
                               >
                                 {column.id === "amountTotal" ? (
-                                  (value = currencyFormatter(value).split(
-                                    ","
-                                  )[0])
+                                  (value =
+                                    currencyFormatter(value).split(",")[0])
                                 ) : column.id === "drop" ? (
                                   <IconButton
                                     aria-label="expand row"
@@ -750,7 +806,7 @@ class Transaction extends Component {
                                       color: "#4aa96c",
                                     }}
                                   >
-                                    <CheckIcon />
+                                    <CheckIcon style={{ fontSize: "19px" }} />
                                   </IconButton>
                                 ) : column.id === "reject" &&
                                   row.status === "awaiting confirmation" ? (
@@ -762,7 +818,21 @@ class Transaction extends Component {
                                       color: "#da0037",
                                     }}
                                   >
-                                    <CloseIcon />
+                                    <CloseIcon style={{ fontSize: "19px" }} />
+                                  </IconButton>
+                                ) : column.id === "showBukti" ? (
+                                  <IconButton
+                                    aria-label="expand row"
+                                    size="small"
+                                    onClick={() => this.handleShowProof(row)}
+                                    style={{
+                                      color:
+                                        row.status === "awaiting confirmation"
+                                          ? "#4aa96c"
+                                          : null,
+                                    }}
+                                  >
+                                    <ImageIcon style={{ fontSize: "19px" }} />
                                   </IconButton>
                                 ) : (
                                   value
@@ -845,9 +915,10 @@ class Transaction extends Component {
                                                 row.invoice
                                                   ? column.id === "price" ||
                                                     column.id === "amount"
-                                                    ? (value = currencyFormatter(
-                                                        value
-                                                      ).split(",")[0])
+                                                    ? (value =
+                                                        currencyFormatter(
+                                                          value
+                                                        ).split(",")[0])
                                                     : value
                                                   : "loading.."}
                                                 {/* {value} */}

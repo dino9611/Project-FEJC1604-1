@@ -23,6 +23,7 @@ import {
 } from "@material-ui/core";
 import { IconButton } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
+import { Alert } from "@material-ui/lab";
 import { API_URL, currencyFormatter } from "../../helper";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
@@ -50,7 +51,9 @@ class Processing extends Component {
     open: false,
     openDialog: false,
     openSnack: false,
+    openSnackSending: false,
     loading: false,
+    stockTomuch: false,
     currentOpen: -1,
     productId: 0,
     totalData: 0,
@@ -66,45 +69,55 @@ class Processing extends Component {
         prevState.page != this.state.page ||
         prevState.rowsPerPage != this.state.rowsPerPage ||
         prevState.orders_id != this.state.orders_id ||
-        prevState.openSnack != this.state.openSnack
+        prevState.openSnack != this.state.openSnack ||
+        prevState.openSnackSending != this.state.openSnackSending
       ) {
         this.setState({ loading: true });
-        let res = await axios.get(`${API_URL}/admin/transaction`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            status: "processed",
-            page: this.state.page,
-            rowPerPage: this.state.rowsPerPage,
-          },
-        });
+        let res = await axios.get(
+          `${API_URL}/admin-warehouse-transaction/transaction`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              status: "processed",
+              page: this.state.page,
+              rowPerPage: this.state.rowsPerPage,
+            },
+          }
+        );
         this.setState({
           transaction: res.data.dataTransaction,
           totalData: res.data.totalData,
           loading: false,
         });
 
-        let res2 = await axios.get(`${API_URL}/admin/processing-product`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            orders_id: this.state.orders_id,
-          },
-        });
+        let res2 = await axios.get(
+          `${API_URL}/admin-warehouse-processing/processing-product`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              orders_id: this.state.orders_id,
+            },
+          }
+        );
         this.setState({
           transactionDetail: res2.data,
         });
       } else if (prevState.productId != this.state.productId) {
-        let res2 = await axios.get(`${API_URL}/admin/warehouse-location`, {
-          headers: {
-            Authorization: "Bearer " + tokenAccess,
-          },
-          params: {
-            productId: this.state.productId,
-          },
-        });
+        let res2 = await axios.get(
+          `${API_URL}/admin-warehouse-processing/warehouse-location`,
+          {
+            headers: {
+              Authorization: "Bearer " + tokenAccess,
+            },
+            params: {
+              productId: this.state.productId,
+            },
+          }
+        );
         // untuk nambah propery
         let newData = res2.data.map((val) => {
           return {
@@ -125,16 +138,19 @@ class Processing extends Component {
   async componentDidMount() {
     try {
       let tokenAccess = localStorage.getItem("TA");
-      let res = await axios.get(`${API_URL}/admin/transaction`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-        params: {
-          status: "processed",
-          page: this.state.page,
-          rowPerPage: this.state.rowsPerPage,
-        },
-      });
+      let res = await axios.get(
+        `${API_URL}/admin-warehouse-transaction/transaction`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+          params: {
+            status: "processed",
+            page: this.state.page,
+            rowPerPage: this.state.rowsPerPage,
+          },
+        }
+      );
       this.setState({
         transaction: res.data.dataTransaction,
         totalData: res.data.totalData,
@@ -142,11 +158,14 @@ class Processing extends Component {
       });
 
       //get location
-      let res2 = await axios.get(`${API_URL}/admin/warehouse-location`, {
-        headers: {
-          Authorization: "Bearer " + tokenAccess,
-        },
-      });
+      let res2 = await axios.get(
+        `${API_URL}/admin-warehouse-processing/warehouse-location`,
+        {
+          headers: {
+            Authorization: "Bearer " + tokenAccess,
+          },
+        }
+      );
       console.log(res2.data);
     } catch (error) {
       console.log(error);
@@ -186,6 +205,10 @@ class Processing extends Component {
     this.setState({ openSnack: false });
   };
 
+  handleSnackSending = () => {
+    this.setState({ openSnackSending: false });
+  };
+
   handleClose = () => {
     this.setState({ openDialog: false });
   };
@@ -201,7 +224,7 @@ class Processing extends Component {
       let tokenAccess = localStorage.getItem("TA");
       axios
         .post(
-          `${API_URL}/admin/request-stock`,
+          `${API_URL}/admin-warehouse-processing/request-stock`,
           {
             productId: productId,
             transactionOrder: transactionOrder,
@@ -224,15 +247,39 @@ class Processing extends Component {
           console.log(err);
         });
     } else {
-      alert("kurang pas");
+      this.setState({ stockTomuch: true });
     }
+  };
+
+  onSendingClick = (row) => {
+    let tokenAccess = localStorage.getItem("TA");
+    let { transaction, transactionDetail} = this.state;
+    axios
+      .post(`${API_URL}/admin-warehouse-processing/sending-item`, {
+        row: row,
+        transactionDetail: transactionDetail,
+        transaction: transaction
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res) => {
+        this.setState({
+          open: false,
+          openSnackSending: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   renderButtonSending = (rowId) => {
     let transactionDetail = this.state.transactionDetail.filter(
       (val) => val.qty > val.stock
     );
-    let orderId = rowId;
     if (transactionDetail.length) {
       return (
         <div
@@ -281,6 +328,7 @@ class Processing extends Component {
               fontWeight: 600,
               letterSpacing: 0.3,
             }}
+            onClick={() => this.onSendingClick(rowId)}
           >
             Sending
           </ButtonBase>
@@ -305,33 +353,38 @@ class Processing extends Component {
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
+                {this.state.stockTomuch ? (
+                  <Alert severity="error" style={{ marginBottom: "10px" }}>
+                    Stock requests don't mactch your needs.
+                  </Alert>
+                ) : null}
                 <p>
                   Items can't be shipped because there's not enough stock in the
                   warehouse..
                 </p>
                 <p>
                   <span className="less-request">
-                    {" "}
-                    {transactionObj.productName}{" "}
-                  </span>{" "}
-                  only have{" "}
+                    {transactionObj.productName}
+                  </span>
+                  only have
                   <span className="less-request"> {transactionObj.stock} </span>
                   stock in warehouse, meanwhile the order quantity is{" "}
-                  <span className="less-request">
-                    {" "}
-                    {transactionObj.qty}{" "}
-                  </span>{" "}
+                  <span className="less-request">{transactionObj.qty}</span>
                   ... You only need to request{" "}
                   <span className="less-request">
-                    {" "}
-                    {transactionObj.qty - transactionObj.stock}{" "}
+                    {transactionObj.qty - transactionObj.stock}
                   </span>{" "}
                   stock in different warehouse
                 </p>
               </DialogContentText>
               {this.state.transactionOrder.map((val, index) => {
                 return (
-                  <div>
+                  <div
+                    style={{
+                      paddingTop: 15,
+                      paddingBottom: 15,
+                    }}
+                  >
                     <p>
                       Warehouse {val.location} have {val.stock || 0} stock.
                     </p>
@@ -389,6 +442,7 @@ class Processing extends Component {
       open,
       openDialog,
       openSnack,
+      openSnackSending,
       currentOpen,
     } = this.state;
 
@@ -464,6 +518,19 @@ class Processing extends Component {
         {
           <div className={classes.root}>
             <Snackbar
+              open={openSnackSending}
+              autoHideDuration={10000}
+              onClose={this.handleSnackSending}
+            >
+              <Alert onClose={this.handleSnackSending} severity="success">
+                Sending item successful!
+              </Alert>
+            </Snackbar>
+          </div>
+        }
+        {
+          <div className={classes.root}>
+            <Snackbar
               open={openSnack}
               autoHideDuration={10000}
               onClose={this.handleSnack}
@@ -497,17 +564,29 @@ class Processing extends Component {
           <TableContainer>
             <StyledTable stickyHeader aria-label="sticky table">
               <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <StyledTableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      <p className="transaction-text-2">{column.label}</p>
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
+                {transaction.length == 0 ? (
+                  <div
+                    style={{
+                      margin: 20,
+                    }}
+                  >
+                    <p style={{ fontSize: "14px" }}>
+                    Table is empty.. no transaction yet on this section.
+                    </p>
+                  </div>
+                ) : (
+                  <TableRow>
+                    {columns.map((column) => (
+                      <StyledTableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        <p className="transaction-text-2">{column.label}</p>
+                      </StyledTableCell>
+                    ))}
+                  </TableRow>
+                )}
               </TableHead>
               <TableBody>
                 {transaction.map((row, index) => {
@@ -572,7 +651,6 @@ class Processing extends Component {
                           );
                         })}
                       </TableRow>
-
                       <TableRow>
                         <TableCell
                           style={{
@@ -699,7 +777,7 @@ class Processing extends Component {
                                   })}
                                 </TableBody>
                               </Table>
-                              {this.renderButtonSending(row.id)}
+                              {this.renderButtonSending(row)}
                             </Box>
                           </Collapse>
                         </TableCell>

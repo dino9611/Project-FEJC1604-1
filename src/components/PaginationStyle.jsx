@@ -13,4 +13,7 @@ export const styles = (theme) => ({
       color: "grey",
     },
   },
+  table: {
+    minWidth: 650,
+  },
 });

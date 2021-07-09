@@ -4,7 +4,9 @@ import axios from "axios";
 import { connect } from "react-redux";
 import "../styles/userProfile.css";
 import Sidebar from "../../components/SideBar";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { FaEdit } from "react-icons/fa";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class UserProfile extends Component {
   state = {
@@ -21,19 +23,30 @@ class UserProfile extends Component {
       age: "",
     },
     save: true,
+    modalVisible: false,
+    photo: null,
+    photoDefault: null,
   };
 
   componentDidMount() {
     axios
       .get(`${API_URL}/auth/${this.props.Auth.id}`)
       .then((res) => {
-        console.log(res.data[0]);
-        this.setState({ dataUser: res.data[0], dataInit: res.data[0] });
+        console.log("ini res.data ke 0", res.data[0]);
+        this.setState({
+          dataUser: res.data[0],
+          dataInit: res.data[0],
+          photoDefault: res.data[0].photo,
+        });
       })
       .catch((err) => {
         console.error(err);
       });
   }
+
+  toggle = () => {
+    this.setState({ modalVisible: !this.state.modalVisible, photo: null });
+  };
 
   onInputChange = (e) => {
     let data = this.state.dataUser;
@@ -72,22 +85,101 @@ class UserProfile extends Component {
       });
   };
 
+  onUploadClick = () => {
+    // upload & edit photo
+    let formData = new FormData();
+    formData.append("photo", this.state.photo);
+    console.log(formData);
+    const id = this.props.Auth.id;
+    let tokenAccess = localStorage.getItem("TA");
+    axios
+      .post(`${API_URL}/auth/uploadphoto/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "Bearer " + tokenAccess,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        this.setState({
+          photo: null,
+          modalVisible: false,
+          photoDefault: res.data[0].photo,
+        });
+        alert("berhasil");
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
+  addFileChange = (e) => {
+    // console.log(e.target.files);
+    if (e.target.files[0]) {
+      this.setState({ photo: e.target.files[0] });
+    } else {
+      this.setState({ photo: null });
+    }
+  };
+
   render() {
     return (
       <div>
+        {/* MODAL UPLOAD */}
+        <Modal isOpen={this.state.modalVisible} toggle={this.toggle} centered>
+          <ModalHeader toggle={this.toggle}>
+            <div
+              style={{
+                marginLeft: "130px",
+                color: "#052c43",
+                fontWeight: "650",
+              }}
+            >
+              Upload Your Picture
+            </div>
+          </ModalHeader>
+          <ModalBody>
+            {this.state.photo ? (
+              <img
+                style={{ marginLeft: "80px", height: "200px" }}
+                src={URL.createObjectURL(this.state.photo)}
+                alt="photo"
+              />
+            ) : null}
+            <input
+              type="file"
+              className="form-control mt-3"
+              onChange={this.addFileChange}
+              name="photo"
+            />
+          </ModalBody>
+          <ModalFooter>
+            <button className="btn-upload-profile" onClick={this.onUploadClick}>
+              Upload
+            </button>
+            <button className="btn-cancel-profile" onClick={this.toggle}>
+              Cancel
+            </button>
+          </ModalFooter>
+        </Modal>
+
+        {/* SIDEBAR */}
         <Sidebar page="profile">
-          <div className="">
+          <div>
             <div className="d-flex justify-content-center">
               <div className="photo">
                 <img
-                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                  src={API_URL + this.state.photoDefault}
                   alt="photo"
                   height="100%"
                   width="100%"
                 />
               </div>
             </div>
-            <div className="d-flex flex-column align-items-center mt-5">
+            <p onClick={this.toggle} className="change-photo">
+              Change Profile Picture
+            </p>
+            <div className="d-flex flex-column align-items-center mt-4">
               <div>
                 <div className="d-flex">
                   <div>

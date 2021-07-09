@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { connect } from "react-redux";
 import Header from "../../components/Header";
 import Axios from "axios";
 import { Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import Carousel from "./../../components/Carousel";
 import { withStyles } from "@material-ui/core/styles";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { styles } from "./../../components/PaginationStyle";
+import Footer from "./../../components/Footer";
 import "./../styles/Collection.css";
 
 class Collection extends Component {
@@ -174,8 +174,6 @@ class Collection extends Component {
                 marginBottom: "2%",
               }}
             ></div>
-            {/* <h5 className="page-2-text-1">Our Product</h5>
-            <h1 className="page-2-text-2">Furniture Collection</h1> */}
             <div className="filter-content-collection">
               <div className="totalprod-info-collection">
                 <p>Total Products {this.state.totaldata}</p>
@@ -216,7 +214,7 @@ class Collection extends Component {
                   <input
                     className="searchbar-collection"
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Search product name"
                     value={this.state.searchInput}
                     onChange={this.searchChange}
                   />
@@ -264,6 +262,7 @@ class Collection extends Component {
           className="pagination-collection"
           style={{ marginBottom: "10px" }}
         ></div>
+        <Footer />
       </div>
     );
   }

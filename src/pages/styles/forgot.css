@@ -1,0 +1,89 @@
+.kotak-1{
+    /* background-color: #E5E5E5; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background-image: url('../../images/forgot.jpg');
+}
+
+.kotak-2{
+    background-color: #D4EAF5;
+    /* background-color: #89ADC3; */
+    border: 0px solid #052C43;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    height: 437px ;
+    width: 596px;
+    border-radius: 10px;
+}
+
+.forgot{
+    color: #052C43;
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 40px;
+}
+
+.email{
+    /* background-color: coral; */
+    font-size: 18px;
+    margin:30px 100px 0px 100px;
+    text-align: center;
+    color: #535353;
+    font-weight: 600;
+}
+
+.persegi{
+    margin-top: 50px;
+    /* width: 40vh; */
+    /* background-color: cyan; */
+}
+
+.persegi-dalem{
+    height: 50px;
+    width: 470px;
+    border-radius: 7px;
+    padding-left: 15px;
+    font-size: 17px;
+    border: 1px solid #D4EAF5;
+    -webkit-transition: 0.5s ;
+    transition: 0.5s;
+    outline: none;
+    color:#052C43 ;
+    box-sizing: border-box;
+}
+
+.persegi-dalem:focus{
+    border:1px solid #89ADC3;
+    border-radius: 7px;
+}
+
+.send{
+    margin-top: 30px;
+    background-color:#89ADC3 ;
+    border: none;
+    color: white;
+    height: 50px;
+    width: 470px;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: 600;
+    transition: 700ms;
+}
+
+.send:hover{
+    background-color: #7fbbe0;
+    transition: 700ms;
+}
+
+/* .back-home{
+    align-self: flex-start;
+    background: tomato;
+    margin-top: 60px;
+    margin-left: 15px
+} */
+

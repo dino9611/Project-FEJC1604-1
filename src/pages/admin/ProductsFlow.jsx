@@ -125,7 +125,7 @@ class ProductsFlow extends Component {
                 <div>Warehouse {this.state.location}</div>
                 <div className="profo-search-right">
                   <div>Status :</div>
-                  <div className="profo-dropdown">
+                  <div>
                     <Select
                       value={this.state.status}
                       onChange={this.statusChange}
