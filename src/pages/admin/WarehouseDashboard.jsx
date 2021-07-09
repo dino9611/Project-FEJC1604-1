@@ -9,8 +9,8 @@ import DraftsIcon from "@material-ui/icons/Drafts";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
-import BallotIcon from '@material-ui/icons/Ballot';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import BallotIcon from "@material-ui/icons/Ballot";
+import AssessmentIcon from "@material-ui/icons/Assessment";
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
@@ -56,7 +56,7 @@ class WarehouseDashboard extends Component {
 
   render() {
     if (!this.props.dataUser.islogin) {
-      return <Redirect to='/unauthorize' />;
+      return <Redirect to="/unauthorize" />;
     }
     const { role, name, warehouse } = this.state;
     return (
@@ -81,7 +81,7 @@ class WarehouseDashboard extends Component {
                     fontSize: "14px",
                     color:
                       window.location.href ===
-                        "http://localhost:3000/admin/dashboard"
+                      "http://localhost:3000/admin/dashboard"
                         ? "#535353"
                         : "#b4b4b4",
                     fontWeight: "bold",
@@ -92,7 +92,7 @@ class WarehouseDashboard extends Component {
                       marginRight: "20px",
                       color:
                         window.location.href ===
-                          "http://localhost:3000/admin/dashboard"
+                        "http://localhost:3000/admin/dashboard"
                           ? "#535353"
                           : "#b4b4b4",
                     }}
@@ -101,7 +101,7 @@ class WarehouseDashboard extends Component {
                 </ButtonBase>
               </Link>
 
-              {role == 2 ? null : (
+              {role === 2 ? null : (
                 <React.Fragment>
                   <Link
                     to="/admin/dashboard/requeststock"
@@ -117,7 +117,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                            "http://localhost:3000/admin/dashboard/requeststock"
+                          "http://localhost:3000/admin/dashboard/requeststock"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -128,7 +128,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                              "http://localhost:3000/admin/dashboard/requeststock"
+                            "http://localhost:3000/admin/dashboard/requeststock"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -151,7 +151,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                            "http://localhost:3000/admin/dashboard/processing"
+                          "http://localhost:3000/admin/dashboard/processing"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -162,7 +162,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                              "http://localhost:3000/admin/dashboard/processing"
+                            "http://localhost:3000/admin/dashboard/processing"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -185,7 +185,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                            "http://localhost:3000/admin/dashboard/manage-product"
+                          "http://localhost:3000/admin/dashboard/manage-product"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -196,7 +196,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                              "http://localhost:3000/admin/dashboard/manage-product"
+                            "http://localhost:3000/admin/dashboard/manage-product"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -219,7 +219,7 @@ class WarehouseDashboard extends Component {
                         fontSize: "14px",
                         color:
                           window.location.href ===
-                            "http://localhost:3000/admin/dashboard/report"
+                          "http://localhost:3000/admin/dashboard/report"
                             ? "#535353"
                             : "#b4b4b4",
                         fontWeight: "bold",
@@ -230,7 +230,7 @@ class WarehouseDashboard extends Component {
                           marginRight: "20px",
                           color:
                             window.location.href ===
-                              "http://localhost:3000/admin/dashboard/report"
+                            "http://localhost:3000/admin/dashboard/report"
                               ? "#535353"
                               : "#b4b4b4",
                         }}
@@ -242,7 +242,8 @@ class WarehouseDashboard extends Component {
               )}
 
               <div className="container-bottom-wh-ds">
-                <Link to="/admin/login"
+                <Link
+                  to="/admin/login"
                   style={{
                     textDecoration: "none",
                     color: "#535353",
@@ -288,10 +289,7 @@ class WarehouseDashboard extends Component {
         </div>
         <div className="whdashboard-content">
           <Switch>
-            <Route
-              path="/admin/dashboard"
-              exact
-              component={Transaction} />
+            <Route path="/admin/dashboard" exact component={Transaction} />
             <Route
               path="/admin/dashboard/requeststock"
               exact
@@ -307,11 +305,7 @@ class WarehouseDashboard extends Component {
               exact
               component={ManageProduct}
             />
-            <Route
-              path="/admin/dashboard/report"
-              exact
-              component={Report}
-            />
+            <Route path="/admin/dashboard/report" exact component={Report} />
           </Switch>
         </div>
       </div>

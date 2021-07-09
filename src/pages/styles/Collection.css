@@ -14,6 +14,7 @@
 .jumbotron-1-collection {
   display: flex;
   width: 100%;
+  flex-direction: column;
 }
 
 .page-2-collection {
@@ -21,24 +22,25 @@
   width: 100%;
   flex-direction: column;
   align-items: center;
-  margin-top: 2%;
+  margin-top: 1.5%;
 }
 
 .page-2-text-1 {
   color: grey;
-  margin-top: 8%;
+  /* margin-top: 5%; */
 }
 
 .page-2-text-2 {
   color: var(--textprimary);
   font-weight: bold;
-  margin-bottom: 4%;
+  margin-bottom: 2%;
 }
 
 .filter-content-collection {
   width: 87.5%;
+  /* margin-top: 3%; */
   margin-bottom: 2%;
-  height: 45px;
+  /* height: 45px; */
   display: flex;
   justify-content: space-between;
 }
@@ -60,7 +62,7 @@
 .searchbar-content-collection {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 44.5px;
   justify-content: space-between;
   border: solid gainsboro;
   border-width: 1px;
@@ -90,7 +92,7 @@
   width: 50px;
 }
 
-.card-content {
+.card-content-collection {
   width: 87.5%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -148,74 +150,14 @@
   font-weight: bold;
 }
 
-.pagination-content {
-  margin-top: 10px;
+.pagination-collection {
+  display: flex;
+  justify-content: center;
   margin-bottom: 5%;
+  width: 100%;
 }
-
-.page-number {
-  list-style: none;
+.pagination-collection > div {
   display: flex;
-}
-
-.page-number li {
-  display: flex;
-  justify-content: center;
-  margin: 5px;
-  width: 45px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: transparent;
-  color: var(--textprimary);
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 3px;
-}
-
-.page-number li.active {
-  color: white;
-  background-color: #89adc3;
-  border-color: #89adc3;
-}
-
-.page-number li:hover {
-  color: #89adc3;
-  background-color: #d4eaf5;
-  border-color: #d4eaf5;
-  transition: ease-out 0.3s;
-}
-
-.page-number li button {
-  display: flex;
-  justify-content: center;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: white;
-}
-
-.page-number li button:hover {
-  color: #89adc3;
-  background-color: #d4eaf5;
-}
-
-.page-number li button:focus {
-  outline: none;
-}
-
-.footer-content {
-  display: flex;
-  flex-direction: column;
-  background-color: #d4eaf5;
-  height: 90vh;
-}
-
-.footer-1 {
-  display: flex;
-  flex: 5;
-}
-
-.footer-2 {
-  display: flex;
-  flex: 1;
-  background-color: #89adc3;
+  justify-content: flex-end;
+  width: 87.5%;
 }

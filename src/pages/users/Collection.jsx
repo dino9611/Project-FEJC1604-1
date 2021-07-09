@@ -1,14 +1,16 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import Header from "../../components/Header";
 import LoaderComp from "../../components/Loader";
 import Axios from "axios";
 import { Link } from "react-router-dom";
-import { BsChevronRight, BsChevronLeft, BsSearch } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { API_URL, currencyFormatter } from "../../helper";
-import { withStyles } from "@material-ui/core/styles";
 import { Select, MenuItem, InputBase } from "@material-ui/core";
+import Carousel from "./../../components/Carousel";
+import { withStyles } from "@material-ui/core/styles";
+import { Pagination, PaginationItem } from "@material-ui/lab";
+import { styles } from "./../../components/PaginationStyle";
+import Footer from "./../../components/Footer";
 import "./../styles/Collection.css";
 
 class Collection extends Component {
@@ -21,7 +23,6 @@ class Collection extends Component {
     maxPage: 5,
     pageLimit: 5,
     categories: [],
-    // filter
     statusCategory: [],
     sortPrice: [],
     searchInput: "",
@@ -30,9 +31,9 @@ class Collection extends Component {
 
   componentDidMount() {
     this.setState({ loading: true })
-    Axios.get(
-      `${API_URL}/product/paging?pages=${this.state.page}&limit=${this.state.limit}`
-    )
+    Axios.get(`${API_URL}/product/paging`, {
+      params: { pages: this.state.page, limit: this.state.limit },
+    })
       .then((res) => {
         Axios.get(`${API_URL}/product/category`)
           .then((res1) => {
@@ -60,19 +61,18 @@ class Collection extends Component {
       this.state.searchInput !== prevstate.searchInput ||
       this.state.sortPrice !== prevstate.sortPrice
     ) {
-      Axios.get(
-        `${API_URL}/product/paging?pages=${this.state.page}&limit=${this.state.limit}`,
-        {
-          params: {
-            status:
-              this.state.statusCategory === "All"
-                ? ""
-                : this.state.statusCategory,
-            search: this.state.searchInput,
-            price: this.state.sortPrice === "All" ? "" : this.state.sortPrice,
-          },
-        }
-      )
+      Axios.get(`${API_URL}/product/paging`, {
+        params: {
+          pages: this.state.page,
+          limit: this.state.limit,
+          status:
+            this.state.statusCategory === "All"
+              ? ""
+              : this.state.statusCategory,
+          search: this.state.searchInput,
+          price: this.state.sortPrice === "All" ? "" : this.state.sortPrice,
+        },
+      })
         .then((res) => {
           this.setState({
             products: res.data.dataProduct,
@@ -84,50 +84,6 @@ class Collection extends Component {
         });
     }
   }
-
-  nextButton = () => {
-    const { page, maxPage, minPage, pageLimit } = this.state;
-    this.setState({ page: page + 1 });
-    if (page + 1 > maxPage) {
-      this.setState({ maxPage: maxPage + pageLimit });
-      this.setState({ minPage: minPage + pageLimit });
-    }
-  };
-
-  prevButton = () => {
-    const { page, maxPage, minPage, pageLimit } = this.state;
-    this.setState({ page: page - 1 });
-    if ((page - 1) % pageLimit == 0) {
-      this.setState({ maxPage: maxPage - pageLimit });
-      this.setState({ minPage: minPage - pageLimit });
-    }
-  };
-
-  renderTotalPage = () => {
-    let { limit, totaldata, page, maxPage, minPage } = this.state;
-    let panjang = Math.ceil(totaldata / limit);
-    let paging = [];
-    for (let i = 1; i <= panjang; i++) {
-      paging.push(i);
-    }
-    let renderPageNumber = paging.map((number) => {
-      if (number < maxPage + 1 && number > minPage) {
-        return (
-          <li
-            key={number}
-            id={number}
-            onClick={() => this.setState({ page: number })}
-            className={page == number ? "active" : null}
-          >
-            {number}
-          </li>
-        );
-      } else {
-        return null;
-      }
-    });
-    return renderPageNumber;
-  };
 
   renderProducts = () => {
     return this.state.products.map((val, index) => {
@@ -188,7 +144,14 @@ class Collection extends Component {
     this.setState({ sortPrice: e.target.value });
   };
 
+  handleChangePage = (e, newPage) => {
+    this.setState({
+      page: newPage,
+    });
+  };
+
   render() {
+    const { classes } = this.props;
     const BootstrapInput = withStyles(() => ({
       input: {
         position: "relative",
@@ -205,10 +168,17 @@ class Collection extends Component {
       <div>
         {this.state.loading ? <LoaderComp /> : null}
         <Header />
+        <Carousel />
         <div className="jumbotron-1-collection">
           <div className="page-2-collection">
-            <h5 className="page-2-text-1">Our Product</h5>
-            <h1 className="page-2-text-2">Furniture Collection</h1>
+            <div
+              style={{
+                width: "87.5%",
+                height: "1px",
+                backgroundColor: "gainsboro",
+                marginBottom: "2%",
+              }}
+            ></div>
             <div className="filter-content-collection">
               <div className="totalprod-info-collection">
                 <p>Total Products {this.state.totaldata}</p>
@@ -249,7 +219,7 @@ class Collection extends Component {
                   <input
                     className="searchbar-collection"
                     type="text"
-                    placeholder="Search..."
+                    placeholder="Search product name"
                     value={this.state.searchInput}
                     onChange={this.searchChange}
                   />
@@ -266,52 +236,41 @@ class Collection extends Component {
                 </div>
               </div>
             </div>
-            <div className="card-content">{this.renderProducts()}</div>
-            <div className="pagination-content">
-              <ul className="page-number">
-                <li>
-                  <button
-                    disabled={this.state.page == 1 ? true : false}
-                    onClick={() => this.prevButton()}
-                  >
-                    <BsChevronLeft
-                      style={{ fontSize: "20px", color: "#052c43" }}
-                    />
-                  </button>
-                </li>
-                {this.renderTotalPage()}
-                <li>
-                  <button
-                    disabled={
-                      this.state.page ==
-                        Math.ceil(this.state.totaldata / this.state.limit)
-                        ? true
-                        : false
-                    }
-                    onClick={() => this.nextButton()}
-                  >
-                    <BsChevronRight
-                      style={{ fontSize: "20px", color: "#052c43" }}
-                    />
-                  </button>
-                </li>
-              </ul>
+            <div className="card-content-collection">
+              {this.renderProducts()}
+            </div>
+            <div>
+              <Pagination
+                count={Math.ceil(this.state.totaldata / this.state.limit)}
+                variant="outlined"
+                shape="rounded"
+                size="large"
+                defaultPage={this.state.page}
+                onChange={this.handleChangePage}
+                // showFirstButton
+                // showLastButton
+                classes={{ ul: classes.ul }}
+                renderItem={(item) => (
+                  <PaginationItem
+                    {...item}
+                    classes={{
+                      selected: classes.selected,
+                      color: classes.color,
+                    }}
+                  />
+                )}
+              />
             </div>
           </div>
         </div>
-        <div className="footer-content">
-          <div className="footer-1"></div>
-          <div className="footer-2"></div>
-        </div>
+        <div
+          className="pagination-collection"
+          style={{ marginBottom: "10px" }}
+        ></div>
+        <Footer />
       </div>
     );
   }
 }
 
-const MaptstatetoProps = (state) => {
-  return {
-    dataUser: state.Auth,
-  };
-};
-
-export default connect(MaptstatetoProps)(Collection);
+export default withStyles(styles)(Collection);

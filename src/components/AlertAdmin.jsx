@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import zIndex from "@material-ui/core/styles/zIndex";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,11 +19,11 @@ class AlertAdmin extends Component {
     const Alert = (props) => {
       return <MuiAlert elevation={10000} variant="filled" {...props} />;
     };
-    return ReactDOM.createPortal(
-      <div style={{ zIndex: 11000 }} className={classes.root}>
+    return (
+      <div className={classes.root}>
         <Snackbar
           open={this.props.openSnack}
-          autoHideDuration={6000}
+          autoHideDuration={4000}
           onClose={this.props.handleSnack}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
@@ -34,8 +31,7 @@ class AlertAdmin extends Component {
             {this.props.message}
           </Alert>
         </Snackbar>
-      </div>,
-      document.getElementById("portal")
+      </div>
     );
   }
 }
