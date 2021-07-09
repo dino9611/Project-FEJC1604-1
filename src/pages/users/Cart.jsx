@@ -45,12 +45,13 @@ class Cart extends Component {
 
   componentDidMount() {
     console.log("ini dataUser", this.props.dataUser);
+    this.setState({ loading: true })
     axios
       .get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
       .then((res) => {
         console.log("ini addresses", res.data);
         // if (res.data.length) {
-        this.setState({ addresses: res.data, selected_address: res.data[0] });
+        this.setState({ addresses: res.data, selected_address: res.data[0], loading: false });
         // } else {
         //   this.setState({
         //     addresses: [{ address: "no data", zip: 0, city: "no data" }],

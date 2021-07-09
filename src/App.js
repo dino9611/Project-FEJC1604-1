@@ -18,6 +18,7 @@ import HomeAdmin from "./pages/admin/Home";
 import WareHouseDashboard from "./pages/admin/WarehouseDashboard";
 import axios from "axios";
 import LoaderComp from "./components/Loader";
+import ScrollToTop from "./components/ScrollToTop";
 import ManageProduct from "./pages/admin/ManageProduct";
 import Report from "./pages/admin/Report";
 import ProductsFlow from "./pages/admin/ProductsFlow";
@@ -69,6 +70,7 @@ class App extends Component {
     if (role === 1) {
       return (
         <div>
+          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/cart" exact component={Cart} />
@@ -76,11 +78,7 @@ class App extends Component {
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/login" exact component={Login} />
-            <Route
-              path="/verified-email/:token"
-              component={EmailVerification}
-            />
-
+            <Route path="/verified-email/:token" component={EmailVerification} />
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -93,6 +91,7 @@ class App extends Component {
     if (role === 2) {
       return (
         <div>
+          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/collection" exact component={Collection} />
@@ -111,6 +110,7 @@ class App extends Component {
     if (role > 2) {
       return (
         <div>
+          <ScrollToTop />
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/collection" exact component={Collection} />
@@ -118,11 +118,7 @@ class App extends Component {
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/productsInOut" exact component={ProductsFlow} />
-            <Route
-              path="/admin/productsWarehouse"
-              exact
-              component={ProductWarehouse}
-            />
+            <Route path="/admin/productsWarehouse" exact component={ProductWarehouse} />
             <Route path="/admin/dashboard/" component={WareHouseDashboard} />
             <Route path="/admin/modalpw" exact component={ModalPW} />
             <Route path="*" component={NotFound} />
@@ -132,6 +128,7 @@ class App extends Component {
     }
     return (
       <div>
+        <ScrollToTop />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/collection" exact component={Collection} />

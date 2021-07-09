@@ -416,9 +416,9 @@ class ManageProd extends Component {
   render() {
     return (
       <div className="jumbotron">
-        <div className="kiri">
+        {/* <div className="kiri">
           <div className="nama-admin">Admin Fournir</div>
-        </div>
+        </div> */}
         <div className="kanan">
           {/*===========Moal Add Data==========*/}
           <Modal size="lg" isOpen={this.state.modalAdd} toggle={this.toggle}>

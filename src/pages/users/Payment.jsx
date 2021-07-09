@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Container } from "reactstrap";
+import {TransactionAction} from "../../redux/actions"
 import "../styles/payment.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -24,11 +25,12 @@ class Payment extends Component {
   };
 
   componentDidMount() {
+    this.setState({ loading: true })
     axios
       .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
       .then((res) => {
         console.log(res.data);
-        this.setState({ orders: res.data });
+        this.setState({ orders: res.data, loading: false });
       })
       .catch((error) => {
         console.error(error);
@@ -116,6 +118,7 @@ class Payment extends Component {
       .then((res) => {
         alert("berhasil");
         this.setState({ orders: res.data, modalUpload: false, photo: null });
+        this.props.TransactionAction(res.data)
       })
       .catch((error) => {
         console.error(error);
@@ -242,6 +245,9 @@ class Payment extends Component {
             ) : null}
             <input
               type="file"
+              style={{
+                backgroundColor: "red"
+              }}
               // placeholder='Input payment'
               className="form-control mt-3"
               onChange={this.addFileChange}
@@ -267,7 +273,7 @@ class Payment extends Component {
               <div className="box-1">
                 <div>Finish your payment</div>
               </div>
-              {this.renderPayment()}=
+              {this.renderPayment()}
             </div>
             :
             <div className="container-payment">
@@ -298,4 +304,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Payment);
+export default connect(mapStateToProps, {TransactionAction})(Payment);

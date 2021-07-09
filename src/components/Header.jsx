@@ -13,19 +13,32 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { API_URL } from "../helper";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import AccountBalanceWalletOutlinedIcon from "@material-ui/icons/AccountBalanceWalletOutlined";
-import Badge from '@material-ui/core/Badge';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Badge from "@material-ui/core/Badge";
 import HistoryIcon from "@material-ui/icons/History";
 import ModalCH from "./ModalCH";
+import axios from "axios";
 import "./styles/Header.css";
 
 class Header extends Component {
   state = {
     isOpenModalCH: false,
     isOpen: false,
+    transaction: [],
   };
 
   componentDidMount() {
     console.log("ini data user", this.props.dataUser);
+    // axios
+    //   .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
+    //   .then((res) => {
+    //     console.log(res.data);
+    //     this.setState({ transaction: res.data });
+    //     console.log("ini transaction", this.state.transaction);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }
 
   onLogoutClick = () => {
@@ -84,7 +97,10 @@ class Header extends Component {
                   padding: 10,
                 }}
               >
-                <Badge badgeContent={this.props.dataUser.cart.length} color="secondary">
+                <Badge
+                  badgeContent={this.props.dataUser.cart.length}
+                  color="secondary"
+                >
                   <ShoppingCartOutlinedIcon />
                 </Badge>
               </Link>
@@ -100,7 +116,12 @@ class Header extends Component {
                   padding: 10,
                 }}
               >
-                <AccountBalanceWalletOutlinedIcon />
+                <Badge
+                  badgeContent={this.props.dataUser.transaction.length}
+                  color="secondary"
+                >
+                  <AccountBalanceWalletOutlinedIcon />
+                </Badge>
               </Link>
 
               <Link
@@ -116,6 +137,21 @@ class Header extends Component {
               >
                 <HistoryIcon />
               </Link>
+
+              <Link
+                to="/wishlist"
+                className="normal-link-header"
+                style={{
+                  width: "60px",
+                  color: "#052c43",
+                  fontWeight: "bold",
+                  fontSize: "17px",
+                  padding: 10,
+                }}
+              >
+                <FavoriteBorderIcon />
+              </Link>
+
             </div>
           ) : null}
 
@@ -129,7 +165,7 @@ class Header extends Component {
                     size="15px"
                     style={{
                       textDecoration: "none",
-                      color: "gray"
+                      color: "gray",
                     }}
                   >
                     <div
@@ -147,7 +183,7 @@ class Header extends Component {
                             height: "30px",
                             width: "30px",
                             borderRadius: "50%",
-                            cursor: "pointer"
+                            cursor: "pointer",
                           }}
                           alt="profile-picture"
                         />
@@ -156,49 +192,29 @@ class Header extends Component {
                         style={{
                           marginLeft: "15px",
                           marginTop: "3px",
-                          cursor: "pointer"
+                          cursor: "pointer",
                         }}
                       >
-                       <span>{this.props.dataUser.username}</span> 
+                        <span>{this.props.dataUser.username}</span>
                       </div>
                     </div>
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem>
-                      <Link
-                        to="/userprofile"
-                        style={{ textDecoration: "none", color: "#052c43" }}
-                      >
-                        My Profile
-                      </Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link
-                        to="/history"
-                        style={{ textDecoration: "none", color: "#052c43" }}
-                      >
-                        History
-                      </Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link
-                        to="/payment"
-                        style={{ textDecoration: "none", color: "#052c43" }}
-                      >
-                        Payment
-                      </Link>
-                    </DropdownItem>
+                    <Link
+                      to="/userprofile"
+                      style={{ textDecoration: "none", color: "#052c43" }}
+                    >
+                      <DropdownItem>My Profile</DropdownItem>
+                    </Link>
                     <DropdownItem divider />
-                    <DropdownItem>
-                      <Link
-                        to="/"
-                        className="normal-link-header"
-                        onClick={this.onLogoutClick}
-                        style={{ color: "#052c43" }}
-                      >
-                        Logout
-                      </Link>
-                    </DropdownItem>
+                    <Link
+                      to="/"
+                      className="normal-link-header"
+                      onClick={this.onLogoutClick}
+                      style={{ color: "#052c43" }}
+                    >
+                      <DropdownItem>Logout</DropdownItem>
+                    </Link>
                   </DropdownMenu>
                 </Dropdown>
               </div>

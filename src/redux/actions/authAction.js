@@ -8,6 +8,13 @@ export const CartAction = (input) => {
   };
 };
 
+export const TransactionAction = (input) => {
+  return {
+    type: "UPDATETRANSACTION",
+    transaction: input,
+  };
+};
+
 export const LoginAction = (input) => {
   return {
     type: "LOGIN",

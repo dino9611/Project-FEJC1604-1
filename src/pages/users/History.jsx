@@ -12,12 +12,14 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import Header from "../../components/Header";
+import LoaderComp from "../../components/Loader";
 import { withStyles } from "@material-ui/core/styles";
 import { FiSearch } from "react-icons/fi";
 import MuiAlert from "@material-ui/lab/Alert";
 import ModalDP from "../../components/ModalDP";
 import SyncIcon from "@material-ui/icons/Sync";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import CloseIcon from "@material-ui/icons/Close";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
 
@@ -54,13 +56,14 @@ class History extends Component {
 
   componentDidMount() {
     let tokenAccess = localStorage.getItem("TA");
+    this.setState({ loading: true })
     Axios.get(`${API_URL}/transaction/history`, {
       headers: {
         Authorization: "Bearer " + tokenAccess,
       },
     })
       .then((res) => {
-        this.setState({ history: res.data });
+        this.setState({ history: res.data, loading: false });
         console.log(res.data);
       })
       .catch((err) => {
@@ -74,7 +77,6 @@ class History extends Component {
       this.state.statusTransaction != prevstate.statusTransaction ||
       this.state.openDialogAcceptedOrder != prevstate.openDialogAcceptedOrder
     ) {
-      this.setState({ loading: true });
       let tokenAccess = localStorage.getItem("TA");
       Axios.get(`${API_URL}/transaction/detailHistory/${this.state.idProd}`)
         .then((res) => {
@@ -164,7 +166,7 @@ class History extends Component {
         <React.Fragment>
           <div className="history-list" key={val.id}>
             <div className="history-upper">
-              <div className="history-status">
+              <div className="history-status" style={{backgroundColor: val.status == "rejected" ? "#da003773" : ""}}>
                 {val.status == "processed" ? (
                   <span>
                     <SyncIcon /> {val.status}
@@ -173,8 +175,12 @@ class History extends Component {
                   <span>
                     <LocalShippingIcon /> {val.status}
                   </span>
+                ) : val.status == "rejected" ? (
+                  <span style={{ color: "#da0037" }}>
+                    <CloseIcon /> {val.status}
+                  </span>
                 ) : (
-                  upperCase(val.status)
+                  val.status
                 )}
               </div>
               <div className="history-date" width="120px">
@@ -338,8 +344,8 @@ class History extends Component {
             </Snackbar>
           </div>
         }
-
         <Header />
+        {this.state.loading ? <LoaderComp /> : null}
         <div className="jumbotron-1-history">
           <ModalDP
             closeDP={this.onCloseClick}

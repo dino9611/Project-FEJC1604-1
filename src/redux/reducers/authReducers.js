@@ -8,6 +8,7 @@ const INITIAL_STATE = {
   islogin: false,
   loading: false,
   cart: [],
+  transaction: [],
   is_verified: 0,
 };
 
@@ -19,7 +20,7 @@ const AuthReducers = (state = INITIAL_STATE, action) => {
         ...action.payload,
         islogin: true,
         loading: true,
-        error: "",
+        error: ""
       };
     case "ERROR":
       return { ...state, error: action.error, loading: false };
@@ -33,6 +34,8 @@ const AuthReducers = (state = INITIAL_STATE, action) => {
       return { ...state, error: "", sendemail: "", loading: false };
     case "UPDATECART":
       return { ...state, cart: action.cart };
+      case "UPDATETRANSACTION":
+      return { ...state, transaction: action.transaction };
     default:
       return state;
   }
