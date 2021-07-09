@@ -1,0 +1,45 @@
+.create-wh-content {
+  margin-top: 1%;
+  margin-bottom: -2%;
+}
+
+.list-warehouse {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  flex: 1;
+  font-size: 13px;
+  font-weight: 700;
+  padding-top: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 13px;
+  margin-bottom: 1.3%;
+  width: 100%;
+}
+
+.content-warehouse {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  flex: 1;
+  font-size: 13px;
+  padding-top: 14px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 6px;
+  width: 100%;
+}
+
+.text-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.text-content-2 {
+  display: flex;
+  flex: 1;
+  justify-content: start;
+}
