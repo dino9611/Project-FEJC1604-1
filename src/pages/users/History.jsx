@@ -149,12 +149,12 @@ class History extends Component {
 
   renderAcceptItem = (val) => {
     return (
-        <div className="delivered-order" onClick={() => this.dialogAccepted(val)}>
-          <div className="accepted-order">
-            Have you received the product? and are there no complaints about it?
-            click to confirmation
-          </div>
+      <div className="delivered-order" onClick={() => this.dialogAccepted(val)}>
+        <div className="accepted-order">
+          Have you received the product? and are there no complaints about it?
+          click to confirmation
         </div>
+      </div>
     );
   };
 
@@ -180,6 +180,9 @@ class History extends Component {
               <div className="history-date" width="120px">
                 {val.date}
               </div>
+              {/* <div>
+                {val.status == "sending" ? this.renderAcceptItem(val) : null}
+              </div> */}
             </div>
             <div className="history-bottom">
               <div className="history-bottom-left">
@@ -202,17 +205,19 @@ class History extends Component {
                   <div className="totalprice">
                     {currencyFormatter(val.total_price)}
                   </div>
-                  <div
-                    className="history-button-detail"
-                    onClick={() => this.detailProduct(index)}
-                  >
-                    Transaction Detail
-                  </div>
                 </div>
               </div>
             </div>
-            <div>
-              {val.status == "sending" ? this.renderAcceptItem(val) : null}
+            <div className="history-button-group">
+              <div
+                className="history-button-detail"
+                onClick={() => this.detailProduct(index)}
+              >
+                Transaction Detail
+              </div>
+              <div className="history-button-sending">
+                {val.status == "sending" ? this.renderAcceptItem(val) : null}
+              </div>
             </div>
           </div>
         </React.Fragment>
@@ -223,17 +228,8 @@ class History extends Component {
   renderDetail = () => {
     return this.state.details.map((val, index) => {
       return (
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            marginBottom: "5px",
-            marginTop: "5px",
-          }}
-          key={index}
-        >
-          <div style={{ display: "flex" }}>
+        <div className="modal-dp-render-content" key={index}>
+          <div className="modal-dp-render-dataprod" style={{ display: "flex" }}>
             <div
               style={{
                 display: "flex",

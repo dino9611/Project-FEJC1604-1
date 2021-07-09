@@ -1,22 +1,89 @@
 import React, { Component } from "react";
 import Header from "../../components/Header";
-import { connect } from "react-redux";
+import Axios from "axios";
+import { API_URL, currencyFormatter } from "../../helper";
 import { Link } from "react-router-dom";
 import ChairHome from "../../images/chair-home.jpg";
 import Deal from "../../images/great-deal.png";
 import Design from "../../images/great-design.png";
 import Minimalist from "../../images/minimalist.png";
 import Support from "../../images/support.png";
-import { LogoutAction, ResetActionthunk } from "../../redux/actions";
+import Footer from "./../../components/Footer";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "./../styles/Home.css";
 
 class Home extends Component {
   state = {
+    page: 1,
+    limit: 10,
+    products: [],
     cardText:
       "Far far away, behind the word mountains, far from the countries Vokalia.",
   };
 
+  componentDidMount() {
+    Axios.get(`${API_URL}/product/paging`, {
+      params: { pages: this.state.page, limit: this.state.limit },
+    })
+      .then((res) => {
+        this.setState({
+          products: res.data.dataProduct,
+        });
+        console.log(this.state.products);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  renderProducts = () => {
+    return this.state.products.map((val, index) => {
+      return (
+        <Link
+          className="normal-link-collection"
+          to={{ pathname: `/productDetail/${val.id}`, state: { product: val } }}
+        >
+          <div className="render-prod-home" key={index}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <div className="render-prod-card-home">
+                <img
+                  src={API_URL + val.image}
+                  alt={val.name}
+                  style={{ width: "100%" }}
+                />
+              </div>
+              <div className="render-prod-info-home">
+                <div className="card-name-content-home">
+                  <p>{val.name}</p>
+                  <p>{val.category}</p>
+                </div>
+                <div className="card-price-content-home">
+                  <p>{currencyFormatter(val.price)}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Link>
+      );
+    });
+  };
+
   render() {
+    const settings = {
+      className: "center",
+      centerMode: true,
+      infinite: true,
+      centerPadding: "10px",
+      slidesToShow: 5,
+      speed: 500,
+    };
     return (
       <div className="home-content">
         <div className="jumbotron-one-home">
@@ -71,17 +138,16 @@ class Home extends Component {
         <div className="jumbotron-three-home">
           <h5 className="three-one-home">Our Collection</h5>
           <h1 className="three-two-home">Furniture Collection</h1>
-          <div></div>
+          <div className="slider-content-home">
+            <Slider {...settings} autoplay className="slider-inside-home">
+              {this.renderProducts()}
+            </Slider>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 }
 
-const MaptstatetoProps = (state) => {
-  return {
-    dataUser: state.Auth,
-  };
-};
-
-export default connect(MaptstatetoProps)(Home);
+export default Home;

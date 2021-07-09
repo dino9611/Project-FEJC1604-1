@@ -11,65 +11,67 @@
   z-index: 900;
   height: 100vh;
   width: 100%;
-  padding: 0 33%;
+  padding: 0 30px;
 }
 
-/* .modal-content {
-  background: rgb(137, 173, 195);
-  background: linear-gradient(
-    0deg,
-    rgba(137, 173, 195, 1) 15%,
-    rgba(212, 234, 245, 1) 93%
-  );
+.modal-content-ch {
+  background: white;
+  height: 350px;
+  width: 460px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   z-index: 1000;
-  padding: 20px 50px;
-} */
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.modal-inside-ch {
+  /* background-color: brown; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
 
 .modal-image-ch {
-  margin-top: 6%;
   height: 150px;
 }
 
 .text-1-modal-ch {
-  letter-spacing: -2px;
-  color: white;
-  font-size: 3rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 750;
   margin-bottom: -1px;
+  margin-top: 5px;
 }
 
 .text-2-modal-ch {
   font-size: 1rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.822);
   text-align: center;
 }
 
 .text-3-modal-ch {
   font-size: 1rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.822);
   text-align: center;
   margin-top: -15px;
-  margin-bottom: 5%;
+  margin-bottom: 15px;
 }
 
 .button-modal-ch {
   font-weight: bold;
-  background-color: white;
-  color: #89adc3;
+  background-color: #89adc3;
+  color: white;
   border: none;
-  height: 50px;
-  width: 120px;
+  height: 40px;
+  width: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: -50px;
-  margin-bottom: 15%;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .normal-link-modal {

@@ -89,6 +89,10 @@ class Header extends Component {
               </Link>
             )}
           </div>
+          <ModalCH
+            openCH={this.state.isOpenModalCH}
+            closeCH={this.onCloseClick}
+          />
           <div>
             {this.props.dataUser.islogin ? null : (
               <Link to="/registration">

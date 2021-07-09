@@ -29,9 +29,11 @@ import Cart from "./pages/users/Cart";
 import History from "./pages/users/History";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
+import Carousel from "./components/Carousel";
 import ForgotPassword from "./pages/users/ForgotPassword";
 import ResetPassword from "./pages/users/ResetPassword";
 import ModalPW from "./components/ModalPW";
+import Footer from "./components/Footer";
 
 class App extends Component {
   state = {
@@ -80,7 +82,6 @@ class App extends Component {
               path="/verified-email/:token"
               component={EmailVerification}
             />
-
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -139,9 +140,11 @@ class App extends Component {
           <Route path="/registration" exact component={Registration} />
           <Route path="/login" exact component={Login} />
           <Route path="/admin/login" exact component={LoginAdmin} />
+          <Route path="/carousel" exact component={Carousel} />
           <Route path="/admin/dashboard/" component={WareHouseDashboard} />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
+          <Route path="/footer" exact component={Footer} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
