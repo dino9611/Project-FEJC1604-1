@@ -5,12 +5,13 @@
 .home-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .jumbotron-one-home {
   display: flex;
   height: 100vh;
-  /* background-color: red; */
   overflow: hidden;
 }
 
@@ -149,11 +150,9 @@
 .slider-content-home {
   width: 100%;
   padding: 20px 0;
-  /* background-color: blue; */
 }
 .slider-inside-home {
   padding: 10px;
-  /* background-color: red; */
 }
 
 .render-prod-home {

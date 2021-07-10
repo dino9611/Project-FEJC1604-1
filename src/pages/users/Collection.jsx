@@ -9,6 +9,8 @@ import Carousel from "./../../components/Carousel";
 import { withStyles } from "@material-ui/core/styles";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { styles } from "./../../components/PaginationStyle";
+import Empty from "./../../images/history-empty.svg";
+import NoImg from "./../../images/no-image.png";
 import Footer from "./../../components/Footer";
 import "./../styles/Collection.css";
 
@@ -231,8 +233,30 @@ class Collection extends Component {
                 </div>
               </div>
             </div>
-            <div className="card-content-collection">
-              {this.renderProducts()}
+            <div className="card-collection-jumbo">
+              {!this.state.products.length ? (
+                <div className="card-empty-collection">
+                  <img src={Empty} alt="" />
+                  <div className="empty-collection-text">
+                    <p>No Results Found</p>
+                    {this.state.searchInput ? (
+                      <p>
+                        We couldn't find a match for "{this.state.searchInput}".
+                        Please try another search.
+                      </p>
+                    ) : (
+                      <p>
+                        We couldn't find a match for this category. Please try
+                        another search.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="card-content-collection">
+                  {this.renderProducts()}
+                </div>
+              )}
             </div>
             <div>
               <Pagination
@@ -242,8 +266,6 @@ class Collection extends Component {
                 size="large"
                 defaultPage={this.state.page}
                 onChange={this.handleChangePage}
-                // showFirstButton
-                // showLastButton
                 classes={{ ul: classes.ul }}
                 renderItem={(item) => (
                   <PaginationItem
@@ -258,10 +280,6 @@ class Collection extends Component {
             </div>
           </div>
         </div>
-        <div
-          className="pagination-collection"
-          style={{ marginBottom: "10px" }}
-        ></div>
         <Footer />
       </div>
     );

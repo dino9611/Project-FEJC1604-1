@@ -18,6 +18,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import ModalDP from "../../components/ModalDP";
 import SyncIcon from "@material-ui/icons/Sync";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import Empty from "../../images/history-empty.svg";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
 
@@ -50,6 +51,7 @@ class History extends Component {
     loading: false,
     openDialogAcceptedOrder: false,
     openSnack: false,
+    searchInput: "",
   };
 
   componentDidMount() {
@@ -72,7 +74,8 @@ class History extends Component {
     if (
       (this.state.idProd !== prevstate.idProd && this.state.idProd != 0) ||
       this.state.statusTransaction != prevstate.statusTransaction ||
-      this.state.openDialogAcceptedOrder != prevstate.openDialogAcceptedOrder
+      this.state.openDialogAcceptedOrder != prevstate.openDialogAcceptedOrder ||
+      this.state.searchInput !== prevstate.searchInput
     ) {
       this.setState({ loading: true });
       let tokenAccess = localStorage.getItem("TA");
@@ -87,6 +90,7 @@ class History extends Component {
                 this.state.statusTransaction === "All"
                   ? ""
                   : this.state.statusTransaction,
+              search: this.state.searchInput,
             },
           })
             .then((res1) => {
@@ -112,6 +116,10 @@ class History extends Component {
 
   handleChange = (e) => {
     this.setState({ statusTransaction: e.target.value });
+  };
+
+  searchChange = (e) => {
+    this.setState({ searchInput: e.target.value });
   };
 
   detailProduct = (index) => {
@@ -180,9 +188,6 @@ class History extends Component {
               <div className="history-date" width="120px">
                 {val.date}
               </div>
-              {/* <div>
-                {val.status == "sending" ? this.renderAcceptItem(val) : null}
-              </div> */}
             </div>
             <div className="history-bottom">
               <div className="history-bottom-left">
@@ -353,6 +358,8 @@ class History extends Component {
                   className="history-searchinput"
                   type="text"
                   placeholder="Search product..."
+                  value={this.state.searchInput}
+                  onChange={this.searchChange}
                 />
                 <FiSearch className="history-searchicon" />
               </div>
@@ -388,7 +395,29 @@ class History extends Component {
                 </Select>
               </div>
             </div>
-            <div>{this.renderHistory()}</div>
+            <div className="history-container-2">
+              {!this.state.history.length ? (
+                <div className="history-empty-list">
+                  <img src={Empty} alt="" />
+                  <div className="history-empty-text">
+                    <p>No Results Found</p>
+                    {this.state.searchInput ? (
+                      <p>
+                        We couldn't find a match for "{this.state.searchInput}".
+                        Please try another search.
+                      </p>
+                    ) : (
+                      <p>
+                        We couldn't find a match for this status. Please try
+                        another search.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                this.renderHistory()
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -396,4 +425,5 @@ class History extends Component {
   }
 }
 
+// {this.renderHistory()}
 export default withStyles(useStyles)(History);
