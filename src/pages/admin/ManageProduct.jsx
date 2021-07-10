@@ -21,7 +21,6 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Empty from "./../../images/pf-empty.svg";
 import "../styles/ManageProduct.css";
-import AlertAdmin from "../../components/AlertAdmin";
 
 const Myswal = withReactContent(Swal);
 
