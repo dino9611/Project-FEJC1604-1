@@ -14,13 +14,17 @@ import EqualizerIcon from "@material-ui/icons/Equalizer";
 import GroupIcon from "@material-ui/icons/Group";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import DataUsageIcon from "@material-ui/icons/DataUsage";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import AllInboxIcon from "@material-ui/icons/AllInbox";
 import Transaction from "./Transaction";
 import Processing from "./Processing";
 import RequestStock from "./RequestStock";
 import ManageProduct from "./ManageProduct";
+import ProductWarehouse from "./ProductWarehouse";
 import Revenue from "./Home";
 import Report from "./Report";
 import CreateAdmin from "./CreateAdmin";
+import CreateWarehouse from "./CreateWarehouse";
 import ProductsFlow from "./ProductsFlow";
 import axios from "axios";
 import "../styles/warehouseDashboard.css";
@@ -70,7 +74,11 @@ class WarehouseDashboard extends Component {
       <div className="whdashboard-container">
         <div className="whdashboard-sidebar">
           <div className="wh-sidebar-content">
-            <div className="wh-sb-content-1">
+            <div
+              className={
+                role == 2 ? "wh-sb-content-1-super" : "wh-sb-content-1"
+              }
+            >
               <h1 className="wh-sb-text-1">Fournir Warehouse</h1>
             </div>
             <div className="wh-sb-content-2">
@@ -84,7 +92,7 @@ class WarehouseDashboard extends Component {
                 <ButtonBase
                   disableRipple
                   style={{
-                    marginBottom: "27px",
+                    marginBottom: role == 2 ? "23px" : "27px",
                     fontSize: "14px",
                     color:
                       this.props.match.params.status == "transaction"
@@ -118,7 +126,7 @@ class WarehouseDashboard extends Component {
                     <ButtonBase
                       disableRipple
                       style={{
-                        marginBottom: "27px",
+                        marginBottom: "23px",
                         fontSize: "14px",
                         color:
                           this.props.match.params.status == "report-admin"
@@ -149,7 +157,7 @@ class WarehouseDashboard extends Component {
                     <ButtonBase
                       disableRipple
                       style={{
-                        marginBottom: "27px",
+                        marginBottom: "23px",
                         fontSize: "14px",
                         color:
                           this.props.match.params.status == "add-admin"
@@ -171,6 +179,37 @@ class WarehouseDashboard extends Component {
                     </ButtonBase>
                   </Link>
                   <Link
+                    to="/admin/dashboard/create-warehouse"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "23px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "create-warehouse"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <StorefrontIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "create-warehouse"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Add Warehouse
+                    </ButtonBase>
+                  </Link>
+                  <Link
                     to="/admin/dashboard/manage-product"
                     style={{
                       textDecoration: "none",
@@ -180,7 +219,7 @@ class WarehouseDashboard extends Component {
                     <ButtonBase
                       disableRipple
                       style={{
-                        marginBottom: "27px",
+                        marginBottom: "23px",
                         fontSize: "14px",
                         color:
                           this.props.match.params.status == "manage-product"
@@ -201,6 +240,7 @@ class WarehouseDashboard extends Component {
                       Manage Product
                     </ButtonBase>
                   </Link>
+
                   <Link
                     to="/admin/dashboard/revenue"
                     style={{
@@ -211,7 +251,7 @@ class WarehouseDashboard extends Component {
                     <ButtonBase
                       disableRipple
                       style={{
-                        marginBottom: "27px",
+                        marginBottom: "23px",
                         fontSize: "14px",
                         color:
                           this.props.match.params.status == "revenue"
@@ -298,7 +338,6 @@ class WarehouseDashboard extends Component {
                       Processing
                     </ButtonBase>
                   </Link>
-
                   <Link
                     to="/admin/dashboard/products-flow"
                     style={{
@@ -309,7 +348,7 @@ class WarehouseDashboard extends Component {
                     <ButtonBase
                       disableRipple
                       style={{
-                        marginBottom: "27px",
+                        marginBottom: "23px",
                         fontSize: "14px",
                         color:
                           this.props.match.params.status == "products-flow"
@@ -328,6 +367,39 @@ class WarehouseDashboard extends Component {
                         }}
                       />
                       Products Flow
+                    </ButtonBase>
+                  </Link>
+
+                  <Link
+                    to="/admin/dashboard/product-warehouse"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "23px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "product-warehouse"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <AllInboxIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status ==
+                            "product-warehouse"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Products
                     </ButtonBase>
                   </Link>
                 </React.Fragment>
@@ -389,39 +461,31 @@ class WarehouseDashboard extends Component {
           <Switch>
             <Route
               path="/admin/dashboard/transaction"
-              exact
               component={Transaction}
             />
             <Route
               path="/admin/dashboard/requeststock"
-              exact
               component={RequestStock}
             />
-            <Route
-              path="/admin/dashboard/processing"
-              exact
-              component={Processing}
-            />
+            <Route path="/admin/dashboard/processing" component={Processing} />
             <Route
               path="/admin/dashboard/manage-product"
-              exact
               component={ManageProduct}
             />
-            <Route path="/admin/dashboard/revenue" exact component={Revenue} />
-            <Route
-              path="/admin/dashboard/report-admin"
-              exact
-              component={Report}
-            />
-            <Route
-              path="/admin/dashboard/add-admin"
-              exact
-              component={CreateAdmin}
-            />
+            <Route path="/admin/dashboard/revenue" component={Revenue} />
+            <Route path="/admin/dashboard/report-admin" component={Report} />
+            <Route path="/admin/dashboard/add-admin" component={CreateAdmin} />
             <Route
               path="/admin/dashboard/products-flow"
-              exact
               component={ProductsFlow}
+            />
+            <Route
+              path="/admin/dashboard/create-warehouse"
+              component={CreateWarehouse}
+            />
+            <Route
+              path="/admin/dashboard/product-warehouse"
+              component={ProductWarehouse}
             />
           </Switch>
         </div>

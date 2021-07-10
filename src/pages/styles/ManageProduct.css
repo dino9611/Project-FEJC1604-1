@@ -180,63 +180,38 @@
   font-size: 1.2rem;
   margin-right: 10px;
   color: #89adc3;
+  cursor: pointer;
 }
 .mp-prod-delete {
   display: flex;
   align-items: center;
   font-size: 1.2rem;
   color: red;
+  cursor: pointer;
 }
 
 .pagination-content {
   margin: 0 40px 15px;
 }
 
-.page-number {
-  list-style: none;
+.mp-empty-result {
   display: flex;
-}
-
-.page-number li {
-  display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin: 5px;
-  width: 45px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: transparent;
-  color: var(--textprimary);
-  border: 1px solid rgb(204, 204, 204);
-  border-radius: 3px;
+  margin: 25px 20px 10px;
+  border-radius: 5px;
 }
-
-.page-number li.active {
-  color: white;
-  background-color: #89adc3;
-  border-color: #89adc3;
+.mp-empty-result > img {
+  margin-top: 15px;
+  height: 300px;
 }
-
-.page-number li:hover {
-  color: #89adc3;
-  background-color: #d4eaf5;
-  border-color: #d4eaf5;
-  transition: ease-out 0.3s;
-}
-
-.page-number li button {
+.mp-warning {
   display: flex;
-  justify-content: center;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: white;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
-
-.page-number li button:hover {
-  color: #89adc3;
-  background-color: #d4eaf5;
-}
-
-.page-number li button:focus {
-  outline: none;
+.mp-warning > p:first-child {
+  font-weight: bold;
+  margin-bottom: 0;
 }

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { API_URL, currencyFormatter } from "../../helper";
 import Axios from "axios";
 import {
-  // Table,
   Button,
   Modal,
   ModalBody,
@@ -17,8 +16,10 @@ import TablePagination from "@material-ui/core/TablePagination";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { styles } from "./../../components/PaginationStyle";
 import { withStyles } from "@material-ui/core/styles";
+import AlertAdmin from "../../components/AlertAdmin";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Empty from "./../../images/pf-empty.svg";
 import "../styles/ManageProduct.css";
 
 const Myswal = withReactContent(Swal);
@@ -51,6 +52,9 @@ class ManageProd extends Component {
     totaldata: 0,
     page: 0,
     searchInput: "",
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
@@ -197,6 +201,7 @@ class ManageProd extends Component {
     const qty = this.state.qty;
     const { name, price, category } = this.state.AddData;
     let dataPost = { name, price, qty, category };
+    let tokenAccess = localStorage.getItem("TA");
     console.log(dataPost);
     if (name && price && this.qtyValidation(qty) && image && category) {
       let formData = new FormData();
@@ -208,11 +213,14 @@ class ManageProd extends Component {
         },
       })
         .then((res) => {
-          Axios.get(
-            `${API_URL}/admin/product?pages=${this.state.page}&limit=10`
-          )
+          Axios.get(`${API_URL}/admin/product`, {
+            headers: { Authorization: "Bearer " + tokenAccess },
+            params: {
+              pages: this.state.page,
+              limit: this.state.limit,
+            },
+          })
             .then((res1) => {
-              alert("Data berhasil ditambahkan");
               this.setState({
                 products: res1.data.dataProduct,
                 modalAdd: false,
@@ -223,6 +231,9 @@ class ManageProd extends Component {
                   image: "",
                   category: "",
                 },
+                message: `${name} has been added!`,
+                alertStatus: "success",
+                openSnack: true,
                 qty: this.state.qty.map((data) => ({ ...data, qty: 0 })),
                 totaldata: res1.data.totaldata,
               });
@@ -235,7 +246,11 @@ class ManageProd extends Component {
           console.log(err);
         });
     } else {
-      alert("harus diisi inputnya!");
+      this.setState({
+        alertStatus: "error",
+        message: "Data must be filled correctly to update!",
+        openSnack: true,
+      });
     }
   };
 
@@ -259,6 +274,7 @@ class ManageProd extends Component {
     const { name, price, category } = this.state.EditData;
     let dataPost = { name, price, category };
     let id = this.state.EditData.id;
+    let tokenAccess = localStorage.getItem("TA");
     if (name || price || image || category) {
       let formData = new FormData();
       formData.append("data", JSON.stringify(dataPost));
@@ -269,11 +285,14 @@ class ManageProd extends Component {
         },
       })
         .then(() => {
-          Axios.get(
-            `${API_URL}/admin/product?pages=${this.state.page}&limit=10`
-          )
+          Axios.get(`${API_URL}/admin/product`, {
+            headers: { Authorization: "Bearer " + tokenAccess },
+            params: {
+              pages: this.state.page,
+              limit: this.state.limit,
+            },
+          })
             .then((res1) => {
-              alert("Data berhasil diedit");
               this.setState({
                 products: res1.data.dataProduct,
                 modalEdit: false,
@@ -284,6 +303,9 @@ class ManageProd extends Component {
                   image: "",
                   category: "",
                 },
+                message: `Update for ${name} success!`,
+                alertStatus: "success",
+                openSnack: true,
                 indexEdit: -1,
                 totaldata: res1.data.totaldata,
               });
@@ -295,14 +317,20 @@ class ManageProd extends Component {
         .catch((err) => {
           console.log(err);
         });
+      this.setState({ message: "", openSnack: false, alertStatus: "" });
     } else {
-      alert("harus diisi inputnya!");
+      this.setState({
+        alertStatus: "error",
+        message: "Data must be filled correctly to update!",
+        openSnack: true,
+      });
     }
   };
 
   onDeleteClick = (index) => {
     let id = this.state.products[index].id;
     let name = this.state.products[index].name;
+    let tokenAccess = localStorage.getItem("TA");
     Myswal.fire({
       title: `Are you sure want to Delete ${name}`,
       text: "You won't be able to revert this!",
@@ -315,13 +343,20 @@ class ManageProd extends Component {
       if (result.isConfirmed) {
         Axios.delete(`${API_URL}/admin/product/${id}`)
           .then(() => {
-            Axios.get(
-              `${API_URL}/admin/product?pages=${this.state.page}&limit=10`
-            )
+            Axios.get(`${API_URL}/admin/product`, {
+              headers: { Authorization: "Bearer " + tokenAccess },
+              params: {
+                pages: this.state.page,
+                limit: this.state.limit,
+              },
+            })
               .then((res1) => {
                 this.setState({
                   products: res1.data.dataProduct,
                   totaldata: res1.data.totaldata,
+                  message: `${name} has been deleted!`,
+                  alertStatus: "success",
+                  openSnack: true,
                 });
               })
               .catch((err) => {
@@ -426,8 +461,11 @@ class ManageProd extends Component {
     });
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: "", alertStatus: "" });
+  };
+
   render() {
-    const { classes } = this.props;
     const BootstrapInput = withStyles(() => ({
       input: {
         position: "relative",
@@ -627,7 +665,30 @@ class ManageProd extends Component {
                 <div>Action</div>
               </div>
             </div>
-            <div>{this.renderProducts()}</div>
+            {/* <div>{this.renderProducts()}</div> */}
+            <div>
+              {!this.state.products.length ? (
+                <div className="mp-empty-result">
+                  <img src={Empty} alt="" />
+                  <div className="mp-warning">
+                    <p>No Results Found.</p>
+                    {this.state.searchInput ? (
+                      <p>
+                        We couldn't find a match for "{this.state.searchInput}".
+                        Please try another.
+                      </p>
+                    ) : (
+                      <p>
+                        We couldn't find a match for this status. Please try
+                        another.
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                this.renderProducts()
+              )}
+            </div>
           </div>
         </div>
         <div className="pagination-content">
@@ -649,6 +710,12 @@ class ManageProd extends Component {
             />
           </div>
         </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }

@@ -6,6 +6,8 @@
 .home-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .jumbotron-one-home {
@@ -148,7 +150,7 @@
 
 .slider-content-home {
   width: 100%;
-  padding: 20px 0;
+  padding: 20px 25px;
 }
 .slider-inside-home {
   width: 100%;

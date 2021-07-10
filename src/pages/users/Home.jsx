@@ -13,6 +13,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./../styles/Home.css";
+import ScrollToTop from "../../components/ScrollToTop";
 
 class Home extends Component {
   state = {
@@ -138,8 +139,8 @@ class Home extends Component {
         <div className="jumbotron-three-home">
           <h5 className="three-one-home">Our Collection</h5>
           <h1 className="three-two-home">Furniture Collection</h1>
-          <div className="slider-content-home">
-            <Slider {...settings} autoplay className="slider-inside-home">
+          <div className="slider-content-home ">
+            <Slider {...settings} autoplay className="slider-inside-home ">
               {this.renderProducts()}
             </Slider>
           </div>

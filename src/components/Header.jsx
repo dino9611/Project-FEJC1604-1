@@ -244,39 +244,6 @@ class Header extends Component {
             openCH={this.state.isOpenModalCH}
             closeCH={this.onCloseClick}
           />
-
-          <div className="menu">
-            {this.props.dataUser.islogin ? null : (
-              <Link to="/registration" className="normal-link-header">
-                <ButtonBase
-                  disableRipple
-                  style={{
-                    width: "115px",
-                    backgroundColor: "#052c43",
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "13px",
-                    marginLeft: "18px",
-                    letterSpacing: "0.3px",
-                    padding: 7,
-                    paddingBottom: 8,
-                  }}
-                >
-                  Sign Up
-                  <ArrowForwardIcon
-                    style={{
-                      fontWeight: "bold",
-                      fontSize: "23px",
-                      paddingLeft: 7,
-                      paddingTop: 3,
-                    }}
-                  />
-                </ButtonBase>
-              </Link>
-            )}
-          </div>
-
-          <ModalCH open={this.state.isOpenModalCH} close={this.onCloseClick} />
         </div>
       </div>
     );

@@ -33,8 +33,6 @@ import Payment from "./pages/users/Payment";
 import Carousel from "./components/Carousel";
 import ForgotPassword from "./pages/users/ForgotPassword";
 import ResetPassword from "./pages/users/ResetPassword";
-import ModalPW from "./components/ModalPW";
-import Footer from "./components/Footer";
 
 class App extends Component {
   state = {
@@ -80,7 +78,10 @@ class App extends Component {
             <Route path="/collection" exact component={Collection} />
             <Route path="/productDetail/:id" exact component={ProductDetail} />
             <Route path="/login" exact component={Login} />
-            <Route path="/verified-email/:token" component={EmailVerification} />
+            <Route
+              path="/verified-email/:token"
+              component={EmailVerification}
+            />
             <Route path="/address" exact component={AddressList} />
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
@@ -101,7 +102,10 @@ class App extends Component {
             <Route path="/admin" exact component={ManageProduct} />
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
-            <Route path="/admin/dashboard/:status" component={WareHouseDashboard} />
+            <Route
+              path="/admin/dashboard/:status"
+              component={WareHouseDashboard}
+            />
             <Route path="/admin/report" exact component={Report} />
             <Route path="/admin/addAdmin" exact component={CreateAdmin} />
             <Route path="*" component={NotFound} />
@@ -120,8 +124,16 @@ class App extends Component {
             <Route path="/admin/login" exact component={LoginAdmin} />
             <Route path="/admin/home" exact component={HomeAdmin} />
             <Route path="/admin/productsInOut" exact component={ProductsFlow} />
-            <Route path="/admin/productsWarehouse" exact component={ProductWarehouse} />
-            <Route path="/admin/dashboard/:status" exact component={WareHouseDashboard} />
+            <Route
+              path="/admin/productsWarehouse"
+              exact
+              component={ProductWarehouse}
+            />
+            <Route
+              path="/admin/dashboard/:status"
+              exact
+              component={WareHouseDashboard}
+            />
             <Route path="/admin/modalpw" exact component={ModalPW} />
             <Route path="*" component={NotFound} />
           </Switch>
@@ -139,10 +151,12 @@ class App extends Component {
           <Route path="/login" exact component={Login} />
           <Route path="/admin/login" exact component={LoginAdmin} />
           <Route path="/carousel" exact component={Carousel} />
-          <Route path="/admin/dashboard/" component={WareHouseDashboard} />
+          <Route
+            path="/admin/dashboard/:status"
+            component={WareHouseDashboard}
+          />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
-          <Route path="/footer" exact component={Footer} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>

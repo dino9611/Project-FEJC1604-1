@@ -161,3 +161,28 @@
   justify-content: flex-end;
   width: 87.5%;
 }
+
+.card-collection-jumbo {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.card-empty-collection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5%;
+  margin-top: 3%;
+}
+.empty-collection-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+.empty-collection-text > p:first-child {
+  margin-bottom: 0;
+  font-weight: bold;
+}
