@@ -176,3 +176,17 @@
   margin-top: 0;
   font-size: 1.8rem;
 }
+
+.wish-product{
+  /* background-color: plum; */
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heart-click{
+
+}

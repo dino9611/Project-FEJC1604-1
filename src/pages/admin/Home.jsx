@@ -7,6 +7,7 @@ import { LoginAdminActionThunk } from "../../redux/actions";
 import { API_URL, currencyFormatter } from "../../helper";
 import { Redirect } from "react-router-dom";
 import "../styles/HomeAdmin.css";
+import AlertAdmin from '../../components/AlertAdmin';
 
 class HomeAdmin extends Component {
   state = {
@@ -14,6 +15,10 @@ class HomeAdmin extends Component {
     potential: 0,
     startDate: "",
     endDate: "",
+    loading: false,
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
@@ -43,9 +48,19 @@ class HomeAdmin extends Component {
     // console.log(e.target.value);
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
+  };
+
+
   onFilterClick = () => {
     if (!this.state.startDate || !this.state.endDate) {
-      alert("Isi tanggalnya");
+      this.setState({
+        message: 'Date must be selected',
+        openSnack: true,
+        alertStatus: 'info',
+        loading: false
+      });
     } else {
       axios
         .get(
@@ -108,6 +123,12 @@ class HomeAdmin extends Component {
             </div>
           </div>
         </Container>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }

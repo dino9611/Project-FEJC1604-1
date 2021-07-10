@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Empty from "./../../images/pf-empty.svg";
 import "../styles/ManageProduct.css";
+import AlertAdmin from "../../components/AlertAdmin";
 
 const Myswal = withReactContent(Swal);
 
@@ -135,6 +136,10 @@ class ManageProd extends Component {
     this.setState({ modalEdit: !this.state.modalEdit });
   };
 
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: "", alertStatus: "" });
+  };
+
   categoryChange = (e) => {
     this.setState({ statusCategory: e.target.value });
   };
@@ -230,6 +235,9 @@ class ManageProd extends Component {
                   price: "",
                   image: "",
                   category: "",
+                  message: "Data added successfuly",
+                  openSnack: true,
+                  alertStatus: "success",
                 },
                 message: `${name} has been added!`,
                 alertStatus: "success",
@@ -302,6 +310,9 @@ class ManageProd extends Component {
                   price: "",
                   image: "",
                   category: "",
+                  message: "Data edited successfuly",
+                  openSnack: true,
+                  alertStatus: "success",
                 },
                 message: `Update for ${name} success!`,
                 alertStatus: "success",

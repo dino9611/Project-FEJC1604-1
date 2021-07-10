@@ -174,7 +174,7 @@ class UserProfile extends Component {
 
         {/* SIDEBAR */}
         <Sidebar page="profile">
-          <div style={{ marginTop: '50px' }}>
+          <div style={{ marginTop: '100px' }}>
             <div className="d-flex justify-content-center">
               <div className="photo">
                 <img

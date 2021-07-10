@@ -78,6 +78,8 @@ class Collection extends Component {
             products: res.data.dataProduct,
             totaldata: res.data.totaldata,
           });
+          console.log(this.state.products);
+          console.log(this.state.totaldata);
         })
         .catch((err) => {
           console.log(err);
