@@ -271,7 +271,6 @@ class ProductWarehouse extends Component {
           openDW={this.state.modalUpdate}
           closeDW={this.onCloseClick}
         />
-        <div className="sidebar-prowa"> untuk side bar</div>
         <div className="prowa-content">
           <div className="prowa-title-content">
             <p>Warehouse Stock</p>

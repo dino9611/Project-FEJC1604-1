@@ -3,11 +3,6 @@
   min-height: 100vh;
 }
 
-.sidebar-prowa {
-  flex: 1;
-  background-color: brown;
-}
-
 /* result not found image */
 .prowa-empty-result {
   display: flex;
@@ -64,18 +59,20 @@
   display: flex;
   flex-direction: column;
   flex: 4.5;
+  padding-top: 5%;
   background-color: whitesmoke;
 }
 
 .prowa-content-in {
   display: flex;
   flex-direction: column;
+  padding-bottom: 6%;
   margin: 0 20px 0px;
 }
 
 .prowa-title-content {
+  padding-left: 2%;
   background-color: transparent;
-  border-bottom: solid 1px gainsboro;
   display: flex;
   align-items: center;
   height: 60px;
