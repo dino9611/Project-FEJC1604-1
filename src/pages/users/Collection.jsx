@@ -11,7 +11,6 @@ import { withStyles } from "@material-ui/core/styles";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { styles } from "./../../components/PaginationStyle";
 import Empty from "./../../images/history-empty.svg";
-import LoaderComp from "../../components/Loader";
 import Footer from "./../../components/Footer";
 import "./../styles/Collection.css";
 
