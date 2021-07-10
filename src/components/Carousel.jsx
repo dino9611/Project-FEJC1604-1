@@ -5,20 +5,20 @@ import "slick-carousel/slick/slick-theme.css";
 import Slide1 from "./../images/slide-1.png";
 import Slide2 from "./../images/slide-2.png";
 import Slide3 from "./../images/slide-3.png";
-import Header from "./Header";
+import LoaderComp from "./Loader";
 import "./styles/Carousel.css";
 
 class Carousel extends Component {
   state = {};
+
   render() {
     const settings = {
       className: "center",
-      //   centerMode: true,
       infinite: true,
-      //   centerPadding: "60px",
       slidesToShow: 1,
       speed: 500,
     };
+
     return (
       <div>
         <div className="home-carousel-jumbotron">

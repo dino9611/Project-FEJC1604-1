@@ -11,7 +11,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { styles } from "./../../components/PaginationStyle";
 import Empty from "./../../images/history-empty.svg";
-import NoImg from "./../../images/no-image.png";
+import LoaderComp from "../../components/Loader";
 import Footer from "./../../components/Footer";
 import "./../styles/Collection.css";
 
@@ -28,11 +28,11 @@ class Collection extends Component {
     statusCategory: [],
     sortPrice: [],
     searchInput: "",
-    loading: false
+    loading: false,
   };
 
   componentDidMount() {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     Axios.get(`${API_URL}/product/paging`, {
       params: { pages: this.state.page, limit: this.state.limit },
     })
@@ -43,9 +43,8 @@ class Collection extends Component {
               products: res.data.dataProduct,
               totaldata: res.data.totaldata,
               categories: res1.data,
-              loading: false
+              loading: false,
             });
-            console.log(this.state.categories);
           })
           .catch((err) => {
             console.log(err);
@@ -170,7 +169,17 @@ class Collection extends Component {
       <div>
         {this.state.loading ? <LoaderComp /> : null}
         <Header />
-        <Carousel />
+        {this.state.loading ? (
+          <LoaderComp
+            type="ThreeDots"
+            color="#052C43"
+            height={70}
+            width={70}
+            timeout={3000}
+          />
+        ) : (
+          <Carousel />
+        )}
         <div className="jumbotron-1-collection">
           <div className="page-2-collection">
             <div

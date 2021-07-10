@@ -12,14 +12,13 @@ import {
   Snackbar,
 } from "@material-ui/core";
 import Header from "../../components/Header";
-import LoaderComp from "../../components/Loader";
 import { withStyles } from "@material-ui/core/styles";
 import { FiSearch } from "react-icons/fi";
+import { GiShoppingBag } from "react-icons/gi";
 import MuiAlert from "@material-ui/lab/Alert";
 import ModalDP from "../../components/ModalDP";
 import SyncIcon from "@material-ui/icons/Sync";
 import LocalShippingIcon from "@material-ui/icons/LocalShipping";
-import CloseIcon from "@material-ui/icons/Close";
 import Empty from "../../images/history-empty.svg";
 import "./../styles/History.css";
 import "./../../components/styles/ModalDP.css"; //buat style modal detail product
@@ -58,14 +57,13 @@ class History extends Component {
 
   componentDidMount() {
     let tokenAccess = localStorage.getItem("TA");
-    this.setState({ loading: true });
     Axios.get(`${API_URL}/transaction/history`, {
       headers: {
         Authorization: "Bearer " + tokenAccess,
       },
     })
       .then((res) => {
-        this.setState({ history: res.data, loading: false });
+        this.setState({ history: res.data });
         console.log(res.data);
       })
       .catch((err) => {
@@ -80,6 +78,7 @@ class History extends Component {
       this.state.openDialogAcceptedOrder != prevstate.openDialogAcceptedOrder ||
       this.state.searchInput !== prevstate.searchInput
     ) {
+      this.setState({ loading: true });
       let tokenAccess = localStorage.getItem("TA");
       Axios.get(`${API_URL}/transaction/detailHistory/${this.state.idProd}`)
         .then((res) => {
@@ -174,31 +173,29 @@ class History extends Component {
         <React.Fragment>
           <div className="history-list" key={val.id}>
             <div className="history-upper">
-              <div
-                className="history-status"
-                style={{
-                  backgroundColor: val.status == "rejected" ? "#da003773" : "",
-                }}
-              >
-                {val.status == "processed" ? (
-                  <span>
-                    <SyncIcon /> {val.status}
-                  </span>
-                ) : val.status == "sending" ? (
-                  <span>
-                    <LocalShippingIcon /> {val.status}
-                  </span>
-                ) : val.status == "rejected" ? (
-                  <span style={{ color: "#da0037" }}>
-                    <CloseIcon /> {val.status}
-                  </span>
-                ) : (
-                  val.status
-                )}
+              <div className="history-shopping">
+                <GiShoppingBag className="history-shopping-logo" />
+                <div>Shopping</div>
               </div>
               <div className="history-date" width="120px">
                 {val.date}
               </div>
+              <div className="history-status">
+                {val.status == "processed" ? (
+                  <div className="history-status-in">
+                    <SyncIcon fontSize="small" />
+                    <div>{val.status}</div>
+                  </div>
+                ) : val.status == "sending" ? (
+                  <div className="history-status-in">
+                    <LocalShippingIcon fontSize="small" />
+                    <div>{val.status}</div>
+                  </div>
+                ) : (
+                  upperCase(val.status)
+                )}
+              </div>
+              <div className="history-invoice">{val.invoice}</div>
             </div>
             <div className="history-bottom">
               <div className="history-bottom-left">
@@ -210,8 +207,7 @@ class History extends Component {
                     {val.name}
                   </div>
                   <div className="history-price" width="180px">
-                    {val.qty} items x{" "}
-                    {currencyFormatter(val.price).split(",")[0]}
+                    {val.qty} items x {currencyFormatter(val.price)}
                   </div>
                 </div>
               </div>
@@ -220,7 +216,7 @@ class History extends Component {
                 <div className="history-totalprice">
                   <div>Total price</div>
                   <div className="totalprice">
-                    {currencyFormatter(val.total_price).split(",")[0]}
+                    {currencyFormatter(val.total_price)}
                   </div>
                 </div>
               </div>
@@ -263,7 +259,7 @@ class History extends Component {
             <div className="modal-dp-sm-prod">
               <p>{val.name}</p>
               <p>
-                {val.qty} product x {currencyFormatter(val.price).split(",")[0]}
+                {val.qty} product x {currencyFormatter(val.price)}
               </p>
             </div>
             <div
@@ -275,7 +271,7 @@ class History extends Component {
             ></div>
             <div className="modal-dp-sm-price">
               <p>Price</p>
-              <p>{currencyFormatter(val.price * val.qty).split(",")[0]}</p>
+              <p>{currencyFormatter(val.price * val.qty)}</p>
             </div>
           </div>
         </div>
@@ -351,8 +347,8 @@ class History extends Component {
             </Snackbar>
           </div>
         }
+
         <Header />
-        {this.state.loading ? <LoaderComp /> : null}
         <div className="jumbotron-1-history">
           <ModalDP
             closeDP={this.onCloseClick}
