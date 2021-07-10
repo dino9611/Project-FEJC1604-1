@@ -37,6 +37,7 @@ class WarehouseDashboard extends Component {
 
   async componentDidMount() {
     console.log(this.props.match.params.status);
+    console.log(this.props.match);
     try {
       let tokenAccess = localStorage.getItem("TA");
       let res = await axios.get(
