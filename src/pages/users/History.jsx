@@ -14,6 +14,7 @@ import {
 import Header from "../../components/Header";
 import { withStyles } from "@material-ui/core/styles";
 import { FiSearch } from "react-icons/fi";
+import { GiShoppingBag } from "react-icons/gi";
 import MuiAlert from "@material-ui/lab/Alert";
 import ModalDP from "../../components/ModalDP";
 import SyncIcon from "@material-ui/icons/Sync";
@@ -172,22 +173,29 @@ class History extends Component {
         <React.Fragment>
           <div className="history-list" key={val.id}>
             <div className="history-upper">
-              <div className="history-status">
-                {val.status == "processed" ? (
-                  <span>
-                    <SyncIcon /> {val.status}
-                  </span>
-                ) : val.status == "sending" ? (
-                  <span>
-                    <LocalShippingIcon /> {val.status}
-                  </span>
-                ) : (
-                  upperCase(val.status)
-                )}
+              <div className="history-shopping">
+                <GiShoppingBag className="history-shopping-logo" />
+                <div>Shopping</div>
               </div>
               <div className="history-date" width="120px">
                 {val.date}
               </div>
+              <div className="history-status">
+                {val.status == "processed" ? (
+                  <div className="history-status-in">
+                    <SyncIcon fontSize="small" />
+                    <div>{val.status}</div>
+                  </div>
+                ) : val.status == "sending" ? (
+                  <div className="history-status-in">
+                    <LocalShippingIcon fontSize="small" />
+                    <div>{val.status}</div>
+                  </div>
+                ) : (
+                  upperCase(val.status)
+                )}
+              </div>
+              <div className="history-invoice">{val.invoice}</div>
             </div>
             <div className="history-bottom">
               <div className="history-bottom-left">

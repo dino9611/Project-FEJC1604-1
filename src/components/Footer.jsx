@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import Image from "./../images/footer.svg";
 import Google from "./../images/google-play.png";
-import Apple from "./../images/app-store.png";
+import {
+  AiFillTwitterCircle,
+  AiFillInstagram,
+  AiFillFacebook,
+  AiFillYoutube,
+} from "react-icons/ai";
 import "./styles/Footer.css";
 
 class Footer extends Component {
@@ -20,6 +25,20 @@ class Footer extends Component {
                 <p>bridestory</p>
                 <p>fournir parents</p>
                 <p>mitra blog</p>
+                <div className="footer-1-logo">
+                  <div>
+                    <AiFillTwitterCircle />
+                  </div>
+                  <div>
+                    <AiFillInstagram />
+                  </div>
+                  <div>
+                    <AiFillFacebook />
+                  </div>
+                  <div>
+                    <AiFillYoutube />
+                  </div>
+                </div>
               </div>
             </div>
             <div className="footer-1-2">
@@ -54,11 +73,18 @@ class Footer extends Component {
               <img src={Image} alt="" />
             </div>
             <div>
-              <img src={Google} alt="" />
+              <a href="https://play.google.com/store" target="_blank">
+                <img src={Google} alt="" />
+              </a>
             </div>
           </div>
         </div>
-        <div className="footer-2"></div>
+        <div className="footer-2">
+          <div className="footer-2-in">
+            <span>&#169;</span> 2021 JCWM1604 WAO. Made In Indonesia. Thanks To
+            Mas Dino.
+          </div>
+        </div>
       </div>
     );
   }
