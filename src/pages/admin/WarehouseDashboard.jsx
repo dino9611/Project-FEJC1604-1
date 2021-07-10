@@ -239,70 +239,6 @@ class WarehouseDashboard extends Component {
                       Manage Product
                     </ButtonBase>
                   </Link>
-                  <Link
-                    to="/admin/dashboard/products-flow"
-                    style={{
-                      textDecoration: "none",
-                      color: "#535353",
-                    }}
-                  >
-                    <ButtonBase
-                      disableRipple
-                      style={{
-                        marginBottom: "23px",
-                        fontSize: "14px",
-                        color:
-                          this.props.match.params.status == "products-flow"
-                            ? "#535353"
-                            : "#b4b4b4",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <SwapHorizIcon
-                        style={{
-                          marginRight: "20px",
-                          color:
-                            this.props.match.params.status == "products-flow"
-                              ? "#535353"
-                              : "#b4b4b4",
-                        }}
-                      />
-                      Products Flow
-                    </ButtonBase>
-                  </Link>
-
-                  <Link
-                    to="/admin/dashboard/product-warehouse"
-                    style={{
-                      textDecoration: "none",
-                      color: "#535353",
-                    }}
-                  >
-                    <ButtonBase
-                      disableRipple
-                      style={{
-                        marginBottom: "23px",
-                        fontSize: "14px",
-                        color:
-                          this.props.match.params.status == "product-warehouse"
-                            ? "#535353"
-                            : "#b4b4b4",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <AllInboxIcon
-                        style={{
-                          marginRight: "20px",
-                          color:
-                            this.props.match.params.status ==
-                            "product-warehouse"
-                              ? "#535353"
-                              : "#b4b4b4",
-                        }}
-                      />
-                      Products
-                    </ButtonBase>
-                  </Link>
 
                   <Link
                     to="/admin/dashboard/revenue"
@@ -399,6 +335,70 @@ class WarehouseDashboard extends Component {
                         }}
                       />
                       Processing
+                    </ButtonBase>
+                  </Link>
+                  <Link
+                    to="/admin/dashboard/products-flow"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "23px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "products-flow"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <SwapHorizIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status == "products-flow"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Products Flow
+                    </ButtonBase>
+                  </Link>
+
+                  <Link
+                    to="/admin/dashboard/product-warehouse"
+                    style={{
+                      textDecoration: "none",
+                      color: "#535353",
+                    }}
+                  >
+                    <ButtonBase
+                      disableRipple
+                      style={{
+                        marginBottom: "23px",
+                        fontSize: "14px",
+                        color:
+                          this.props.match.params.status == "product-warehouse"
+                            ? "#535353"
+                            : "#b4b4b4",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <AllInboxIcon
+                        style={{
+                          marginRight: "20px",
+                          color:
+                            this.props.match.params.status ==
+                            "product-warehouse"
+                              ? "#535353"
+                              : "#b4b4b4",
+                        }}
+                      />
+                      Products
                     </ButtonBase>
                   </Link>
                 </React.Fragment>
