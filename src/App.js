@@ -31,6 +31,7 @@ import History from "./pages/users/History";
 import NotFound from "./pages/NotFound";
 import Payment from "./pages/users/Payment";
 import Carousel from "./components/Carousel";
+import ModalPW from "./components/ModalPW";
 import ForgotPassword from "./pages/users/ForgotPassword";
 import ResetPassword from "./pages/users/ResetPassword";
 

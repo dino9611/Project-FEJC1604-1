@@ -240,6 +240,28 @@ class Header extends Component {
             )}
           </div>
 
+          <div className="menu">
+            {this.props.dataUser.islogin ? null : (
+              <Link to="/registration" className="normal-link-header">
+                <ButtonBase
+                  disableRipple
+                  style={{
+                    width: "120px",
+                    backgroundColor: "#052c43",
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    marginLeft: "18px",
+                    padding: 10,
+                  }}
+                >
+                  Sign up
+                  <ArrowForwardIcon style={{ fontSize: "17px", marginLeft: "10px", marginTop: "3px" }} />
+                </ButtonBase>
+              </Link>
+            )}
+          </div>
+
           <ModalCH
             openCH={this.state.isOpenModalCH}
             closeCH={this.onCloseClick}
