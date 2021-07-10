@@ -47,7 +47,7 @@ class Cart extends Component {
 
   componentDidMount() {
     console.log("ini dataUser", this.props.dataUser);
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     axios
       .get(`${API_URL}/auth/address/${this.props.dataUser.id}`)
       .then((res) => {
@@ -126,7 +126,12 @@ class Cart extends Component {
       qty: qtyInput,
     };
     if (qtyInput > stockByProduct) {
-      alert('stock kurang');
+      this.setState({
+        message: 'Stock not enough',
+        openSnack: true,
+        alertStatus: 'warning',
+        loading: false
+      });
     } else {
       axios
         .patch(`${API_URL}/transaction/editqty`, data)
@@ -423,7 +428,7 @@ class Cart extends Component {
           this.setState({
             modalPayment: !this.state.modalPayment,
             message: 'Checkout success',
-            openSnack: true,
+            openSnack: false,
             alertStatus: 'success',
             loading: false
           });
@@ -520,7 +525,7 @@ class Cart extends Component {
                 />
               </div>
               <div style={{ flex: 1, marginTop: "15px" }}>
-                <h2>Your Cart is Empty</h2>
+                <h2 style={{ color: '#052C43' }}>Your Cart is Empty</h2>
                 <Link to="/collection">
                   <buton className="tombol-home">Shop Now</buton>
                 </Link>

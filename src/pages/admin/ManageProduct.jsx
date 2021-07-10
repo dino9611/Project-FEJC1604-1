@@ -20,6 +20,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../styles/ManageProduct.css";
+import AlertAdmin from '../../components/AlertAdmin';
 
 const Myswal = withReactContent(Swal);
 
@@ -51,6 +52,9 @@ class ManageProd extends Component {
     totaldata: 0,
     page: 0,
     searchInput: "",
+    openSnack: false,
+    message: "",
+    alertStatus: "",
   };
 
   componentDidMount() {
@@ -129,6 +133,10 @@ class ManageProd extends Component {
 
   toggleEdit = () => {
     this.setState({ modalEdit: !this.state.modalEdit });
+  };
+
+  handleSnack = () => {
+    this.setState({ openSnack: false, message: '', alertStatus: '' });
   };
 
   categoryChange = (e) => {
@@ -212,7 +220,6 @@ class ManageProd extends Component {
             `${API_URL}/admin/product?pages=${this.state.page}&limit=10`
           )
             .then((res1) => {
-              alert("Data berhasil ditambahkan");
               this.setState({
                 products: res1.data.dataProduct,
                 modalAdd: false,
@@ -222,6 +229,9 @@ class ManageProd extends Component {
                   price: "",
                   image: "",
                   category: "",
+                  message: "Data added successfuly",
+                  openSnack: true,
+                  alertStatus: "success",
                 },
                 qty: this.state.qty.map((data) => ({ ...data, qty: 0 })),
                 totaldata: res1.data.totaldata,
@@ -235,7 +245,11 @@ class ManageProd extends Component {
           console.log(err);
         });
     } else {
-      alert("harus diisi inputnya!");
+      this.setState({
+        message: "Input must be filled",
+        openSnack: true,
+        alertStatus: "warning",
+      });
     }
   };
 
@@ -273,7 +287,6 @@ class ManageProd extends Component {
             `${API_URL}/admin/product?pages=${this.state.page}&limit=10`
           )
             .then((res1) => {
-              alert("Data berhasil diedit");
               this.setState({
                 products: res1.data.dataProduct,
                 modalEdit: false,
@@ -283,6 +296,9 @@ class ManageProd extends Component {
                   price: "",
                   image: "",
                   category: "",
+                  message: "Data edited successfuly",
+                  openSnack: true,
+                  alertStatus: "success",
                 },
                 indexEdit: -1,
                 totaldata: res1.data.totaldata,
@@ -296,7 +312,11 @@ class ManageProd extends Component {
           console.log(err);
         });
     } else {
-      alert("harus diisi inputnya!");
+      this.setState({
+        message: "Input must be filled",
+        openSnack: true,
+        alertStatus: "warning",
+      });
     }
   };
 
@@ -649,6 +669,12 @@ class ManageProd extends Component {
             />
           </div>
         </div>
+        <AlertAdmin
+          openSnack={this.state.openSnack}
+          handleSnack={this.handleSnack}
+          message={this.state.message}
+          status={this.state.alertStatus}
+        />
       </div>
     );
   }

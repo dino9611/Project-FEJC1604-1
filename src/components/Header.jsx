@@ -17,7 +17,6 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Badge from "@material-ui/core/Badge";
 import HistoryIcon from "@material-ui/icons/History";
 import ModalCH from "./ModalCH";
-import axios from "axios";
 import "./styles/Header.css";
 
 class Header extends Component {
@@ -28,17 +27,7 @@ class Header extends Component {
   };
 
   componentDidMount() {
-    console.log("ini data user", this.props.dataUser);
-    // axios
-    //   .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     this.setState({ transaction: res.data });
-    //     console.log("ini transaction", this.state.transaction);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    // console.log("ini data user", this.props.dataUser);
   }
 
   onLogoutClick = () => {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Container } from "reactstrap";
-import {TransactionAction} from "../../redux/actions"
+import { TransactionAction } from "../../redux/actions";
 import "../styles/payment.css";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
@@ -29,7 +29,7 @@ class Payment extends Component {
   };
 
   componentDidMount() {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     axios
       .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
       .then((res) => {
@@ -42,13 +42,13 @@ class Payment extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.orders != this.state.orders) {
+    if (prevState.orders.length != this.state.orders.length) {
       axios
         .get(`${API_URL}/transaction/history/${this.props.dataUser.id}`)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           this.setState({ orders: res.data, loading: false });
-          console.log(this.state.orders);
+          // console.log(this.state.orders);
         })
         .catch((error) => {
           console.error(error);
@@ -144,10 +144,15 @@ class Payment extends Component {
           openSnack: true,
           alertStatus: 'success',
         });
-        this.props.TransactionAction(res.data)
+        this.props.TransactionAction(res.data);
       })
       .catch((error) => {
         console.error(error);
+        this.setState({
+          message: error.response.data.message,
+          openSnack: true,
+          alertStatus: 'error',
+        });
       });
   };
 
@@ -333,4 +338,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {TransactionAction})(Payment);
+export default connect(mapStateToProps, { TransactionAction })(Payment);

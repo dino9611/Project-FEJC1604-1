@@ -45,11 +45,10 @@ class ForgotPassword extends Component {
                         alertStatus: 'success',
                         loading: false,
                     });
-                }).catch((res, error) => {
-                    console.log(res);
+                }).catch((error) => {
+                    // alert(error.response.data.message);
                     this.setState({
-                        email: '',
-                        message: 'Email unregistered',
+                        message: error.response.data.message,
                         openSnack: true,
                         alertStatus: 'error',
                         loading: false

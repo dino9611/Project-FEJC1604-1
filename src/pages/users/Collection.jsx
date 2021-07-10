@@ -30,7 +30,7 @@ class Collection extends Component {
   };
 
   componentDidMount() {
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     Axios.get(`${API_URL}/product/paging`, {
       params: { pages: this.state.page, limit: this.state.limit },
     })
@@ -78,6 +78,8 @@ class Collection extends Component {
             products: res.data.dataProduct,
             totaldata: res.data.totaldata,
           });
+          console.log(this.state.products);
+          console.log(this.state.totaldata);
         })
         .catch((err) => {
           console.log(err);

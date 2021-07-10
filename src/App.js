@@ -35,6 +35,7 @@ import ForgotPassword from "./pages/users/ForgotPassword";
 import ResetPassword from "./pages/users/ResetPassword";
 import ModalPW from "./components/ModalPW";
 import Footer from "./components/Footer";
+import Wishlist from './pages/users/Wishlist';
 
 class App extends Component {
   state = {
@@ -85,6 +86,7 @@ class App extends Component {
             <Route path="/security" exact component={Security} />
             <Route path="/userprofile" exact component={UserProfile} />
             <Route path="/payment" exact component={Payment} />
+            <Route exact path="/wishlist" component={Wishlist} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>
