@@ -40,6 +40,7 @@ class RequestStock extends Component {
     rowsPerPage: 5,
     totalData: 0,
     acceptProductId: 0,
+    indexrow: 0,
     rejectProductId: 0,
     openDialogAccept: false,
     openDialogReject: false,
@@ -107,7 +108,7 @@ class RequestStock extends Component {
     let tokenAccess = localStorage.getItem("TA");
     let data = {
       id: acceptProductId,
-      request_list: this.state.request_list,
+      request_list: this.state.request_list[this.state.indexrow],
     };
     axios
       .post(`${API_URL}/admin-warehouse-request/accept-request`, data, {
@@ -131,7 +132,7 @@ class RequestStock extends Component {
     let tokenAccess = localStorage.getItem("TA");
     let data = {
       id: rejectProductId,
-      request_list: this.state.request_list,
+      request_list: this.state.request_list[this.state.indexrow],
     };
     axios
       .post(`${API_URL}/admin-warehouse-request/reject-request`, data, {
@@ -171,17 +172,19 @@ class RequestStock extends Component {
     this.setState({ openSnackReject: false });
   };
 
-  handleAccepted = (row) => {
+  handleAccepted = (row, index) => {
     this.setState({
       openDialogAccept: true,
       acceptProductId: row.products_id,
+      indexrow: index,
     });
   };
 
-  handleRejectedReq = (row) => {
+  handleRejectedReq = (row, index) => {
     this.setState({
       openDialogReject: true,
       rejectProductId: row.products_id,
+      indexrow: index,
     });
   };
 
@@ -369,7 +372,7 @@ class RequestStock extends Component {
                       }}
                     >
                       <p style={{ fontSize: "14px" }}>
-                         Table is empty.. no transaction yet on this section.
+                        Table is empty.. no transaction yet on this section.
                       </p>
                     </div>
                   ) : (
@@ -387,7 +390,7 @@ class RequestStock extends Component {
                   )}
                 </TableHead>
                 <TableBody>
-                  {request_list.map((row, index) => {
+                  {request_list.map((row, index1) => {
                     return (
                       <React.Fragment>
                         <TableRow
@@ -439,7 +442,9 @@ class RequestStock extends Component {
                                     <IconButton
                                       aria-label="expand row"
                                       size="small"
-                                      onClick={() => this.handleAccepted(row)}
+                                      onClick={() =>
+                                        this.handleAccepted(row, index1)
+                                      }
                                       style={{
                                         color: "#4aa96c",
                                       }}
@@ -454,7 +459,7 @@ class RequestStock extends Component {
                                       aria-label="expand row"
                                       size="small"
                                       onClick={() =>
-                                        this.handleRejectedReq(row)
+                                        this.handleRejectedReq(row, index1)
                                       }
                                       style={{
                                         color: "#da0037",
