@@ -33,8 +33,6 @@ import Payment from "./pages/users/Payment";
 import Carousel from "./components/Carousel";
 import ForgotPassword from "./pages/users/ForgotPassword";
 import ResetPassword from "./pages/users/ResetPassword";
-import ModalPW from "./components/ModalPW";
-import Footer from "./components/Footer";
 
 class App extends Component {
   state = {
@@ -159,7 +157,6 @@ class App extends Component {
           />
           <Route path="/forgotPassword" component={ForgotPassword} />
           <Route path="/resetpassword/:token" component={ResetPassword} />
-          <Route path="/footer" exact component={Footer} />
           <Route path="*" component={NotFound} />
         </Switch>
       </div>
