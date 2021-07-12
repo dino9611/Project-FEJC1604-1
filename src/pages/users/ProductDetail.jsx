@@ -9,8 +9,8 @@ import "../styles/ProductDetail.css";
 import { CartAction } from "../../redux/actions/authAction";
 import Swal from "sweetalert2";
 import AlertAdmin from "../../components/AlertAdmin";
-import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import LoaderComp from '../../components/Loader';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import LoaderComp from "../../components/Loader";
 
 class ProductDetail extends Component {
   state = {
@@ -19,8 +19,8 @@ class ProductDetail extends Component {
     loading: true,
     openSnack: false,
     message: "",
-    alertStatus: "",
-    wishlist: []
+    alertStatus: "success",
+    wishlist: [],
   };
 
   componentDidMount() {
@@ -30,10 +30,11 @@ class ProductDetail extends Component {
     // console.log('ini product', data);
     Axios.get(`${API_URL}/auth/getwish/${this.props.dataUser.id}`)
       .then((res) => {
-        console.log('ini res.data', res.data);
+        console.log("ini res.data", res.data);
         this.setState({ wishlist: res.data, loading: false });
-        console.log('ini state wish', this.state.wishlist);
-      }).catch((error) => {
+        console.log("ini state wish", this.state.wishlist);
+      })
+      .catch((error) => {
         console.error(error);
         this.setState({
           loading: false,
@@ -61,13 +62,14 @@ class ProductDetail extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if ((this.state.wishlist.length !== prevState.wishlist.length)) {
+    if (this.state.wishlist.length !== prevState.wishlist.length) {
       Axios.get(`${API_URL}/auth/getwish/${this.props.dataUser.id}`)
         .then((res) => {
           // console.log('ini res.data', res.data);
           this.setState({ wishlist: res.data });
-          console.log('ini state wish', this.state.wishlist);
-        }).catch((error) => {
+          console.log("ini state wish", this.state.wishlist);
+        })
+        .catch((error) => {
           console.error(error);
           this.setState({
             loading: false,
@@ -188,18 +190,21 @@ class ProductDetail extends Component {
   wishClick = () => {
     if (this.state.wishlist.length) {
       let wish_id = this.state.wishlist[0].wish_id;
-      Axios.delete(`${API_URL}/auth/removewish/${this.props.dataUser.id}/${wish_id}`)
+      Axios.delete(
+        `${API_URL}/auth/removewish/${this.props.dataUser.id}/${wish_id}`
+      )
         .then((res) => {
           this.setState({
             wishlist: res.data,
-            message: 'Removed from wishlist',
+            message: "Removed from wishlist",
             openSnack: true,
             alertStatus: "info",
             loading: false,
           });
-          console.log('ini res.data', res.data);
-          console.log('ini state wish', this.state.wishlist);
-        }).catch((error) => {
+          console.log("ini res.data", res.data);
+          console.log("ini state wish", this.state.wishlist);
+        })
+        .catch((error) => {
           console.error(error);
           this.setState({
             message: error.response.data.message,
@@ -211,20 +216,24 @@ class ProductDetail extends Component {
     } else {
       let product_id = this.state.product.id;
       let dataInsert = {
-        product_id: product_id
+        product_id: product_id,
       };
-      Axios.post(`${API_URL}/auth/addwishlist/${this.props.dataUser.id}`, dataInsert)
+      Axios.post(
+        `${API_URL}/auth/addwishlist/${this.props.dataUser.id}`,
+        dataInsert
+      )
         .then((res) => {
-          console.log('ini res post', res.data);
+          console.log("ini res post", res.data);
           this.setState({
-            message: 'Added to wishlist',
+            message: "Added to wishlist",
             openSnack: true,
             alertStatus: `success`,
             loading: false,
-            wishlist: res.data
+            wishlist: res.data,
           });
-          console.log('post state.wish', this.state.wishlist);
-        }).catch((error) => {
+          console.log("post state.wish", this.state.wishlist);
+        })
+        .catch((error) => {
           console.error(error);
           this.setState({
             message: error.response.data.message,
@@ -293,7 +302,7 @@ class ProductDetail extends Component {
                   onClick={() => this.quantityClick("plus")}
                   disabled={
                     this.state.qty == this.state.product.quantity ||
-                      this.state.product.quantity == null
+                    this.state.product.quantity == null
                       ? true
                       : false
                   }
@@ -329,17 +338,24 @@ class ProductDetail extends Component {
                   <div className="add-tocart">Add to cart</div>
                 </button>
               </div>
-              {this.props.dataUser.islogin ?
-                <div className='wish-product' onClick={this.wishClick}>
-                  {this.state.wishlist.length ?
-                    <FaHeart style={{ color: '#F50057', fontSize: '18px', marginRight: '5px' }} />
-                    :
-                    <FaRegHeart style={{ fontSize: '18px', marginRight: '5px' }} />
-                  } Wishlist
+              {this.props.dataUser.islogin ? (
+                <div className="wish-product" onClick={this.wishClick}>
+                  {this.state.wishlist.length ? (
+                    <FaHeart
+                      style={{
+                        color: "#F50057",
+                        fontSize: "18px",
+                        marginRight: "5px",
+                      }}
+                    />
+                  ) : (
+                    <FaRegHeart
+                      style={{ fontSize: "18px", marginRight: "5px" }}
+                    />
+                  )}{" "}
+                  Wishlist
                 </div>
-                :
-                null
-              }
+              ) : null}
             </div>
           </div>
         </div>

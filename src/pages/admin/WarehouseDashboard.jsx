@@ -74,11 +74,7 @@ class WarehouseDashboard extends Component {
       <div className="whdashboard-container">
         <div className="whdashboard-sidebar">
           <div className="wh-sidebar-content">
-            <div
-              className={
-                role == 2 ? "wh-sb-content-1-super" : "wh-sb-content-1"
-              }
-            >
+            <div className="wh-sb-content-1">
               <h1 className="wh-sb-text-1">Fournir Warehouse</h1>
             </div>
             <div className="wh-sb-content-2">

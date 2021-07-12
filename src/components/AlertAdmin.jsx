@@ -1,16 +1,22 @@
 import React, { Component } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles((theme) => ({
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     width: "100%",
+//     "& > * + *": {
+//       marginTop: theme.spacing(2),
+//     },
+//   },
+// }));
+
+const styles = {
   root: {
-    width: "100%",
-    "& > * + *": {
-      marginTop: theme.spacing(2),
-    },
+    width: "",
   },
-}));
+};
 
 class AlertAdmin extends Component {
   state = {};
@@ -27,13 +33,18 @@ class AlertAdmin extends Component {
           onClose={this.props.handleSnack}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
         >
-          <Alert onClose={this.props.handleSnack} severity={this.props.status}>
+          <MuiAlert
+            elevation={10000}
+            variant="filled"
+            onClose={this.props.handleSnack}
+            severity={this.props.status}
+          >
             {this.props.message}
-          </Alert>
+          </MuiAlert>
         </Snackbar>
       </div>
     );
   }
 }
 
-export default withStyles(useStyles)(AlertAdmin);
+export default withStyles(styles)(AlertAdmin);
