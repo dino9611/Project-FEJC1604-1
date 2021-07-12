@@ -91,7 +91,7 @@ class Home extends Component {
           <Header />
           <div className="left-content-home">
             <div className="inside-left-content-home">
-              <h1 className="fournir-text-1-home">Best Design of</h1>
+              <h1 className="fournir-text-1-home">Best Designs of</h1>
               <h1 className="fournir-text-2-home">Furniture Collections</h1>
               <h5 className="fournir-text-3-home">
                 A small river named Duden flows by their place and supplies it
