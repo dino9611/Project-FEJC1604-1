@@ -31,16 +31,6 @@
   border-bottom: 1px solid #afafaf;
 }
 
-.wh-sb-content-1-super {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 20%;
-  margin-left: 20%;
-  height: 15vh;
-  border-bottom: 1px solid #afafaf;
-}
-
 .wh-sb-content-2 {
   display: flex;
   flex-direction: column;
@@ -89,7 +79,7 @@
 }
 
 .container-bottom-wh-ds-super {
-  margin-top: 15% 
+  margin-top: 20% 
 }
 
 .container-bottom-wh-ds {

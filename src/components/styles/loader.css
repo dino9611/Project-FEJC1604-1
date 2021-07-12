@@ -7,8 +7,8 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(255, 255, 255, 0.685);
-  clip-path: (1900px at 90%);
-  -webkit-clip-path: circle(1300px at 90%);
+  clip-path: (2700px at 90%);
+  -webkit-clip-path: circle(2700px at 90%);
   transition: all 1s ease-in-out;
 }
 
